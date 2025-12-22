@@ -1,418 +1,329 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poster Oficial | Tercer Culto Unido</title>
-
-    <!-- Fuentes de Alto Impacto (Diseño Gráfico) -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Teko:wght@300;400;600;700&family=Poppins:wght@300;400;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <title>Flyer Oficial | Diseño Profesional</title>
+    
+    <!-- Fuentes de Diseño Editorial -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-color: #03080f;
-            --accent-cyan: #00f2ff;
-            --accent-gold: #ffcc00;
-            --accent-purple: #7000ff;
-            --white: #ffffff;
+            --primary-dark: #0b1118;
+            --accent-blue: #0044ff;
+            --accent-cyan: #00e5ff;
+            --accent-gold: #cfaa6d;
+            --text-white: #ffffff;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #000;
+            background-color: #1a1a1a;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
+            font-family: 'Montserrat', sans-serif;
             padding: 20px;
         }
 
-        /* --- LIENZO DEL PÓSTER (A4 Ratio aprox) --- */
-        .poster-canvas {
+        /* --- LIENZO DEL FLYER (Vertical Ratio) --- */
+        .flyer-artboard {
             width: 100%;
-            max-width: 600px;
-            /* Aspect ratio vertical para móvil/flyer */
-            aspect-ratio: 2/3;
-            background: var(--bg-color);
+            max-width: 550px;
+            aspect-ratio: 4/5; /* Formato estándar de Flyer/Instagram Portrait */
+            background-color: var(--primary-dark);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 50px rgba(0, 242, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             display: flex;
             flex-direction: column;
-            border: 1px solid #222;
+            color: white;
         }
 
-        /* --- TEXTURA DE RUIDO (Efecto Papel/Impresión) --- */
-        .noise-overlay {
+        /* --- FONDO Y TEXTURA --- */
+        .bg-element {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.07;
-            pointer-events: none;
-            z-index: 50;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+        }
+        
+        /* Gradiente dramático */
+        .bg-gradient {
+            background: radial-gradient(circle at 70% 20%, #1a2f4d 0%, var(--primary-dark) 70%);
+            width: 100%; height: 100%; absolute;
+        }
+
+        /* Ruido sutil para acabado de impresión */
+        .texture-noise {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.4;
             mix-blend-mode: overlay;
         }
 
-        /* --- FONDO ABSTRACTO --- */
-        .bg-gradient {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(circle at 10% 20%, rgba(112, 0, 255, 0.2) 0%, transparent 40%),
-                radial-gradient(circle at 90% 60%, rgba(0, 242, 255, 0.15) 0%, transparent 50%);
-            z-index: 0;
-        }
-
-        /* Líneas decorativas */
-        .grid-lines {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 100% 40px;
-            z-index: 0;
-        }
-
-        /* --- HEADER & TIPOGRAFÍA GIGANTE --- */
-        .header-section {
-            padding: 30px;
+        /* --- ENCABEZADO (INSTITUCIONAL) --- */
+        .brand-header {
             position: relative;
-            z-index: 2;
+            z-index: 10;
             text-align: center;
+            padding-top: 30px;
+            padding-bottom: 10px;
         }
 
-        .church-brand {
-            font-family: 'Teko', sans-serif;
-            font-size: 1.2rem;
-            letter-spacing: 4px;
-            color: var(--accent-cyan);
+        .church-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 4px; /* Mucho espaciado = Elegancia */
             text-transform: uppercase;
-            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
             display: inline-block;
-            border-bottom: 1px solid var(--accent-cyan);
+            padding-bottom: 8px;
         }
 
-        /* El texto "03" gigante de fondo */
-        .giant-number {
-            position: absolute;
-            top: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Anton', sans-serif;
-            font-size: 18rem;
-            line-height: 0.8;
-            color: rgba(255, 255, 255, 0.03);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* Título Principal Estilizado */
-        .main-title {
-            font-family: 'Anton', sans-serif;
-            text-transform: uppercase;
-            line-height: 0.9;
-            transform: scaleY(1.1);
-            /* Estirar letra verticalmente */
-            position: relative;
-            z-index: 5;
-            /* Delante del pastor parcialmente */
-        }
-
-        .title-line-1 {
-            font-size: 4rem;
-            color: transparent;
-            -webkit-text-stroke: 2px var(--white);
-            display: block;
-        }
-
-        .title-line-2 {
-            font-size: 6rem;
-            background: linear-gradient(to bottom, #fff, #999);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: block;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        /* --- COMPOSICIÓN DE IMAGEN PRINCIPAL --- */
-        .hero-composition {
+        /* --- COMPOSICIÓN PRINCIPAL --- */
+        .hero-section {
             flex-grow: 1;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            z-index: 3;
-            margin-top: -40px;
-            /* Superposición */
+            z-index: 1;
         }
 
-        /* Halo detrás del pastor */
-        .holy-glow {
+        /* Título Detrás del Sujeto (Efecto Revista) */
+        .title-back {
             position: absolute;
-            bottom: 0;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 204, 0, 0.2) 0%, transparent 70%);
-            z-index: 1;
-            mix-blend-mode: screen;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 1; /* Detrás de la imagen */
+            width: 100%;
+        }
+
+        .big-text {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 6.5rem; /* Muy grande */
+            line-height: 0.85;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.05); /* Muy sutil */
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3); /* Solo borde */
+        }
+        
+        .highlight-text {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 3rem;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            display: block;
+            margin-top: -10px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+        }
+
+        /* Imagen del Pastor */
+        .pastor-image-container {
+            position: relative;
+            z-index: 2; /* Delante del título */
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
         }
 
         .pastor-img {
             height: 110%;
-            /* Sale un poco del marco si es necesario */
             width: auto;
-            max-width: 100%;
+            max-width: 120%;
             object-fit: contain;
-            filter: contrast(1.1) brightness(1.1) drop-shadow(0 0 20px rgba(0, 0, 0, 0.8));
-            position: relative;
-            z-index: 2;
-            /* Mascara de degradado abajo para fusionar */
-            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-            transition: transform 0.5s ease;
+            filter: contrast(1.1) brightness(1.1);
+            /* Máscara inferior para fusionar con el panel de datos */
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
         }
 
-        .hero-composition:hover .pastor-img {
-            transform: scale(1.02);
-        }
-
-        /* Badge del nombre flotante */
-        .pastor-badge {
+        /* Etiqueta del Pastor */
+        .pastor-tag {
             position: absolute;
-            bottom: 20px;
-            right: -10px;
-            background: var(--accent-gold);
-            color: #000;
-            padding: 10px 30px;
-            font-family: 'Teko', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            transform: rotate(-5deg);
-            box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.5);
-            z-index: 10;
-        }
-
-        .pastor-badge span {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 400;
-            line-height: 0.8;
-        }
-
-        /* --- SECCIÓN INFERIOR (DATOS + INVITADOS) --- */
-        .footer-info {
-            background: linear-gradient(to top, #000 0%, rgba(3, 8, 15, 0.9) 100%);
-            padding: 20px 30px;
-            position: relative;
-            z-index: 10;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Grid de Info */
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .info-box h3 {
-            color: var(--accent-cyan);
-            font-family: 'Teko', sans-serif;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            margin-bottom: 0;
-            line-height: 1;
-        }
-
-        .info-box p {
-            color: #fff;
-            font-weight: 700;
-            font-size: 1rem;
-            line-height: 1.2;
-        }
-
-        /* Sección Invitados (Trío) */
-        .guest-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .trio-thumb {
-            width: 80px;
-            height: 60px;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .trio-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(0.5);
-        }
-
-        .guest-text h4 {
-            color: var(--accent-gold);
-            font-family: 'Anton', sans-serif;
-            text-transform: uppercase;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
-        }
-
-        .guest-text p {
-            font-size: 0.7rem;
-            color: #ccc;
-        }
-
-        /* --- BOTÓN FLOTANTE (CTA) --- */
-        .cta-btn {
-            position: absolute;
-            bottom: 20px;
+            top: 50%;
             right: 20px;
-            background: var(--accent-cyan);
-            color: #000;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
+            text-align: right;
+            z-index: 3;
+        }
+        .tag-role {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            display: block;
+        }
+        .tag-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1;
+            color: white;
+            text-shadow: 0 5px 10px rgba(0,0,0,0.5);
+        }
+
+        /* --- PANEL INFERIOR (DATOS) --- */
+        .info-panel {
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            padding: 25px 30px;
+            position: relative;
+            z-index: 10;
+            border-top: 2px solid var(--accent-cyan);
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 20px;
             align-items: center;
-            font-size: 1.5rem;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
-            animation: pulse 2s infinite;
-            text-decoration: none;
-            z-index: 100;
         }
 
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(0, 242, 255, 0.7);
-            }
-
-            70% {
-                box-shadow: 0 0 0 15px rgba(0, 242, 255, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(0, 242, 255, 0);
-            }
+        /* Columna Izquierda: Fecha y Lugar */
+        .date-box {
+            border-right: 1px solid rgba(255,255,255,0.2);
+            padding-right: 15px;
+        }
+        
+        .huge-date {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+        .huge-date span {
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            vertical-align: super;
+        }
+        .location-text {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #ccc;
+            margin-top: 5px;
+            line-height: 1.4;
         }
 
-        /* Adaptación a pantallas muy pequeñas */
-        @media (max-width: 400px) {
-            .title-line-2 {
-                font-size: 4.5rem;
-            }
+        /* Columna Derecha: Invitado Especial */
+        .guest-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .trio-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-gold);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .trio-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
 
-            .giant-number {
-                font-size: 12rem;
-            }
+        .guest-info h4 {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+            letter-spacing: 1px;
+        }
+        .guest-info h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            line-height: 1;
+            text-transform: uppercase;
+        }
 
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
+        /* --- DECORACIÓN --- */
+        .graphic-lines {
+            position: absolute;
+            top: 20px; right: 20px;
+            width: 50px; height: 50px;
+            border-top: 2px solid var(--accent-cyan);
+            border-right: 2px solid var(--accent-cyan);
+            opacity: 0.5;
+            z-index: 5;
         }
     </style>
 </head>
-
 <body>
 
-    <!-- LIENZO DEL PÓSTER -->
-    <div class="poster-canvas">
+    <div class="flyer-artboard">
+        
+        <!-- Background Elements -->
+        <div class="bg-element bg-gradient"></div>
+        <div class="bg-element texture-noise"></div>
+        <div class="graphic-lines"></div>
 
-        <!-- Capas de Fondo y Textura -->
-        <div class="noise-overlay"></div>
-        <div class="bg-gradient"></div>
-        <div class="grid-lines"></div>
-        <div class="giant-number">03</div>
+        <!-- Header Limpio -->
+        <header class="brand-header">
+            <!-- Sin iconos, solo texto institucional -->
+            <span class="church-name">Iglesia Cristiana Centro de Restauración</span>
+        </header>
 
-        <!-- ENCABEZADO -->
-        <div class="header-section">
-            <div class="church-brand">
-                <i class="fas fa-church"></i> Centro de Restauración
+        <!-- Composición Central -->
+        <div class="hero-section">
+            
+            <!-- Título de Fondo (Layering) -->
+            <div class="title-back">
+                <div class="big-text">Culto</div>
+                <div class="big-text">Unido</div>
+                <div class="highlight-text">III Edición</div>
             </div>
 
-            <div class="main-title">
-                <span class="title-line-1">TERCER CULTO</span>
-                <span class="title-line-2">UNIDO</span>
-            </div>
-        </div>
-
-        <!-- COMPOSICIÓN CENTRAL -->
-        <div class="hero-composition">
-            <div class="holy-glow"></div>
-            <!-- Usa la imagen del pastor con el brazo alzado para más impacto -->
-            <img src="pastor_pulpito.png" alt="Pastor" class="pastor-img">
-
-            <!-- Etiqueta estilo Sticker -->
-            <div class="pastor-badge">
-                <span>Predicador</span>
-                Ps. Jose Chuzón
-            </div>
-        </div>
-
-        <!-- PIE DE PÁGINA (INFORMACIÓN) -->
-        <div class="footer-info">
-
-            <!-- Grid de Fecha y Lugar -->
-            <div class="info-grid">
-                <div class="info-box">
-                    <h3><i class="far fa-calendar-alt"></i> Fecha</h3>
-                    <p style="font-size: 1.5rem; color: #fff;">26 DIC <span
-                            style="font-size:0.8rem; color:#888;">7PM</span></p>
-                </div>
-                <div class="info-box">
-                    <h3><i class="fas fa-map-marker-alt"></i> Ubicación</h3>
-                    <p>Ciudad del Chofer<br><span style="font-weight:400; font-size:0.8rem; color:#aaa;">Mz H Lt
-                            23</span></p>
-                </div>
+            <!-- Imagen Principal -->
+            <div class="pastor-image-container">
+                <img src="pastor_pulpito.png" alt="Pastor Predicando" class="pastor-img">
             </div>
 
-            <!-- Sección Invitados (Trío) -->
-            <div class="guest-section">
-                <div class="trio-thumb">
-                    <img src="trio.png" alt="Trío Restauración">
-                </div>
-                <div class="guest-text">
-                    <p>EN LA ADORACIÓN</p>
-                    <h4>Trío Restauración</h4>
-                    <p>& Ministerios Invitados</p>
-                </div>
+            <!-- Nombre flotante -->
+            <div class="pastor-tag">
+                <span class="tag-role">Mensaje por</span>
+                <span class="tag-name">Ps. Jose<br>Chuzón</span>
             </div>
 
         </div>
 
-        <!-- CTA Flotante -->
-        <a href="https://wa.me/51920620788" class="cta-btn" title="Confirmar Asistencia">
-            <i class="fab fa-whatsapp"></i>
-        </a>
+        <!-- Panel Inferior de Datos -->
+        <div class="info-panel">
+            
+            <!-- Fecha y Ubicación -->
+            <div class="date-box">
+                <div class="huge-date">26<span>DIC</span></div>
+                <div class="location-text">
+                    <strong>7:00 PM</strong><br>
+                    Ciudad del Chofer<br>
+                    Mz H Lt 23
+                </div>
+            </div>
+
+            <!-- Invitados Especiales -->
+            <div class="guest-box">
+                <div class="trio-avatar">
+                    <img src="trio.png" alt="Trío">
+                </div>
+                <div class="guest-info">
+                    <h4>En la Alabanza</h4>
+                    <h3>Trío<br>Restauración</h3>
+                </div>
+            </div>
+
+        </div>
 
     </div>
 
 </body>
-
 </html>
