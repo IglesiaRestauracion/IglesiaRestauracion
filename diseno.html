@@ -3,288 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flyer Oficial | Culto Unido</title>
+    <title>Generador de Flyer | Culto Unido</title>
     
-    <!-- Fuentes de Alto Impacto -->
+    <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Librería para exportar a imagen -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
-            --bg-dark: #020b14; /* Azul Profundo */
-            --cyan: #00E5FF;    /* Cian Neón */
+            --bg-dark: #020b14;
+            --cyan: #00E5FF;
             --white: #FFFFFF;
-            --glass: rgba(255, 255, 255, 0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #111;
+            /* Permitir scroll para ver todo el diseño en pantallas pequeñas */
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             font-family: 'Montserrat', sans-serif;
-            padding: 20px;
+            padding: 40px 20px;
+            gap: 30px;
         }
 
-        /* --- LIENZO DEL FLYER --- */
+        /* --- BOTÓN DE DESCARGA --- */
+        .controls {
+            z-index: 100;
+        }
+
+        .btn-download {
+            background: var(--cyan);
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-download:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.8);
+            background: #fff;
+        }
+
+        /* --- LIENZO DEL FLYER (TAMAÑO FIJO PARA EXPORTACIÓN) --- */
         .flyer-canvas {
-            width: 100%;
-            max-width: 550px; /* Tamaño Flyer Vertical */
-            aspect-ratio: 4/5;
+            width: 550px;
+            height: 688px; /* Ratio 4:5 exacto */
             background-color: var(--bg-dark);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            border: 1px solid #111;
-            box-shadow: 0 0 50px rgba(0, 229, 255, 0.1);
+            border: 1px solid #333;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            /* Evita que el flex shrink aplaste el contenido */
+            flex-shrink: 0; 
         }
 
-        /* --- FONDOS Y EFECTOS --- */
+        /* --- FONDOS --- */
         .noise {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://grainy-gradients.vercel.app/noise.svg');
             opacity: 0.05; pointer-events: none; z-index: 50;
         }
-
         .ambient-light {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 50% 30%, rgba(0, 229, 255, 0.15) 0%, transparent 60%),
-                radial-gradient(circle at 90% 90%, rgba(0, 50, 100, 0.5) 0%, transparent 50%);
+            background: radial-gradient(circle at 50% 30%, rgba(0, 229, 255, 0.15) 0%, transparent 60%);
             z-index: 0;
         }
-
         .border-frame {
             position: absolute; top: 15px; left: 15px; right: 15px; bottom: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
-            pointer-events: none; z-index: 40;
+            border: 1px solid rgba(255,255,255,0.1); pointer-events: none; z-index: 40;
         }
 
-        /* --- HEADER (LIMPIO) --- */
-        .header {
-            text-align: center;
-            padding-top: 40px;
-            z-index: 10;
-        }
-
-        .church-name {
-            color: #fff;
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            opacity: 0.8;
-            margin-bottom: 5px;
-        }
-
+        /* --- HEADER --- */
+        .header { text-align: center; padding-top: 40px; z-index: 10; }
+        .church-name { color: #fff; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; margin-bottom: 5px; }
         .subtitle-badge {
-            display: inline-block;
-            color: var(--cyan);
-            border: 1px solid var(--cyan);
-            padding: 4px 12px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            background: rgba(0, 229, 255, 0.05);
+            display: inline-block; color: var(--cyan); border: 1px solid var(--cyan);
+            padding: 4px 12px; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; background: rgba(0, 229, 255, 0.05);
         }
 
-        /* --- ZONA CENTRAL (TITULO + IMAGEN) --- */
+        /* --- HERO --- */
         .hero-composition {
-            position: relative;
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end; /* Alinea todo abajo */
-            margin-bottom: 20px;
+            position: relative; flex-grow: 1; display: flex;
+            justify-content: center; align-items: flex-end; margin-bottom: 20px;
         }
 
-        /* Título Gigante detrás del pastor */
         .main-title-layer {
-            position: absolute;
-            top: 10%; /* Ajuste vertical */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            text-align: center;
-            z-index: 1;
-            line-height: 0.85;
+            position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+            width: 100%; text-align: center; z-index: 1; line-height: 0.85;
         }
+        .big-text { font-family: 'Anton', sans-serif; font-size: 8rem; text-transform: uppercase; display: block; white-space: nowrap; }
+        .text-culto { color: var(--white); text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .text-unido { color: transparent; -webkit-text-stroke: 2px var(--cyan); opacity: 0.8; }
 
-        .big-text {
-            font-family: 'Anton', sans-serif;
-            font-size: 8rem;
-            text-transform: uppercase;
-            display: block;
-            white-space: nowrap;
-        }
-
-        .text-culto {
-            color: var(--white);
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .text-unido {
-            color: transparent;
-            -webkit-text-stroke: 2px var(--cyan);
-            opacity: 0.8;
-        }
-
-        /* Imagen Pastor */
         .pastor-img {
-            height: 90%; /* Ajuste de tamaño */
-            width: auto;
-            max-width: 120%;
-            object-fit: contain;
-            position: relative;
-            z-index: 2; /* Delante del texto */
+            height: 90%; width: auto; max-width: 120%; object-fit: contain;
+            position: relative; z-index: 2;
             filter: contrast(1.1) drop-shadow(0 20px 30px rgba(0,0,0,0.8));
-            /* Fusión suave en los pies */
             -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
             mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
         }
 
-        /* Badge del nombre */
         .pastor-name-tag {
-            position: absolute;
-            bottom: 20px;
-            right: 0;
-            background: var(--cyan);
-            color: #000;
-            padding: 5px 20px;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 1.2rem;
-            z-index: 5;
-            transform: skewX(-10deg);
-            box-shadow: 10px 10px 0 rgba(0,0,0,0.5);
+            position: absolute; bottom: 20px; right: 0;
+            background: var(--cyan); color: #000; padding: 5px 20px;
+            font-weight: 900; text-transform: uppercase; font-size: 1.2rem;
+            z-index: 5; transform: skewX(-10deg); box-shadow: 10px 10px 0 rgba(0,0,0,0.5);
         }
         .pastor-name-tag span { display: block; font-size: 0.6rem; font-weight: 600; letter-spacing: 1px; }
 
-        /* --- FOOTER INFO (DISTRIBUCIÓN) --- */
+        /* --- FOOTER (PIE DE DISEÑO) --- */
         .footer-grid {
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            padding: 20px 30px 40px 30px;
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Dos columnas */
-            gap: 20px;
-            z-index: 10;
-            align-items: center;
+            /* Aseguramos posición absoluta al fondo para que no se mueva */
+            position: absolute; 
+            bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(to top, #020b14 20%, transparent);
+            padding: 40px 30px 30px 30px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+            z-index: 30; align-items: center;
         }
 
-        /* Columna Izquierda: Invitados */
-        .guest-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .guest-thumb {
-            width: 60px; height: 60px;
-            border-radius: 50%;
-            border: 2px solid var(--cyan);
-            overflow: hidden;
-        }
+        .guest-box { display: flex; align-items: center; gap: 10px; }
+        .guest-thumb { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--cyan); overflow: hidden; background: #000;}
         .guest-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .guest-info h4 {
-            color: var(--white);
-            font-size: 0.9rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-        }
-        .guest-info p {
-            color: #aaa;
-            font-size: 0.65rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        .guest-info h4 { color: var(--white); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
+        .guest-info p { color: #aaa; font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* Columna Derecha: Fecha/Lugar */
-        .date-box {
-            text-align: right;
-            border-left: 1px solid rgba(255,255,255,0.2);
-            padding-left: 15px;
-        }
-        .big-date {
-            font-family: 'Anton', sans-serif;
-            font-size: 3.5rem;
-            color: var(--cyan);
-            line-height: 0.9;
-        }
-        .location-text {
-            color: #fff;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
+        .date-box { text-align: right; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 15px; }
+        .big-date { font-family: 'Anton', sans-serif; font-size: 3.5rem; color: var(--cyan); line-height: 0.9; }
+        .location-text { color: #fff; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
 
-        /* CTA WhatsApp */
-        .wa-btn {
-            position: absolute;
-            top: 20px; right: 20px;
-            color: rgba(255,255,255,0.3);
-            font-size: 1.5rem;
-            z-index: 60;
-            transition: 0.3s;
-        }
-        .wa-btn:hover { color: var(--cyan); }
-
-        /* Ajustes Mobile */
-        @media (max-width: 400px) {
-            .big-text { font-size: 6rem; }
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
-            .guest-box { justify-content: center; }
-            .date-box { text-align: center; border-left: none; border-top: 1px solid #333; padding-top: 15px; }
-            .pastor-name-tag { right: 50%; transform: translateX(50%) skewX(-10deg); bottom: 100px; }
+        /* Estilo Responsive solo para la visualización web, no afecta al PNG */
+        @media (max-width: 600px) {
+            .flyer-canvas {
+                transform: scale(0.65);
+                margin: -100px 0; /* Compensar el espacio vacío por el scale */
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="flyer-canvas">
+    <!-- Botón de Exportación -->
+    <div class="controls">
+        <button onclick="downloadFlyer()" class="btn-download">
+            <i class="fas fa-download"></i> Descargar PNG
+        </button>
+    </div>
+
+    <!-- ÁREA DE DISEÑO (FLYER) -->
+    <div class="flyer-canvas" id="flyerToCapture">
         <div class="noise"></div>
         <div class="ambient-light"></div>
         <div class="border-frame"></div>
         
-        <!-- Enlace discreto a WhatsApp -->
-        <a href="https://wa.me/51920620788" class="wa-btn"><i class="fab fa-whatsapp"></i></a>
-
-        <!-- 1. HEADER LIMPIO -->
+        <!-- Header -->
         <div class="header">
             <div class="church-name">Iglesia Cristiana Centro de Restauración</div>
             <div class="subtitle-badge">III Confraternidad</div>
         </div>
 
-        <!-- 2. COMPOSICIÓN CENTRAL -->
+        <!-- Hero -->
         <div class="hero-composition">
-            
-            <!-- Texto Gigante (Detrás) -->
             <div class="main-title-layer">
                 <span class="big-text text-culto">Culto</span>
                 <span class="big-text text-unido">Unido</span>
             </div>
-
-            <!-- Imagen Pastor (Medio - Efecto 3D) -->
-            <!-- Asegúrate de usar la imagen del brazo alzado o la que prefieras -->
+            
+            <!-- IMAGEN PASTOR (Asegúrate que el archivo existe) -->
             <img src="pastor_pulpito.png" alt="Ps Jose Chuzon" class="pastor-img">
 
-            <!-- Etiqueta Nombre (Frente) -->
             <div class="pastor-name-tag">
                 <span>Predicador</span>
                 Ps. Jose Chuzón
             </div>
         </div>
 
-        <!-- 3. FOOTER INFO -->
+        <!-- Footer -->
         <div class="footer-grid">
-            
-            <!-- Izquierda: Invitados -->
             <div class="guest-box">
                 <div class="guest-thumb">
+                    <!-- IMAGEN TRIO -->
                     <img src="trio.png" alt="Trio">
                 </div>
                 <div class="guest-info">
@@ -293,14 +212,43 @@
                 </div>
             </div>
 
-            <!-- Derecha: Fecha y Lugar -->
             <div class="date-box">
                 <div class="big-date">26 DIC</div>
                 <div class="location-text">Ciudad del Chofer<br>7:00 PM</div>
             </div>
-
         </div>
     </div>
+
+    <!-- Script de Exportación -->
+    <script>
+        function downloadFlyer() {
+            const element = document.getElementById("flyerToCapture");
+            const btn = document.querySelector(".btn-download");
+            
+            // Efecto de carga
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
+
+            html2canvas(element, {
+                scale: 2, // Exportar a doble resolución para que se vea nítido (Retina)
+                useCORS: true, // Permitir imágenes si están en servidor local/externo compatible
+                backgroundColor: "#020b14" // Asegurar fondo correcto
+            }).then(canvas => {
+                // Crear enlace de descarga
+                const link = document.createElement("a");
+                link.download = "Flyer_Culto_Unido_2025.png";
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                
+                // Restaurar botón
+                btn.innerHTML = originalText;
+            }).catch(err => {
+                console.error("Error al exportar:", err);
+                alert("Hubo un error al generar la imagen. Asegúrate de que las imágenes (pastor/trio) estén en la misma carpeta.");
+                btn.innerHTML = originalText;
+            });
+        }
+    </script>
 
 </body>
 </html>
