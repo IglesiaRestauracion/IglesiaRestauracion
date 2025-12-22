@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flyer Pro | Diseño Balanceado</title>
+    <title>Flyer Pro | Layout Asimétrico</title>
     
-    <!-- Fuentes de Impacto -->
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <!-- Fuentes Profesionales -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;800;900&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Librería Exportar -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
-            --bg-dark: #010a13;
-            --cyan: #00E5FF;
-            --dark-blue: #001f3f;
-            --white: #FFFFFF;
+            --dark-navy: #050d1a;
+            --accent-cyan: #00f2ff;
+            --accent-gold: #FFD700;
+            --text-white: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #111;
+            background-color: #222;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -34,173 +32,157 @@
             gap: 20px;
         }
 
-        /* --- BOTÓN DESCARGAR --- */
         .btn-download {
-            background: var(--cyan); color: #000; border: none;
-            padding: 12px 30px; font-weight: 800; text-transform: uppercase;
-            border-radius: 50px; cursor: pointer; display: flex; gap: 10px; align-items: center;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.5); transition: 0.3s;
+            background: var(--accent-cyan); color: #000; border: none;
+            padding: 12px 30px; font-weight: 700; text-transform: uppercase;
+            border-radius: 4px; cursor: pointer; display: flex; gap: 10px; align-items: center;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3); transition: 0.3s;
         }
-        .btn-download:hover { transform: scale(1.05); background: #fff; }
+        .btn-download:hover { background: #fff; letter-spacing: 1px; }
 
-        /* --- LIENZO (CANVAS) --- */
+        /* --- CANVAS DEL FLYER --- */
         .flyer-canvas {
-            width: 550px;
-            height: 750px; /* Un poco más alto para acomodar a todos */
-            background-color: var(--bg-dark);
+            width: 600px;
+            height: 750px; /* Formato 4:5 */
+            background-color: var(--dark-navy);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            flex-shrink: 0;
             border: 1px solid #333;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-            flex-shrink: 0; 
         }
 
-        /* --- EFECTOS DE FONDO --- */
-        .noise {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.06; pointer-events: none; z-index: 50; mix-blend-mode: overlay;
-        }
-        
-        .glow-spot {
-            position: absolute; width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
+        /* --- FONDOS --- */
+        .bg-gradient {
+            position: absolute; width: 100%; height: 100%;
+            background: linear-gradient(120deg, #02060d 30%, #0a1f3d 100%);
             z-index: 0;
         }
-        .glow-top { top: -100px; left: 50%; transform: translateX(-50%); }
-        .glow-bottom { bottom: -50px; left: 50%; transform: translateX(-50%); width: 600px; }
-
-        /* --- HEADER --- */
-        .header {
-            position: absolute; top: 30px; left: 0; width: 100%;
-            text-align: center; z-index: 20;
+        .noise-texture {
+            position: absolute; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05; mix-blend-mode: overlay; z-index: 1;
         }
-        .church-text {
-            color: #fff; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase;
-            opacity: 0.9; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-        .sub-badge {
-            background: var(--cyan); color: #000; padding: 2px 10px;
-            font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
-            display: inline-block; margin-top: 8px; letter-spacing: 1px;
-        }
-
-        /* --- TÍTULO CENTRAL (PUENTE) --- */
-        .title-container {
+        /* Elementos gráficos de fondo */
+        .graphic-shape {
             position: absolute;
-            top: 40%; 
-            left: 50%; transform: translate(-50%, -50%);
-            width: 100%; text-align: center;
-            z-index: 10; /* Encima de las fotos para crear profundidad */
-            mix-blend-mode: overlay; /* Efecto de fusión interesante */
+            width: 400px; height: 800px;
+            background: linear-gradient(90deg, rgba(0, 242, 255, 0.05), transparent);
+            transform: skewX(-20deg);
+            right: 0; top: 0;
+            z-index: 0;
         }
-        
-        /* Título Sólido para legibilidad */
-        .title-solid {
+
+        /* --- 1. HEADER (Top Left) --- */
+        .header-bar {
+            position: absolute; top: 30px; left: 30px; z-index: 20;
+        }
+        .church-brand {
+            color: #fff; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 600;
+            border-left: 3px solid var(--accent-cyan); padding-left: 10px;
+        }
+        .subtitle {
+            margin-top: 5px; color: var(--accent-cyan); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+            padding-left: 13px;
+        }
+
+        /* --- 2. COLUMNA DERECHA (PASTOR) --- */
+        .right-column-img {
             position: absolute;
-            top: 40%; left: 50%; transform: translate(-50%, -50%);
-            width: 100%; text-align: center;
-            z-index: 11;
-        }
-
-        .main-title {
-            font-family: 'Anton', sans-serif;
-            font-size: 6.5rem;
-            line-height: 0.85;
-            text-transform: uppercase;
-            color: transparent;
-            -webkit-text-stroke: 2px rgba(255,255,255,0.8);
-        }
-        .highlight-title {
-            color: var(--cyan);
-            -webkit-text-stroke: 0;
-            text-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
-        }
-
-        /* --- SECCIÓN SUPERIOR: PASTOR --- */
-        .top-section {
-            height: 50%;
-            width: 100%;
-            position: relative;
-            z-index: 1;
+            right: -20px; /* Pegado a la derecha */
+            bottom: 0;
+            height: 90%; /* Ocupa casi toda la altura */
+            width: 65%; /* Ocupa el 65% del ancho */
+            z-index: 5;
+            display: flex; align-items: flex-end;
         }
         
         .pastor-img {
-            height: 110%; /* Sobresale un poco */
-            width: 100%;
-            object-fit: contain;
-            object-position: top center;
-            filter: contrast(1.1) brightness(1.1);
-            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            width: 100%; height: 100%; 
+            object-fit: contain; 
+            object-position: bottom right;
+            filter: contrast(1.1) drop-shadow(-20px 0 30px rgba(0,0,0,0.5));
+            /* Mascara para fundir hacia la izquierda */
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);
+            mask-image: linear-gradient(to right, transparent 0%, black 20%);
         }
 
-        .pastor-label {
-            position: absolute; top: 100px; right: 20px; text-align: right;
+        .pastor-tag {
+            position: absolute; top: 30%; right: 20px; text-align: right;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
-        .pastor-label h3 { color: #fff; font-size: 1.5rem; font-weight: 900; line-height: 1; margin: 0; text-transform: uppercase; font-family: 'Anton'; letter-spacing: 1px;}
-        .pastor-label p { color: var(--cyan); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; margin: 0; font-weight: 700; }
+        .pastor-tag h3 { color: #fff; font-family: 'Barlow Condensed'; font-size: 1.8rem; line-height: 0.9; text-transform: uppercase; margin: 0;}
+        .pastor-tag p { color: var(--accent-cyan); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;}
 
-        /* --- SECCIÓN INFERIOR: TRÍO --- */
-        .bottom-section {
-            height: 55%; /* Se solapa un poco con la de arriba */
-            width: 100%;
-            position: absolute; bottom: 0; left: 0;
-            z-index: 5;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
+        /* --- 3. COLUMNA IZQUIERDA (TÍTULO + TRÍO) --- */
+        .left-column-content {
+            position: absolute;
+            top: 100px; left: 30px;
+            width: 55%; /* Ocupa la mitad izquierda */
+            height: calc(100% - 150px);
+            z-index: 10;
+            display: flex; flex-direction: column;
+            justify-content: space-between; /* Título arriba, Trío abajo */
         }
 
-        .trio-img {
-            width: 110%; /* Grande */
-            height: auto;
-            max-height: 90%;
-            object-fit: contain;
-            /* Filtro para unificar colores con el ambiente */
-            filter: contrast(1.1) saturate(0.9) drop-shadow(0 -10px 20px rgba(0,0,0,0.5));
+        .main-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            text-transform: uppercase;
+            line-height: 0.85;
+        }
+        .title-line-1 { font-size: 5rem; color: #fff; display: block; font-weight: 900; letter-spacing: -2px; }
+        .title-line-2 { 
+            font-size: 5rem; color: transparent; -webkit-text-stroke: 2px var(--accent-cyan); 
+            display: block; font-weight: 900; letter-spacing: -2px; opacity: 0.9;
+        }
+
+        /* Contenedor Trío */
+        .trio-container {
             position: relative;
-            z-index: 1;
+            margin-bottom: 20px;
         }
-
-        /* Degradado negro abajo para que el texto se lea */
-        .bottom-gradient {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 150px;
-            background: linear-gradient(to top, #010a13 40%, transparent 100%);
-            z-index: 2;
-        }
-
         .trio-label {
-            position: absolute; top: 20%; left: 20px; z-index: 6;
+            color: #ccc; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; 
+            border-bottom: 1px solid #555; display: inline-block; margin-bottom: 5px;
         }
-        .trio-label h3 { color: #fff; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; margin: 0; font-family: 'Montserrat'; }
-        .trio-label p { color: #aaa; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; }
+        .trio-img {
+            width: 140%; /* Hacemos que se salga un poco del contenedor para verse grande */
+            height: auto;
+            margin-left: -20px; /* Mover a la izquierda para aprovechar borde */
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
+        }
+        .trio-name {
+            font-family: 'Barlow Condensed'; font-weight: 700; color: var(--accent-gold);
+            font-size: 1.2rem; text-transform: uppercase; margin-top: -10px; position: relative; z-index: 11;
+            text-shadow: 0 2px 4px #000;
+        }
 
-        /* --- FOOTER INFO (DATOS) --- */
-        .info-bar {
-            position: absolute; bottom: 25px; left: 0; width: 100%;
-            display: flex; justify-content: space-between; align-items: center;
+        /* --- 4. FOOTER BAR (DATOS) --- */
+        .footer-info {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(90deg, #000 40%, rgba(2, 12, 26, 0.9) 100%);
+            border-top: 2px solid var(--accent-cyan);
+            z-index: 30;
+            display: flex; align-items: center; justify-content: space-between;
             padding: 0 30px;
-            z-index: 20;
         }
 
-        .date-group { display: flex; align-items: center; gap: 10px; }
-        .big-day { font-size: 3.5rem; font-family: 'Anton'; color: var(--cyan); line-height: 0.8; }
-        .month-time { font-size: 0.8rem; color: #fff; font-weight: 700; text-transform: uppercase; line-height: 1.2; }
-
-        .location-group { text-align: right; }
-        .loc-title { color: var(--cyan); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .loc-text { color: #fff; font-size: 0.8rem; font-weight: 500; }
-
-        /* Marco fino */
-        .frame {
-            position: absolute; top: 15px; left: 15px; right: 15px; bottom: 15px;
-            border: 1px solid rgba(255,255,255,0.1); pointer-events: none; z-index: 40;
+        .date-group { display: flex; align-items: center; gap: 15px; }
+        .day-box {
+            background: var(--accent-cyan); color: #000; padding: 5px 15px;
+            font-family: 'Barlow Condensed'; font-weight: 800; font-size: 2.5rem; line-height: 1;
+            transform: skewX(-10deg);
         }
+        .time-box { color: #fff; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; line-height: 1.2; }
+        
+        .location-box { text-align: right; }
+        .loc-icon { color: var(--accent-cyan); margin-right: 5px; }
+        .loc-main { color: #fff; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; }
+        .loc-sub { color: #888; font-size: 0.75rem; }
 
-        /* Responsive solo para visualización */
+        /* Mobile View fix */
         @media (max-width: 600px) {
             .flyer-canvas { transform: scale(0.6); margin: -120px 0; }
         }
@@ -209,58 +191,56 @@
 <body>
 
     <button onclick="downloadFlyer()" class="btn-download">
-        <i class="fas fa-image"></i> Descargar Imagen
+        <i class="fas fa-file-download"></i> Guardar Afiche
     </button>
 
-    <!-- ÁREA DE DISEÑO -->
     <div class="flyer-canvas" id="flyerToCapture">
         
-        <!-- Fondos -->
-        <div class="noise"></div>
-        <div class="glow-spot glow-top"></div>
-        <div class="glow-spot glow-bottom"></div>
-        <div class="frame"></div>
+        <!-- Capas de Fondo -->
+        <div class="bg-gradient"></div>
+        <div class="graphic-shape"></div>
+        <div class="noise-texture"></div>
 
-        <!-- 1. Header -->
-        <div class="header">
-            <div class="church-text">Iglesia Cristiana Centro de Restauración</div>
-            <div class="sub-badge">III Confraternidad</div>
+        <!-- 1. Header (Arriba Izquierda) -->
+        <div class="header-bar">
+            <div class="church-brand">Iglesia Cristiana Centro de Restauración</div>
+            <div class="subtitle">III Confraternidad Anual</div>
         </div>
 
-        <!-- 2. Sección Pastor (Arriba) -->
-        <div class="top-section">
-            <img src="pastor_pulpito.png" class="pastor-img">
-            <div class="pastor-label">
+        <!-- 2. Columna Derecha: Pastor (Ocupa todo el alto derecho) -->
+        <div class="right-column-img">
+            <img src="pastor_pulpito.png" class="pastor-img" alt="Pastor">
+            <div class="pastor-tag">
                 <p>Predicador</p>
                 <h3>Ps. Jose<br>Chuzón</h3>
             </div>
         </div>
 
-        <!-- 3. Título Central (Capa Intermedia) -->
-        <!-- Usamos esto para tapar un poco la transición entre fotos -->
-        <div class="title-solid">
-            <span class="main-title">Culto<br><span class="highlight-title">Unido</span></span>
-        </div>
-
-        <!-- 4. Sección Trío (Abajo, GRANDE) -->
-        <div class="bottom-section">
-            <div class="trio-label">
-                <p>En la Adoración</p>
-                <h3>Trío<br>Restauración</h3>
+        <!-- 3. Columna Izquierda: Título y Trío -->
+        <div class="left-column-content">
+            <!-- Título -->
+            <div class="title-block">
+                <span class="title-line-1">CULTO</span>
+                <span class="title-line-2">UNIDO</span>
             </div>
-            <img src="trio.png" class="trio-img">
-            <div class="bottom-gradient"></div>
+
+            <!-- Trío (Debajo del título, grande) -->
+            <div class="trio-container">
+                <span class="trio-label">En la Adoración</span>
+                <img src="trio.png" class="trio-img" alt="Trio">
+                <div class="trio-name">Trío Restauración</div>
+            </div>
         </div>
 
-        <!-- 5. Footer Info -->
-        <div class="info-bar">
+        <!-- 4. Footer (Datos duros) -->
+        <div class="footer-info">
             <div class="date-group">
-                <div class="big-day">26</div>
-                <div class="month-time">DIC<br>7:00 PM</div>
+                <div class="day-box">26</div>
+                <div class="time-box">DIC<br>7:00 PM</div>
             </div>
-            <div class="location-group">
-                <div class="loc-title"><i class="fas fa-map-marker-alt"></i> Ubicación</div>
-                <div class="loc-text">Ciudad del Chofer<br>Mz H Lt 23</div>
+            <div class="location-box">
+                <div class="loc-main"><i class="fas fa-map-marker-alt loc-icon"></i> Ciudad del Chofer</div>
+                <div class="loc-sub">Mz H Lt 23 - Chiclayo</div>
             </div>
         </div>
 
@@ -270,23 +250,19 @@
         function downloadFlyer() {
             const element = document.getElementById("flyerToCapture");
             const btn = document.querySelector(".btn-download");
-            
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
 
             html2canvas(element, {
-                scale: 2, // Alta resolución
+                scale: 2, // Alta calidad
                 useCORS: true,
-                backgroundColor: "#010a13"
+                backgroundColor: "#050d1a"
             }).then(canvas => {
                 const link = document.createElement("a");
-                link.download = "Afiche_Culto_Unido_2025.png";
+                link.download = "Afiche_Oficial_2025.png";
                 link.href = canvas.toDataURL("image/png");
                 link.click();
-                btn.innerHTML = '<i class="fas fa-image"></i> Descargar Imagen';
-            }).catch(err => {
-                console.error(err);
-                alert("Error. Verifica que las imágenes 'pastor_pulpito.png' y 'trio.png' estén en la carpeta.");
-                btn.innerHTML = '<i class="fas fa-image"></i> Descargar Imagen';
+                btn.innerHTML = '<i class="fas fa-check"></i> Listo';
+                setTimeout(() => btn.innerHTML = '<i class="fas fa-file-download"></i> Guardar Afiche', 2000);
             });
         }
     </script>
