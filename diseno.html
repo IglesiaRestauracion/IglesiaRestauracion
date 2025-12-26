@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flyer Impacto | High End</title>
+    <title>Flyer Estilo Conferencia | Culto Unido</title>
     
-    <!-- Fuentes Premium -->
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;700&family=Teko:wght@300;400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Fuentes Gruesas y de Impacto -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Teko:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
-            --dark: #050505;
-            --blue-glow: #00d4ff;
-            --gold-glow: #ffae00;
+            --deep-blue: #020f1f;
+            --mid-blue: #00305e;
+            --bright-blue: #0088ff;
+            --silver: #e0e0e0;
             --white: #ffffff;
         }
 
@@ -27,274 +28,321 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             padding: 40px;
             gap: 20px;
         }
 
         .btn-download {
-            background: linear-gradient(90deg, var(--blue-glow), #005f73);
+            background: linear-gradient(90deg, #0088ff, #0055ff);
             color: #fff; border: none; padding: 15px 40px;
-            font-weight: 700; text-transform: uppercase; border-radius: 50px;
-            cursor: pointer; box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
-            letter-spacing: 2px; transition: 0.3s;
+            font-weight: 700; text-transform: uppercase; border-radius: 4px;
+            cursor: pointer; box-shadow: 0 5px 20px rgba(0, 85, 255, 0.4);
+            letter-spacing: 1px; transition: 0.3s;
         }
-        .btn-download:hover { transform: scale(1.05); filter: brightness(1.2); }
+        .btn-download:hover { transform: translateY(-2px); filter: brightness(1.2); }
 
-        /* --- CANVAS --- */
+        /* --- LIENZO DEL FLYER (Formato 4:5 - Instagram Portrait) --- */
         .flyer-canvas {
             width: 600px;
             height: 750px;
-            background-color: var(--dark);
+            background: radial-gradient(circle at 50% 30%, #004e92 0%, #000428 80%);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
-            border: 1px solid #222;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+            border: 1px solid #333;
             flex-shrink: 0;
         }
 
-        /* --- CAPAS DE FONDO --- */
-        .bg-gradient {
-            position: absolute; width: 100%; height: 100%;
-            background: radial-gradient(circle at 80% 20%, #1a2a3a 0%, #000000 70%);
+        /* --- 1. FONDOS Y TEXTURAS --- */
+        
+        /* Imagen de fondo (Multitud adorando - Placeholder) */
+        .bg-crowd {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1478147427282-58a87a120781?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15; /* Sutil */
+            mix-blend-mode: overlay;
             z-index: 0;
         }
+
+        .texture-grunge {
+            position: absolute; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.4; z-index: 1;
+        }
+
+        /* Efecto Papel Rasgado (Esquina Superior Derecha) */
+        .torn-paper-top {
+            position: absolute; top: 0; right: 0;
+            width: 150px; height: 150px;
+            background-color: #fff;
+            /* Polígono irregular para simular rasgado */
+            clip-path: polygon(100% 0, 0 0, 20% 10%, 40% 5%, 60% 15%, 80% 8%, 90% 20%, 100% 15%, 100% 100%);
+            transform: rotate(-45deg) translate(60px, -60px);
+            z-index: 50;
+            box-shadow: -5px 5px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Efecto Papel Rasgado (Esquina Inferior Izquierda) */
+        .torn-paper-bottom {
+            position: absolute; bottom: 0; left: 0;
+            width: 200px; height: 100px;
+            background-color: #fff;
+            clip-path: polygon(0 100%, 100% 100%, 90% 80%, 75% 90%, 50% 75%, 30% 85%, 10% 70%, 0 80%);
+            z-index: 50;
+        }
+
+        /* --- 2. HEADER (FECHA) --- */
+        .header {
+            position: absolute; top: 30px; width: 100%;
+            text-align: center; z-index: 20;
+        }
         
-        .smoke-effect {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://raw.githubusercontent.com/fireball1725/fog-particles/master/fog.png'); /* Placeholder textura humo */
-            opacity: 0.3; mix-blend-mode: screen; z-index: 1;
-            filter: hue-rotate(180deg);
+        .big-date {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 4.5rem;
+            line-height: 0.8;
+            color: #fff;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
-        .grid-floor {
-            position: absolute; bottom: 0; width: 100%; height: 300px;
-            background-image: linear-gradient(0deg, transparent 24%, rgba(0, 212, 255, .1) 25%, rgba(0, 212, 255, .1) 26%, transparent 27%, transparent 74%, rgba(0, 212, 255, .1) 75%, rgba(0, 212, 255, .1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 212, 255, .1) 25%, rgba(0, 212, 255, .1) 26%, transparent 27%, transparent 74%, rgba(0, 212, 255, .1) 75%, rgba(0, 212, 255, .1) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;
-            transform: perspective(300px) rotateX(60deg);
-            z-index: 1; opacity: 0.5;
-        }
-
-        /* --- TIPOGRAFÍA DE IMPACTO (FONDO) --- */
-        .giant-text-layer {
-            position: absolute;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 100%; text-align: center;
-            z-index: 2;
-            mix-blend-mode: overlay;
-        }
-        .text-hoy {
-            font-family: 'Teko', sans-serif;
-            font-size: 28rem; /* EXTREMO */
-            line-height: 0.7;
+        .small-date {
             font-weight: 700;
-            color: rgba(255,255,255,0.05);
-            letter-spacing: -10px;
-            display: block;
+            font-size: 1rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--bright-blue);
+            margin-top: 5px;
         }
 
-        /* --- IMÁGENES HERO --- */
-        .hero-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 5;
-        }
-
-        /* PASTOR */
-        .pastor-img {
+        /* --- 3. COMPOSICIÓN DE IMÁGENES (PIRÁMIDE) --- */
+        .composition-layer {
             position: absolute;
-            right: -50px; bottom: 0;
-            height: 95%; width: auto; max-width: 85%;
-            object-fit: contain;
-            filter: contrast(1.2) drop-shadow(0 0 30px rgba(0,0,0,0.8));
-            /* Efecto de luz lateral */
-            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-            z-index: 6;
-        }
-
-        /* TRIO */
-        .trio-img {
-            position: absolute;
-            left: -20px; bottom: 0;
-            height: 55%; width: auto; max-width: 70%;
-            object-fit: contain;
-            filter: brightness(0.9) contrast(1.1);
-            z-index: 5; /* Detrás del pastor */
-        }
-
-        /* --- TEXTOS FRONTALES --- */
-        .overlay-content {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            top: 150px; width: 100%; height: 400px;
             z-index: 10;
-            padding: 30px;
-            display: flex; flex-direction: column; justify-content: space-between;
+            display: flex; justify-content: center;
         }
 
-        /* HEADER SUPERIOR */
-        .top-header {
-            display: flex; justify-content: space-between; align-items: flex-start;
-        }
-        .brand-box {
-            border-left: 4px solid var(--gold-glow);
-            padding-left: 15px;
-        }
-        .brand-title {
-            color: #fff; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8;
-        }
-        .main-headline {
-            font-family: 'Oswald', sans-serif;
-            font-size: 3.5rem; line-height: 0.9;
-            color: transparent;
-            -webkit-text-stroke: 1px #fff;
-            text-transform: uppercase; font-weight: 700;
-        }
-        .main-headline span {
-            color: var(--blue-glow); -webkit-text-stroke: 0;
-            text-shadow: 0 0 20px var(--blue-glow);
-        }
-
-        .date-badge-circle {
-            width: 80px; height: 80px;
-            background: var(--white);
+        /* Círculo de texto decorativo detrás */
+        .circle-text-bg {
+            position: absolute; top: 20px;
+            width: 450px; height: 450px;
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 50%;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            box-shadow: 0 0 30px rgba(255,255,255,0.3);
-            transform: rotate(15deg);
+            z-index: 0;
         }
-        .db-month { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; line-height: 1; }
-        .db-day { font-size: 2.2rem; font-weight: 700; font-family: 'Teko'; line-height: 0.8; color: #000; }
-        .db-text { font-size: 0.6rem; text-transform: uppercase; font-weight: 600; color: var(--gold-glow); }
-
-        /* FOOTER DE DATOS */
-        .bottom-data {
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255,255,255,0.2);
-            margin: 0 -30px -30px -30px; /* Expandir a los bordes */
-            padding: 25px 30px;
-            display: flex; justify-content: space-between; align-items: center;
+        .circle-text-bg::before {
+            content: "III CONFRATERNIDAD • CULTO UNIDO • 2025 •";
+            position: absolute; width: 100%; text-align: center; top: -10px;
+            font-size: 0.7rem; letter-spacing: 3px; color: rgba(255,255,255,0.4);
+            /* Simulación visual de texto curvo */
+            text-shadow: 0 0 10px rgba(0, 136, 255, 0.5);
         }
 
-        .data-item h3 {
-            color: var(--gold-glow);
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
-            margin-bottom: 2px; display: flex; align-items: center; gap: 5px;
-        }
-        .data-item p {
-            color: #fff; font-size: 1.1rem; font-weight: 600; text-transform: uppercase;
-        }
-        
-        .special-guest-tag {
+        /* TRIO (Atrás y abajo) */
+        .img-trio {
             position: absolute;
-            bottom: 120px; left: 20px;
-            background: var(--blue-glow); color: #000;
-            padding: 5px 15px; font-weight: 700; text-transform: uppercase; font-size: 0.8rem;
-            transform: skewX(-10deg);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            bottom: -50px; /* Bajarlos */
+            width: 90%;
+            max-width: 500px;
+            filter: contrast(1.1) brightness(0.8) saturate(0.8); /* Un poco más oscuros para dar profundidad */
+            z-index: 1;
+            /* Máscara inferior */
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
         }
 
-        /* Partículas flotantes */
-        .particle {
-            position: absolute; width: 4px; height: 4px; background: #fff;
-            border-radius: 50%; opacity: 0.6;
-            box-shadow: 0 0 10px #fff;
+        /* PASTOR (Frente y arriba) */
+        .img-pastor {
+            position: absolute;
+            bottom: 0;
+            height: 380px; /* Tamaño prominente */
+            width: auto;
+            filter: contrast(1.1) drop-shadow(0 10px 30px rgba(0,0,0,0.8));
+            z-index: 2;
+            /* Máscara inferior para fusionar con el título */
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
         }
+
+        /* Resplandor Azul detrás del pastor */
+        .glow-center {
+            position: absolute; top: 50px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(0, 136, 255, 0.6) 0%, transparent 70%);
+            mix-blend-mode: screen;
+            z-index: 1;
+        }
+
+        /* --- 4. TÍTULO METÁLICO 3D --- */
+        .title-container {
+            position: absolute;
+            bottom: 160px; width: 100%;
+            text-align: center; z-index: 20;
+        }
+
+        .subtitle {
+            font-size: 0.9rem; letter-spacing: 4px; color: #fff; text-transform: uppercase; margin-bottom: -10px;
+            font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .main-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 5rem;
+            line-height: 0.85;
+            text-transform: uppercase;
+            /* Gradiente Metálico Azul/Blanco */
+            background: linear-gradient(to bottom, #ffffff 30%, #a2d9ff 50%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Sombra para efecto 3D */
+            filter: drop-shadow(0 5px 0 #002a5c) drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            transform: scaleY(1.1); /* Texto alto */
+        }
+
+        .church-bar {
+            background: var(--white);
+            color: var(--deep-blue);
+            display: inline-block;
+            padding: 2px 20px;
+            font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            transform: skewX(-15deg);
+        }
+
+        /* --- 5. FOOTER INFO --- */
+        .footer {
+            position: absolute; bottom: 30px; width: 100%;
+            z-index: 30;
+            display: flex; justify-content: space-between; align-items: flex-end;
+            padding: 0 30px;
+        }
+
+        .info-col { color: #fff; }
+        .info-label { font-size: 0.65rem; color: var(--bright-blue); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 2px;}
+        .info-val { font-size: 0.9rem; font-weight: 600; line-height: 1.2; text-shadow: 0 2px 5px rgba(0,0,0,0.8);}
+        
+        .right-align { text-align: right; }
+
+        /* Logos Placeholder */
+        .logo-center {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            opacity: 0.8; width: 60px;
+        }
+
+        /* Etiquetas Flotantes para los nombres */
+        .name-tag {
+            position: absolute;
+            color: #fff; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,1);
+            z-index: 25;
+        }
+        .tag-pastor { top: 200px; right: 80px; text-align: right; }
+        .tag-trio { top: 220px; left: 50px; text-align: left; }
 
     </style>
 </head>
 <body>
 
     <button onclick="downloadFlyer()" class="btn-download">
-        <i class="fas fa-bolt"></i> Descargar Masterpiece
+        <i class="fas fa-file-image"></i> Descargar Flyer HD
     </button>
 
     <div class="flyer-canvas" id="flyerToCapture">
         
-        <!-- 1. FONDOS -->
-        <div class="bg-gradient"></div>
-        <div class="smoke-effect"></div>
-        <div class="grid-floor"></div>
+        <!-- Fondo -->
+        <div class="bg-crowd"></div>
+        <div class="texture-grunge"></div>
         
-        <!-- Texto Gigante Fondo -->
-        <div class="giant-text-layer">
-            <span class="text-hoy">HOY</span>
+        <!-- Papel Rasgado (Esquinas) -->
+        <div class="torn-paper-top"></div>
+        <div class="torn-paper-bottom"></div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="big-date">26.DIC</div>
+            <div class="small-date">VIERNES • 7:00 PM</div>
         </div>
 
-        <!-- Partículas (Decorativo) -->
-        <div class="particle" style="top: 20%; left: 20%;"></div>
-        <div class="particle" style="top: 40%; left: 80%; width: 6px; height: 6px; background: var(--gold-glow);"></div>
-        <div class="particle" style="top: 10%; right: 30%;"></div>
-
-        <!-- 2. IMÁGENES (COMPOSICIÓN) -->
-        <div class="hero-container">
-            <!-- Trío (Izquierda) -->
-            <img src="trio.png" class="trio-img" alt="Trio">
+        <!-- Composición Central -->
+        <div class="composition-layer">
+            <div class="circle-text-bg"></div>
+            <div class="glow-center"></div>
             
-            <!-- Pastor (Derecha - Protagonista) -->
-            <img src="pastor_pulpito.png" class="pastor-img" alt="Pastor">
-        </div>
-
-        <!-- 3. CAPA DE CONTENIDO FRONTAL -->
-        <div class="overlay-content">
+            <!-- Trio (Detrás) -->
+            <img src="trio.png" class="img-trio" alt="Trio">
             
-            <!-- Header -->
-            <div class="top-header">
-                <div class="brand-box">
-                    <div class="brand-title">Centro de Restauración</div>
-                    <div class="main-headline">
-                        CULTO<br><span>UNIDO</span>
-                    </div>
-                </div>
-                <!-- Círculo de Fecha -->
-                <div class="date-badge-circle">
-                    <span class="db-month">DIC</span>
-                    <span class="db-day">26</span>
-                    <span class="db-text">HOY</span>
-                </div>
+            <!-- Pastor (Delante) -->
+            <img src="pastor_pulpito.png" class="img-pastor" alt="Pastor">
+            
+            <!-- Etiquetas de Nombres -->
+            <div class="name-tag tag-pastor">
+                Predicador<br>
+                <span style="color:var(--bright-blue); font-size:0.9rem;">Ev. Jose Chuzón</span>
             </div>
-
-            <!-- Etiquetas Flotantes -->
-            <div class="special-guest-tag">
-                <i class="fas fa-microphone"></i> Ps. Jose Chuzón
+            <div class="name-tag tag-trio">
+                Alabanza<br>
+                <span style="color:var(--bright-blue); font-size:0.9rem;">Trío Restauración</span>
             </div>
-
-            <!-- Footer Datos -->
-            <div class="bottom-data">
-                <div class="data-item">
-                    <h3><i class="far fa-clock"></i> Inicio</h3>
-                    <p style="font-size: 2rem; font-family: 'Teko'; line-height: 0.9;">7:00 PM</p>
-                </div>
-                <div class="data-item" style="text-align: right;">
-                    <h3><i class="fas fa-map-marker-alt"></i> Ubicación</h3>
-                    <p style="font-size: 0.9rem;">Ciudad del Chofer</p>
-                    <p style="font-size: 0.7rem; color: #ccc; font-weight: 400;">Mz H Lt 23</p>
-                </div>
-            </div>
-
         </div>
+
+        <!-- Título Principal -->
+        <div class="title-container">
+            <div class="subtitle">TERCERA CONFRATERNIDAD</div>
+            <div class="main-title">CULTO<br>UNIDO</div>
+            <div class="church-bar">Iglesia Cristiana Centro de Restauración</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="info-col">
+                <div class="info-label">Tema</div>
+                <div class="info-val">SALMOS 133:1<br>Unidad y Armonía</div>
+            </div>
+            
+            <!-- Logo Iglesia (Icono simple) -->
+            <div class="logo-center">
+                <i class="fas fa-globe-americas" style="font-size: 2rem; color: var(--bright-blue); filter: drop-shadow(0 0 10px #0055ff);"></i>
+            </div>
+
+            <div class="info-col right-align">
+                <div class="info-label">Local</div>
+                <div class="info-val">Ciudad del Chofer<br>Mz H Lt 23 - Chiclayo</div>
+            </div>
+        </div>
+
     </div>
 
     <script>
         function downloadFlyer() {
             const element = document.getElementById("flyerToCapture");
             const btn = document.querySelector(".btn-download");
+            const originalText = btn.innerHTML;
             
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Renderizando...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
 
             html2canvas(element, {
-                scale: 2,
+                scale: 2, // Exportar en 2x para nitidez
                 useCORS: true,
-                backgroundColor: "#050505"
+                backgroundColor: "#020f1f",
+                allowTaint: true
             }).then(canvas => {
                 const link = document.createElement("a");
-                link.download = "Flyer_Impacto_HOY.png";
+                link.download = "Flyer_Conferencia_2025.png";
                 link.href = canvas.toDataURL("image/png");
                 link.click();
-                btn.innerHTML = '<i class="fas fa-check"></i> ¡Listo!';
-                setTimeout(() => btn.innerHTML = '<i class="fas fa-bolt"></i> Descargar Masterpiece', 2000);
+                btn.innerHTML = '<i class="fas fa-check"></i> Descargado';
+                setTimeout(() => btn.innerHTML = originalText, 3000);
+            }).catch(err => {
+                console.error(err);
+                alert("Error al crear la imagen. Verifica que los archivos 'trio.png' y 'pastor_pulpito.png' existan.");
+                btn.innerHTML = originalText;
             });
         }
     </script>
