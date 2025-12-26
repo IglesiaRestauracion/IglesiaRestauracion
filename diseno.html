@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flyer Pro | Layout Asimétrico</title>
+    <title>Flyer HOY | Gran Fiesta</title>
     
-    <!-- Fuentes Profesionales -->
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;800;900&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Fuentes de Impacto -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Teko:wght@400;600;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
-            --dark-navy: #050d1a;
-            --accent-cyan: #00f2ff;
-            --accent-gold: #FFD700;
-            --text-white: #ffffff;
+            --bg-deep: #050505;
+            --gold: #FFD700;
+            --cyan: #00E5FF;
+            --white: #FFFFFF;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,156 +33,147 @@
         }
 
         .btn-download {
-            background: var(--accent-cyan); color: #000; border: none;
-            padding: 12px 30px; font-weight: 700; text-transform: uppercase;
-            border-radius: 4px; cursor: pointer; display: flex; gap: 10px; align-items: center;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3); transition: 0.3s;
+            background: var(--gold); color: #000; border: none;
+            padding: 12px 30px; font-weight: 800; text-transform: uppercase;
+            border-radius: 50px; cursor: pointer; display: flex; gap: 10px; align-items: center;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); transition: 0.3s;
         }
-        .btn-download:hover { background: #fff; letter-spacing: 1px; }
+        .btn-download:hover { transform: scale(1.05); background: #fff; }
 
-        /* --- CANVAS DEL FLYER --- */
+        /* --- LIENZO --- */
         .flyer-canvas {
             width: 600px;
-            height: 750px; /* Formato 4:5 */
-            background-color: var(--dark-navy);
+            height: 750px;
+            background-color: var(--bg-deep);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            flex-shrink: 0;
             border: 1px solid #333;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            flex-shrink: 0;
         }
 
         /* --- FONDOS --- */
-        .bg-gradient {
-            position: absolute; width: 100%; height: 100%;
-            background: linear-gradient(120deg, #02060d 30%, #0a1f3d 100%);
-            z-index: 0;
-        }
-        .noise-texture {
-            position: absolute; width: 100%; height: 100%;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.05; mix-blend-mode: overlay; z-index: 1;
-        }
-        /* Elementos gráficos de fondo */
-        .graphic-shape {
-            position: absolute;
-            width: 400px; height: 800px;
-            background: linear-gradient(90deg, rgba(0, 242, 255, 0.05), transparent);
-            transform: skewX(-20deg);
-            right: 0; top: 0;
-            z-index: 0;
-        }
-
-        /* --- 1. HEADER (Top Left) --- */
-        .header-bar {
-            position: absolute; top: 30px; left: 30px; z-index: 20;
-        }
-        .church-brand {
-            color: #fff; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 600;
-            border-left: 3px solid var(--accent-cyan); padding-left: 10px;
-        }
-        .subtitle {
-            margin-top: 5px; color: var(--accent-cyan); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
-            padding-left: 13px;
-        }
-
-        /* --- 2. COLUMNA DERECHA (PASTOR) --- */
-        .right-column-img {
-            position: absolute;
-            right: -20px; /* Pegado a la derecha */
-            bottom: 0;
-            height: 90%; /* Ocupa casi toda la altura */
-            width: 65%; /* Ocupa el 65% del ancho */
-            z-index: 5;
-            display: flex; align-items: flex-end;
+        .bg-confetti {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(var(--gold) 1px, transparent 1px), radial-gradient(var(--cyan) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            opacity: 0.15; z-index: 0;
         }
         
-        .pastor-img {
-            width: 100%; height: 100%; 
-            object-fit: contain; 
-            object-position: bottom right;
-            filter: contrast(1.1) drop-shadow(-20px 0 30px rgba(0,0,0,0.5));
-            /* Mascara para fundir hacia la izquierda */
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);
-            mask-image: linear-gradient(to right, transparent 0%, black 20%);
+        .light-burst {
+            position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
+            z-index: 0;
         }
 
-        .pastor-tag {
-            position: absolute; top: 30%; right: 20px; text-align: right;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        /* --- TEXTOS DE IMPACTO --- */
+        .header-msg {
+            position: absolute; top: 40px; width: 100%; text-align: center; z-index: 20;
         }
-        .pastor-tag h3 { color: #fff; font-family: 'Barlow Condensed'; font-size: 1.8rem; line-height: 0.9; text-transform: uppercase; margin: 0;}
-        .pastor-tag p { color: var(--accent-cyan); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;}
-
-        /* --- 3. COLUMNA IZQUIERDA (TÍTULO + TRÍO) --- */
-        .left-column-content {
-            position: absolute;
-            top: 100px; left: 30px;
-            width: 55%; /* Ocupa la mitad izquierda */
-            height: calc(100% - 150px);
-            z-index: 10;
-            display: flex; flex-direction: column;
-            justify-content: space-between; /* Título arriba, Trío abajo */
+        
+        .top-pill {
+            background: var(--white); color: #000;
+            padding: 5px 20px; text-transform: uppercase; font-weight: 800; font-size: 0.9rem;
+            display: inline-block; transform: skewX(-10deg); margin-bottom: 10px;
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
         }
 
-        .main-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            text-transform: uppercase;
-            line-height: 0.85;
-        }
-        .title-line-1 { font-size: 5rem; color: #fff; display: block; font-weight: 900; letter-spacing: -2px; }
-        .title-line-2 { 
-            font-size: 5rem; color: transparent; -webkit-text-stroke: 2px var(--accent-cyan); 
-            display: block; font-weight: 900; letter-spacing: -2px; opacity: 0.9;
-        }
-
-        /* Contenedor Trío */
-        .trio-container {
+        .headline-hoy {
+            font-family: 'Anton', sans-serif;
+            font-size: 11rem; /* GIGANTE */
+            line-height: 0.8;
+            color: transparent;
+            -webkit-text-stroke: 3px var(--white);
             position: relative;
-            margin-bottom: 20px;
+            z-index: 1;
+            text-align: center;
+            margin-top: 10px;
+            text-shadow: 0 0 30px rgba(255,255,255,0.2);
         }
-        .trio-label {
-            color: #ccc; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; 
-            border-bottom: 1px solid #555; display: inline-block; margin-bottom: 5px;
-        }
-        .trio-img {
-            width: 140%; /* Hacemos que se salga un poco del contenedor para verse grande */
-            height: auto;
-            margin-left: -20px; /* Mover a la izquierda para aprovechar borde */
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
-        }
-        .trio-name {
-            font-family: 'Barlow Condensed'; font-weight: 700; color: var(--accent-gold);
-            font-size: 1.2rem; text-transform: uppercase; margin-top: -10px; position: relative; z-index: 11;
-            text-shadow: 0 2px 4px #000;
-        }
-
-        /* --- 4. FOOTER BAR (DATOS) --- */
-        .footer-info {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
-            background: linear-gradient(90deg, #000 40%, rgba(2, 12, 26, 0.9) 100%);
-            border-top: 2px solid var(--accent-cyan);
-            z-index: 30;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 30px;
-        }
-
-        .date-group { display: flex; align-items: center; gap: 15px; }
-        .day-box {
-            background: var(--accent-cyan); color: #000; padding: 5px 15px;
-            font-family: 'Barlow Condensed'; font-weight: 800; font-size: 2.5rem; line-height: 1;
-            transform: skewX(-10deg);
-        }
-        .time-box { color: #fff; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; line-height: 1.2; }
         
-        .location-box { text-align: right; }
-        .loc-icon { color: var(--accent-cyan); margin-right: 5px; }
-        .loc-main { color: #fff; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; }
-        .loc-sub { color: #888; font-size: 0.75rem; }
+        .headline-hoy::after {
+            content: 'HOY';
+            position: absolute; top: 0; left: 0; width: 100%;
+            color: rgba(255,255,255,0.1);
+            z-index: -1; filter: blur(5px);
+        }
 
-        /* Mobile View fix */
+        .sub-headline {
+            font-family: 'Teko', sans-serif;
+            font-size: 3.5rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            line-height: 0.8;
+            text-shadow: 0 5px 10px #000;
+            position: absolute;
+            top: 220px; width: 100%; text-align: center;
+            z-index: 15;
+        }
+
+        /* --- IMÁGENES --- */
+        .images-container {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 65%;
+            z-index: 5;
+        }
+
+        .pastor-img {
+            position: absolute; bottom: 0; right: -30px;
+            height: 100%; width: auto; max-width: 70%;
+            object-fit: contain;
+            filter: contrast(1.15) brightness(1.1);
+            z-index: 2;
+            drop-shadow(-20px 0 30px rgba(0,0,0,0.7));
+        }
+
+        .trio-img {
+            position: absolute; bottom: 0; left: -20px;
+            height: 60%; width: auto; max-width: 70%;
+            object-fit: contain;
+            z-index: 1; /* Detrás del pastor */
+            filter: brightness(0.9);
+            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        }
+
+        /* --- FOOTER DE URGENCIA --- */
+        .footer-banner {
+            position: absolute; bottom: 30px; left: 20px; right: 20px;
+            background: rgba(0, 229, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--cyan);
+            border-radius: 10px;
+            padding: 15px 25px;
+            z-index: 20;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+
+        .time-box {
+            text-align: left;
+        }
+        .time-label { color: #aaa; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; }
+        .time-value { 
+            font-family: 'Anton', sans-serif; font-size: 3rem; color: var(--white); line-height: 1;
+            text-shadow: 0 0 10px var(--cyan);
+        }
+
+        .location-box { text-align: right; }
+        .loc-name { color: var(--gold); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; }
+        .loc-detail { color: #fff; font-size: 0.8rem; }
+
+        /* Badge "Gran Fiesta" */
+        .party-badge {
+            position: absolute; top: 290px; left: 50%; transform: translateX(-50%) rotate(-5deg);
+            background: var(--gold); color: #000;
+            padding: 5px 20px; font-family: 'Montserrat'; font-weight: 900; font-size: 1rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 25;
+        }
+
+        /* Adaptación móvil */
         @media (max-width: 600px) {
             .flyer-canvas { transform: scale(0.6); margin: -120px 0; }
         }
@@ -191,56 +182,48 @@
 <body>
 
     <button onclick="downloadFlyer()" class="btn-download">
-        <i class="fas fa-file-download"></i> Guardar Afiche
+        <i class="fas fa-bullhorn"></i> Descargar Anuncio
     </button>
 
     <div class="flyer-canvas" id="flyerToCapture">
         
-        <!-- Capas de Fondo -->
-        <div class="bg-gradient"></div>
-        <div class="graphic-shape"></div>
-        <div class="noise-texture"></div>
+        <!-- Fondo Festivo -->
+        <div class="bg-confetti"></div>
+        <div class="light-burst"></div>
 
-        <!-- 1. Header (Arriba Izquierda) -->
-        <div class="header-bar">
-            <div class="church-brand">Iglesia Cristiana Centro de Restauración</div>
-            <div class="subtitle">III Confraternidad Anual</div>
+        <!-- Encabezado -->
+        <div class="header-msg">
+            <div class="top-pill">¡El gran día ha llegado!</div>
+            <div class="headline-hoy">HOY</div>
         </div>
 
-        <!-- 2. Columna Derecha: Pastor (Ocupa todo el alto derecho) -->
-        <div class="right-column-img">
+        <!-- Subtítulos -->
+        <div class="sub-headline">
+            III Confraternidad<br>
+            <span style="color: #fff; font-size: 1.5rem; letter-spacing: 5px;">Culto Unido</span>
+        </div>
+
+        <!-- Badge Central -->
+        <div class="party-badge">Es la gran fiesta</div>
+
+        <!-- Imágenes -->
+        <div class="images-container">
+            <!-- Trío (Izquierda/Fondo) -->
+            <img src="trio.png" class="trio-img" alt="Trio">
+            
+            <!-- Pastor (Derecha/Frente) -->
             <img src="pastor_pulpito.png" class="pastor-img" alt="Pastor">
-            <div class="pastor-tag">
-                <p>Predicador</p>
-                <h3>Ps. Jose<br>Chuzón</h3>
-            </div>
         </div>
 
-        <!-- 3. Columna Izquierda: Título y Trío -->
-        <div class="left-column-content">
-            <!-- Título -->
-            <div class="title-block">
-                <span class="title-line-1">CULTO</span>
-                <span class="title-line-2">UNIDO</span>
-            </div>
-
-            <!-- Trío (Debajo del título, grande) -->
-            <div class="trio-container">
-                <span class="trio-label">En la Adoración</span>
-                <img src="trio.png" class="trio-img" alt="Trio">
-                <div class="trio-name">Trío Restauración</div>
-            </div>
-        </div>
-
-        <!-- 4. Footer (Datos duros) -->
-        <div class="footer-info">
-            <div class="date-group">
-                <div class="day-box">26</div>
-                <div class="time-box">DIC<br>7:00 PM</div>
+        <!-- Footer Informativo -->
+        <div class="footer-banner">
+            <div class="time-box">
+                <div class="time-label">Hora de Inicio</div>
+                <div class="time-value">7:00 PM</div>
             </div>
             <div class="location-box">
-                <div class="loc-main"><i class="fas fa-map-marker-alt loc-icon"></i> Ciudad del Chofer</div>
-                <div class="loc-sub">Mz H Lt 23 - Chiclayo</div>
+                <div class="loc-name"><i class="fas fa-map-pin"></i> Ciudad del Chofer</div>
+                <div class="loc-detail">Mz H Lt 23 - Chiclayo</div>
             </div>
         </div>
 
@@ -250,19 +233,20 @@
         function downloadFlyer() {
             const element = document.getElementById("flyerToCapture");
             const btn = document.querySelector(".btn-download");
+            
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
 
             html2canvas(element, {
-                scale: 2, // Alta calidad
+                scale: 2,
                 useCORS: true,
-                backgroundColor: "#050d1a"
+                backgroundColor: "#050505"
             }).then(canvas => {
                 const link = document.createElement("a");
-                link.download = "Afiche_Oficial_2025.png";
+                link.download = "Anuncio_HOY_Gran_Fiesta.png";
                 link.href = canvas.toDataURL("image/png");
                 link.click();
-                btn.innerHTML = '<i class="fas fa-check"></i> Listo';
-                setTimeout(() => btn.innerHTML = '<i class="fas fa-file-download"></i> Guardar Afiche', 2000);
+                btn.innerHTML = '<i class="fas fa-check"></i> ¡Listo!';
+                setTimeout(() => btn.innerHTML = '<i class="fas fa-bullhorn"></i> Descargar Anuncio', 2000);
             });
         }
     </script>
