@@ -3,306 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>11 Aniversario | Ven a Cristo</title>
+    <title>Ven a Cristo | 11 Aniversario - Centro de Restauración</title>
     
-    <!-- Fuentes de Google que se parecen a Heavitas y Hanson para asegurar visualización -->
-    <!-- Heavitas similar -> Fredoka One / Luckiest Guy -->
-    <!-- Hanson similar -> Archivo Black / Russo One -->
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Luckiest+Guy&family=Fredoka+One&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    
+    <!-- Fuentes de Google (Alternativas visuales idénticas para asegurar que se vea bien online) -->
+    <!-- Heavitas es muy similar a 'Titan One' y Hanson a 'Russo One' -->
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Titan+One&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+        /* --- IMPORTACIÓN DE FUENTES LOCALES (SI LAS TIENES) --- */
+        @font-face {
+            font-family: 'Heavitas';
+            src: url('Heavitas.ttf') format('truetype'); /* Pon aquí la ruta de tu archivo si lo tienes */
+        }
+        @font-face {
+            font-family: 'Hanson';
+            src: url('Hanson-Bold.ttf') format('truetype'); /* Pon aquí la ruta de tu archivo si lo tienes */
+        }
+
         :root {
             /* Paleta extraída de la imagen */
-            --bg-green: #008f39; /* Verde césped intenso */
-            --text-white: #ffffff;
-            --text-yellow: #ffcc00;
-            --text-orange: #ff9900;
-            --stroke-blue: #004e64; /* El borde azul oscuro/petróleo de las letras */
-            --shadow-dark: rgba(0,0,0,0.3);
+            --brand-green: #009045; /* Verde fondo */
+            --brand-dark-teal: #004d40; /* Sombra 3D */
+            --brand-yellow: #FFD700;
+            --brand-orange: #FF8C00;
+            --white: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-green);
-            /* Patrón sutil de fondo para darle textura */
-            background-image: radial-gradient(circle at 50% 50%, #00a642 0%, #008f39 60%);
             font-family: 'Montserrat', sans-serif;
-            color: var(--text-white);
+            background-color: var(--brand-green);
+            color: var(--white);
             overflow-x: hidden;
         }
 
-        /* --- TIPOGRAFÍA PERSONALIZADA --- */
-        @font-face {
-            font-family: 'Heavitas';
-            src: local('Heavitas'), url('Heavitas.ttf') format('truetype');
-            /* Fallback si no está instalada */
-        }
-        @font-face {
-            font-family: 'Hanson';
-            src: local('Hanson Bold'), url('Hanson-Bold.ttf') format('truetype');
-        }
-
-        .font-main { font-family: 'Heavitas', 'Luckiest Guy', cursive; }
-        .font-secondary { font-family: 'Hanson', 'Archivo Black', sans-serif; }
-
-        /* --- NAVBAR --- */
-        .navbar {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5%;
-            position: absolute; top: 0; width: 100%; z-index: 100;
-        }
-        .nav-brand { font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-badge {
-            background: var(--text-yellow); color: var(--stroke-blue);
-            padding: 8px 20px; border-radius: 50px; font-weight: 900;
-            text-transform: uppercase; box-shadow: 0 5px 0 var(--stroke-blue);
-            transition: transform 0.2s; cursor: pointer;
-        }
-        .nav-badge:hover { transform: translateY(2px); box-shadow: 0 2px 0 var(--stroke-blue); }
-
         /* --- HERO SECTION (EL LOGO CSS) --- */
-        .hero {
-            min-height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            background: radial-gradient(circle at center, #00ab52 0%, #007a3a 100%);
             padding: 20px;
             position: relative;
+            overflow: hidden;
         }
 
-        /* EFECTO DE LOGO 3D CSS */
+        /* Partículas de fondo sutiles */
+        .bg-pattern {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* CONTENEDOR DEL LOGO */
         .logo-container {
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             transform: scale(1);
-            animation: floatLogo 4s ease-in-out infinite;
-            margin-bottom: 30px;
+            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* "VEN A" */
-        .text-top {
+        /* 1. TEXTO "VEN A" */
+        .text-ven {
+            font-family: 'Heavitas', 'Titan One', cursive; /* Fuente principal y fallback */
             font-size: clamp(3rem, 8vw, 5rem);
-            color: var(--text-white);
-            text-transform: uppercase;
+            color: var(--white);
             line-height: 0.8;
-            position: relative; z-index: 2;
-            /* Borde verde oscuro simulación */
+            text-transform: uppercase;
+            /* Borde verde sutil simulado */
             text-shadow: 
-                0px 5px 0px #006828,
-                0px 8px 10px rgba(0,0,0,0.2);
-            transform: rotate(-3deg) translateY(20px); /* Ligera rotación como la imagen */
+                3px 3px 0px var(--brand-dark-teal);
+            transform: rotate(-3deg) translateY(20px);
+            z-index: 2;
         }
 
-        /* "CRISTO" */
-        .text-main {
+        /* 2. TEXTO "CRISTO" (Efecto 3D Complejo) */
+        .text-cristo {
+            font-family: 'Heavitas', 'Titan One', cursive;
             font-size: clamp(5rem, 15vw, 10rem);
             text-transform: uppercase;
             line-height: 0.9;
-            margin: 0; position: relative; z-index: 1;
+            position: relative;
+            z-index: 1;
+            margin: 0;
             
-            /* Relleno degradado (Naranja a Amarillo) */
-            background: linear-gradient(to bottom, #FFEB3B 20%, #FF9800 80%);
+            /* Gradiente Naranja/Amarillo en el texto */
+            background: linear-gradient(to bottom, #ffeb3b 20%, #ff8f00 80%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             
-            /* El borde azul grueso (Simulado con text-stroke y drop-shadow filter) */
-            filter: drop-shadow(0px 10px 0px var(--stroke-blue)) 
-                    drop-shadow(0px 10px 20px rgba(0,0,0,0.4));
+            /* El contorno blanco y la extrusión 3D Azul verdosa */
+            /* Nota: Webkit-text-stroke hace el borde blanco, text-shadow hace el 3D */
+            -webkit-text-stroke: 6px white; 
+            paint-order: stroke fill;
             
-            /* Borde interno */
-            -webkit-text-stroke: 4px var(--stroke-blue);
+            /* Sombra apilada para efecto 3D sólido */
+            text-shadow: 
+                0px 5px 0px #005f56,
+                0px 10px 0px #005f56,
+                0px 15px 0px #005f56,
+                0px 20px 0px #00403a,
+                0px 20px 20px rgba(0,0,0,0.4);
         }
 
-        /* Brillo decorativo en "CRISTO" */
-        .text-main::after {
-            content: '';
-            position: absolute; top: 20%; left: 50%;
-            width: 100px; height: 100px;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
-            transform: translateX(-50%);
-            pointer-events: none; mix-blend-mode: overlay;
+        /* Destello en la "I" */
+        .shine-effect {
+            position: absolute;
+            top: 20%;
+            left: 48%; /* Ajustado sobre la R/I */
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #fff 10%, rgba(255, 255, 255, 0) 70%);
+            filter: blur(2px);
+            z-index: 10;
+            animation: pulseShine 3s infinite;
         }
 
-        /* "TAL COMO ESTAS" */
-        .text-sub {
-            font-size: clamp(1rem, 3vw, 1.8rem);
-            color: var(--text-white);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 10px;
-            text-shadow: 0 3px 0 var(--stroke-blue);
-        }
-
+        /* 3. TEXTO "TAL COMO ESTAS" */
         .text-verse {
-            font-size: 0.9rem;
+            font-family: 'Hanson', 'Russo One', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.8rem);
+            text-transform: uppercase;
+            margin-top: 25px;
+            letter-spacing: 2px;
+            text-shadow: 0 3px 5px rgba(0,0,0,0.3);
+        }
+        
+        .text-ref {
+            font-family: 'Hanson', 'Russo One', sans-serif;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
             margin-top: 5px;
-            opacity: 0.9;
-            font-weight: 700;
+            color: #b3ffcc;
         }
 
-        /* --- INFO ANIVERSARIO --- */
-        .anniversary-badge {
-            margin-top: 40px;
-            background: rgba(255,255,255,0.1);
+        /* --- DETALLES DE CAMPAÑA (11 ANIVERSARIO) --- */
+        .campaign-badge {
+            background: var(--white);
+            color: var(--brand-green);
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* --- INFO BAR --- */
+        .info-bar {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(5px);
-            border: 2px solid rgba(255,255,255,0.3);
-            padding: 15px 30px;
-            border-radius: 20px;
-            display: inline-block;
-            animation: fadeIn Up 1s ease-out;
-        }
-
-        .anniversary-title {
-            color: var(--text-yellow);
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        /* --- BOTONES CTA --- */
-        .cta-container {
-            margin-top: 30px;
-            display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(to bottom, #ffeb3b, #ffc107);
-            color: var(--stroke-blue);
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            text-transform: uppercase;
-            border: 3px solid var(--stroke-blue);
-            box-shadow: 0 8px 0 var(--stroke-blue);
-            transition: all 0.2s;
-            display: inline-block;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(4px);
-            box-shadow: 0 4px 0 var(--stroke-blue);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: #fff;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            text-transform: uppercase;
-            border: 3px solid #fff;
-            transition: 0.3s;
-        }
-        .btn-secondary:hover { background: rgba(255,255,255,0.1); }
-
-        /* --- FOOTER --- */
-        .footer-details {
-            position: absolute; bottom: 0; left: 0; width: 100%;
             padding: 20px;
-            background: linear-gradient(to top, rgba(0,50,20,0.8), transparent);
-            display: flex; justify-content: space-around; flex-wrap: wrap;
-            text-align: center;
-        }
-        
-        .detail-item { margin: 10px 20px; }
-        .detail-item i { color: var(--text-yellow); font-size: 1.2rem; margin-bottom: 5px; }
-        .detail-item p { font-size: 0.9rem; font-weight: 600; }
-
-        /* --- ANIMACIONES --- */
-        @keyframes floatLogo {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* Partículas de fondo */
-        .particle {
-            position: absolute; width: 8px; height: 8px; background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            animation: rise 10s infinite ease-in;
-        }
-        @keyframes rise {
-            0% { bottom: -10px; opacity: 0; transform: translateX(0); }
-            50% { opacity: 1; }
-            100% { bottom: 100vh; opacity: 0; transform: translateX(50px); }
+        .info-item i { font-size: 1.5rem; color: var(--brand-yellow); margin-bottom: 10px; }
+        .info-item h3 { font-size: 1.1rem; margin-bottom: 5px; font-weight: 800; }
+        .info-item p { font-size: 0.9rem; opacity: 0.9; }
+
+        /* --- CTA BUTTON --- */
+        .cta-btn {
+            background: linear-gradient(to bottom, #ffeb3b, #ff8f00);
+            color: #004d40;
+            padding: 18px 50px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border: 4px solid #fff;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 40px;
+            transition: 0.3s;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            font-family: 'Montserrat', sans-serif;
         }
 
-        /* MEDIA QUERIES */
-        @media (max-width: 768px) {
-            .text-main { -webkit-text-stroke: 2px var(--stroke-blue); }
-            .footer-details { position: relative; background: rgba(0,0,0,0.2); }
+        .cta-btn:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        /* Animaciones */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes pulseShine {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5) rotate(45deg); }
+        }
+
+        /* Responsiveness específico para el logo */
+        @media (max-width: 600px) {
+            .text-cristo { -webkit-text-stroke: 3px white; text-shadow: 0px 5px 0px #005f56; }
+            .info-bar { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Partículas flotantes -->
-    <div id="particles-container"></div>
+    <section class="hero-section">
+        <div class="bg-pattern"></div>
 
-    <nav class="navbar">
-        <div class="nav-brand font-secondary">Centro de Restauración</div>
-        <div class="nav-badge font-secondary">11 Aniversario</div>
-    </nav>
+        <!-- Badge de Aniversario -->
+        <div class="campaign-badge">
+            <i class="fas fa-crown"></i> 11º Aniversario - Centro de Restauración
+        </div>
 
-    <div class="hero">
-        
-        <!-- LOGO RECREADO CON CSS -->
+        <!-- EL LOGO RECREADO EN CSS -->
         <div class="logo-container">
-            <div class="text-top font-main">VEN A</div>
-            <h1 class="text-main font-main">CRISTO</h1>
-            <div class="text-sub font-secondary">TAL COMO ESTÁS</div>
-            <div class="text-verse font-secondary">MATEO 11:28</div>
+            <div class="text-ven">VEN A</div>
+            
+            <div class="text-cristo">
+                CRISTO
+                <div class="shine-effect"></div>
+            </div>
+            
+            <div class="text-verse">Tal como estás</div>
+            <div class="text-ref">Mateo 11:28</div>
         </div>
 
-        <!-- INFO CONTEXTO -->
-        <div class="anniversary-badge font-secondary">
-            <h2 class="anniversary-title">Gran Campaña Evangelística</h2>
-            <p style="margin-top:5px; font-size:0.9rem;">Celebrando 11 años de victoria y restauración</p>
+        <!-- Información del Evento -->
+        <div class="info-bar">
+            <div class="info-item">
+                <i class="far fa-calendar-alt"></i>
+                <h3>Fechas</h3>
+                <p>Del 20 al 23 de Noviembre</p>
+            </div>
+            <div class="info-item">
+                <i class="far fa-clock"></i>
+                <h3>Hora</h3>
+                <p>7:30 PM (Noches de Milagros)</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Lugar</h3>
+                <p>Centro de Restauración<br>Ciudad del Chofer</p>
+            </div>
         </div>
 
-        <!-- BOTONES -->
-        <div class="cta-container font-secondary">
-            <a href="https://wa.me/51920620788" class="btn-primary">¡Quiero Ir!</a>
-            <a href="#detalles" class="btn-secondary">Más Detalles</a>
-        </div>
+        <!-- Botón de Acción -->
+        <a href="#registro" class="cta-btn">
+            ¡Quiero Asistir!
+        </a>
 
-    </div>
+    </section>
 
-    <!-- FOOTER DETALLES -->
-    <div class="footer-details font-secondary">
-        <div class="detail-item">
-            <i class="far fa-calendar-alt"></i>
-            <p>FECHA POR DEFINIR</p>
-        </div>
-        <div class="detail-item">
-            <i class="fas fa-map-marker-alt"></i>
-            <p>Mz H Lt 23, Ciudad del Chofer</p>
-        </div>
-        <div class="detail-item">
-            <i class="far fa-clock"></i>
-            <p>Inicio: 7:00 PM</p>
-        </div>
-    </div>
-
-    <script>
-        // Script simple para generar partículas
-        const container = document.getElementById('particles-container');
-        for (let i = 0; i < 20; i++) {
-            const p = document.createElement('div');
-            p.classList.add('particle');
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            p.style.animationDelay = Math.random() * 5 + 's';
-            container.appendChild(p);
-        }
-    </script>
+    <!-- Footer Simple -->
+    <footer style="text-align: center; padding: 20px; font-size: 0.8rem; background: #004d40;">
+        <p>&copy; 2026 Iglesia Cristiana Centro de Restauración - 11 Años de Victoria</p>
+    </footer>
 
 </body>
 </html>
