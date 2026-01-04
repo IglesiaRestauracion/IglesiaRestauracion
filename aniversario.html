@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador 11 Aniversario | Ven a Cristo</title>
+    <title>Generador Carta | Ven a Cristo</title>
     
-    <!-- Fuentes: Titan One (Estilo Logo) y Montserrat (Textos) -->
-    <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Fuentes: Titan One (Título) y Montserrat (Texto Formal) -->
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Librerías -->
@@ -15,12 +15,11 @@
 
     <style>
         :root {
-            /* PALETA EXACTA DE LA IMAGEN */
-            --bg-green: #009045;       /* Verde Fondo Principal */
-            --bg-dark-green: #006831;  /* Verde Oscuro Sombra */
-            --text-orange: #ff8c00;    /* Naranja degradado */
-            --text-yellow: #ffcc00;    /* Amarillo degradado */
-            --shadow-teal: #004d40;    /* Sombra 3D del logo */
+            --bg-green: #009045;
+            --bg-dark-green: #006831;
+            --text-orange: #ff8c00;
+            --text-yellow: #ffcc00;
+            --shadow-teal: #004d40;
             --white: #ffffff;
         }
 
@@ -36,7 +35,7 @@
 
         /* --- SIDEBAR --- */
         .sidebar {
-            width: 350px;
+            width: 380px;
             background: white;
             padding: 25px;
             border-right: 1px solid #ddd;
@@ -47,9 +46,8 @@
             z-index: 100;
         }
 
-        .sidebar h2 { color: var(--bg-green); margin: 0; font-size: 1.3rem; text-transform: uppercase; font-weight: 800; }
-        .sidebar p { color: #666; font-size: 0.8rem; }
-
+        .sidebar h2 { color: var(--bg-green); margin: 0; font-size: 1.2rem; text-transform: uppercase; font-weight: 800; }
+        
         .upload-btn {
             border: 2px dashed var(--bg-green);
             background: #e8f5e9;
@@ -72,29 +70,24 @@
         .contact-card {
             background: #fff;
             border: 1px solid #eee;
-            padding: 12px;
+            padding: 10px;
             margin-bottom: 8px;
             border-radius: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: 0.2s;
         }
-        .contact-card:hover { border-left: 4px solid var(--text-orange); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        .contact-info h4 { margin: 0; font-size: 0.85rem; color: #333; font-weight: 700; }
-        .contact-info span { font-size: 0.7rem; color: #888; }
-
         .wa-btn {
             background: #25D366; color: white; border: none;
-            width: 38px; height: 38px; border-radius: 50%;
+            width: 35px; height: 35px; border-radius: 50%;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: 0.2s; font-size: 1.1rem;
+            transition: 0.2s;
         }
         .wa-btn:hover { transform: scale(1.1); box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
         .wa-btn.sent { background: #ccc; cursor: default; transform: none; }
 
-        /* --- PREVIEW AREA --- */
+        /* --- PREVIEW --- */
         .preview-area {
             flex-grow: 1;
             background: #333;
@@ -105,13 +98,13 @@
             overflow: auto;
         }
 
-        /* --- EL AFICHE (CANVAS) --- */
+        /* --- AFICHE (CANVAS) --- */
         #flyer {
             width: 600px;
-            height: 750px;
+            /* Altura aumentada para que quepa todo el texto formal */
+            height: 850px; 
             background-color: var(--bg-green);
-            /* Gradiente radial para dar profundidad como en la imagen */
-            background-image: radial-gradient(circle at 50% 30%, #00a050 0%, var(--bg-green) 60%, var(--bg-dark-green) 100%);
+            background-image: radial-gradient(circle at 50% 20%, #00a050 0%, var(--bg-green) 60%, var(--bg-dark-green) 100%);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -120,132 +113,117 @@
             flex-shrink: 0;
             padding: 40px;
             text-align: center;
-            border: 10px solid rgba(255,255,255,0.1); /* Marco sutil */
+            border: 8px solid rgba(255,255,255,0.1);
         }
 
-        /* 1. Header */
+        /* 1. Header Institucional */
         .header-top {
             margin-bottom: 10px;
-            z-index: 10;
-        }
-        .aniv-badge {
-            background: var(--white);
-            color: var(--bg-dark-green);
-            font-weight: 900;
-            padding: 8px 25px;
-            border-radius: 50px;
+            color: white;
             text-transform: uppercase;
-            font-size: 1rem;
-            display: inline-block;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            letter-spacing: 2px;
         }
+        .church-title { font-weight: 800; font-size: 1.1rem; letter-spacing: 1px; }
+        .ministry-title { font-size: 0.8rem; letter-spacing: 2px; opacity: 0.9; }
 
-        /* 2. LEMA (SVG o CSS Fallback) */
+        /* 2. Logo 3D CSS */
         .logo-container {
-            margin: 20px 0 40px 0;
-            z-index: 10;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .logo-img {
-            width: 90%;
-            max-height: 250px;
-            object-fit: contain;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
-        }
-
-        /* Fallback CSS si no hay imagen (Diseño idéntico al solicitado) */
-        .css-logo-wrapper {
+            margin: 15px 0 20px 0;
             transform: rotate(-3deg);
         }
         .text-ven-a {
-            font-family: 'Titan One', cursive;
-            font-size: 3.5rem; color: var(--white);
-            text-shadow: 3px 3px 0 var(--bg-dark-green);
-            line-height: 0.8; margin-bottom: -10px; position: relative; z-index: 2;
+            font-family: 'Titan One', cursive; font-size: 3rem; color: var(--white);
+            text-shadow: 3px 3px 0 var(--bg-dark-green); line-height: 0.8; margin-bottom: -10px; position: relative; z-index: 2;
         }
         .text-cristo {
-            font-family: 'Titan One', cursive;
-            font-size: 6rem;
+            font-family: 'Titan One', cursive; font-size: 5.5rem;
             background: linear-gradient(to bottom, var(--text-yellow) 20%, var(--text-orange) 80%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0px 6px 0px var(--shadow-teal)) drop-shadow(0px 10px 10px rgba(0,0,0,0.3));
+            filter: drop-shadow(0px 5px 0px var(--shadow-teal));
             -webkit-text-stroke: 1.5px var(--shadow-teal);
             line-height: 0.9; position: relative; z-index: 1;
         }
-        .text-versiculo {
-            font-family: 'Titan One', cursive; font-size: 1.2rem; color: var(--white);
-            text-transform: uppercase; margin-top: 15px; letter-spacing: 1px;
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-        }
 
-        /* 3. CAJA DE DATOS */
-        .invite-box {
-            background: rgba(0, 50, 20, 0.4); /* Verde oscuro translúcido para contraste */
+        /* 3. Cuerpo de la Carta (Texto Formal) */
+        .letter-container {
+            background: rgba(0, 40, 15, 0.3); /* Fondo oscuro translúcido para leer bien */
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 15px;
-            padding: 25px 20px;
+            padding: 25px 30px;
             width: 100%;
-            margin-top: auto;
-            margin-bottom: 30px;
+            text-align: left;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             backdrop-filter: blur(5px);
+            margin-bottom: 20px;
         }
 
-        .invite-label {
+        .greeting {
+            color: var(--white);
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+        
+        .highlight-name {
             color: var(--text-yellow);
-            font-family: 'Montserrat', sans-serif;
             font-weight: 800;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .body-text {
+            color: #f0f0f0;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        /* Bloque de Fecha destacado */
+        .event-details {
+            background: var(--white);
+            color: var(--bg-dark-green);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
             text-transform: uppercase;
             font-size: 0.9rem;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin: 10px 0;
+        }
+        .event-details span { color: var(--text-orange); font-size: 1.1rem; display: block; }
+
+        /* 4. Firma y Versículo */
+        .verse {
+            font-style: italic; color: #ddd; font-size: 0.75rem; text-align: center; margin-bottom: 15px;
+        }
+        
+        .signature-area {
+            text-align: center;
+            margin-top: auto;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 10px;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .pastor-sign {
+            color: var(--white); font-weight: 800; font-size: 0.9rem; text-transform: uppercase;
         }
 
-        .pastor-name {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900; /* Super Bold */
-            font-size: 2rem;
-            color: var(--white);
-            text-transform: uppercase;
-            line-height: 1.1;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .church-name {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: #ddd;
-            text-transform: uppercase;
-        }
-
-        /* 4. FOOTER */
+        /* 5. Footer */
         .footer-info {
-            background: var(--white);
-            color: var(--bg-green);
-            width: 115%;
-            padding: 15px 0;
-            margin-bottom: -40px;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            font-weight: 800;
-            font-size: 1rem;
-            text-transform: uppercase;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+            font-size: 0.75rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1px;
         }
-        .footer-info i { color: var(--text-orange); margin-right: 5px; font-size: 1.1rem; }
 
         @media (max-width: 900px) {
             body { flex-direction: column; overflow-y: auto; }
             .sidebar { width: 100%; height: 400px; }
-            #flyer { transform: scale(0.6); margin: -100px 0; }
+            #flyer { transform: scale(0.55); margin: -150px 0; }
         }
     </style>
 </head>
@@ -254,20 +232,20 @@
     <!-- SIDEBAR -->
     <div class="sidebar">
         <div>
-            <h2><i class="fas fa-bullhorn"></i> Gestor 11 Aniversario</h2>
-            <p>Sube tu Excel y envía invitaciones personalizadas.</p>
+            <h2><i class="fas fa-envelope-open-text"></i> Gestor Cartas</h2>
+            <p>Generación de Invitaciones Formales</p>
         </div>
 
         <label class="upload-btn">
-            <i class="fas fa-file-excel" style="font-size: 2rem; color: #009045;"></i>
-            <div style="font-weight: 700; margin-top:10px;">Cargar Excel</div>
+            <i class="fas fa-file-excel" style="font-size: 1.5rem; color: #009045;"></i>
+            <div style="font-weight: 700; margin-top:5px;">Cargar Excel</div>
             <small style="color: #666;">Columnas: Pastor, Iglesia, Celular</small>
             <input type="file" id="excelInput" accept=".xlsx, .xls">
         </label>
 
         <div class="contacts-wrapper" id="contactsList">
             <div style="text-align: center; color: #aaa; padding: 20px;">
-                Lista vacía. Carga un archivo.
+                <i class="fas fa-arrow-up"></i> Carga tu lista.
             </div>
         </div>
     </div>
@@ -276,41 +254,63 @@
     <div class="preview-area">
         <div id="flyer">
             
+            <!-- Header -->
             <div class="header-top">
-                <div class="aniv-badge">11 Años de Victoria</div>
+                <div class="church-title">Iglesia Cristiana Centro de Restauración</div>
+                <div class="ministry-title">Ministerio de Alabanza</div>
             </div>
 
-            <!-- LEMA -->
+            <!-- Logo 3D -->
             <div class="logo-container">
-                <!-- Intenta cargar SVG, si falla usa CSS -->
-                <img src="lema.svg" class="logo-img" onerror="this.style.display='none'; document.getElementById('css-logo').style.display='block';">
+                <div class="text-ven-a">VEN A</div>
+                <div class="text-cristo">CRISTO</div>
+            </div>
+
+            <!-- CUERPO DE LA CARTA (TEXTO ANTERIOR) -->
+            <div class="letter-container">
                 
-                <!-- Fallback CSS (Diseño idéntico a la imagen) -->
-                <div id="css-logo" class="css-logo-wrapper" style="display: none;">
-                    <div class="text-ven-a">VEN A</div>
-                    <div class="text-cristo">CRISTO</div>
-                    <div class="text-versiculo">TAL COMO ESTÁS • MATEO 11:28</div>
+                <!-- Saludo Personalizado -->
+                <div class="greeting">
+                    Apreciado Pastor <span class="highlight-name" id="pName">NOMBRE DEL PASTOR</span><br>
+                    y hermanos de <span class="highlight-name" id="cName">NOMBRE DE LA IGLESIA</span>.
                 </div>
+
+                <!-- Texto Formal -->
+                <div class="body-text">
+                    Les saludo muy cordialmente en el nombre de nuestro Señor y Salvador Jesucristo, deseando que estén gozando de las bendiciones que Él nos da.
+                    <br><br>
+                    El motivo de la presente es invitarles a participar de esta gran fiesta espiritual de nuestro <strong>11 Aniversario</strong>. Es una maravillosa oportunidad para que las iglesias de nuestra ciudad nos unamos en adoración, alabanza y comunión fraternal.
+                </div>
+
+                <!-- Detalle del Evento Destacado -->
+                <div class="event-details">
+                    Dicho evento se realizará el día:
+                    <span>26 de Diciembre, 7:00 PM</span>
+                    en nuestro templo: Mz. H Lote 23, Ciudad del Chofer.
+                </div>
+
+                <!-- Versículo -->
+                <div class="verse">
+                    "Mirad cuán bueno y cuán delicioso es habitar los hermanos juntos en armonía" - Salmos 133:1
+                </div>
+
+                <!-- Firma -->
+                <div class="signature-area">
+                    <div class="pastor-sign">Brigadiel Cerna Ravines</div>
+                    <div style="font-size: 0.7rem; color: #ccc;">Pastor Principal</div>
+                </div>
+
             </div>
 
-            <!-- DATOS -->
-            <div class="invite-box">
-                <div class="invite-label">Invitación Especial Para:</div>
-                <div class="pastor-name" id="pName">NOMBRE DEL PASTOR</div>
-                <div class="church-name" id="cName">NOMBRE DE LA IGLESIA</div>
-            </div>
-
-            <!-- FOOTER -->
+            <!-- Footer -->
             <div class="footer-info">
-                <div><i class="far fa-calendar-alt"></i> 26 DIC</div>
-                <div><i class="far fa-clock"></i> 7:00 PM</div>
-                <div><i class="fas fa-map-marker-alt"></i> Ciudad del Chofer</div>
+                Chiclayo - Lambayeque - Perú
             </div>
 
         </div>
     </div>
 
-    <!-- SCRIPT -->
+    <!-- SCRIPT AUTOMATIZACIÓN -->
     <script>
         let contactsData = [];
 
@@ -336,11 +336,11 @@
                 const div = document.createElement('div');
                 div.className = 'contact-card';
                 div.innerHTML = `
-                    <div class="contact-info">
-                        <h4>${c.Pastor || 'Pastor'}</h4>
-                        <span>${c.Iglesia || ''}</span>
+                    <div style="font-size:0.8rem;">
+                        <strong>${c.Pastor || 'Pastor'}</strong><br>
+                        <span style="color:#666">${c.Iglesia || ''}</span>
                     </div>
-                    <button class="wa-btn" onclick="process(${i}, this)" title="Enviar"><i class="fab fa-whatsapp"></i></button>
+                    <button class="wa-btn" onclick="process(${i}, this)"><i class="fab fa-whatsapp"></i></button>
                 `;
                 list.appendChild(div);
             });
@@ -351,33 +351,27 @@
             const icon = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
-            // 1. Actualizar Datos
+            // Actualizar Texto
             document.getElementById('pName').innerText = data.Pastor || "";
             document.getElementById('cName').innerText = data.Iglesia || "";
 
             await new Promise(r => setTimeout(r, 400));
 
-            // 2. Generar Imagen
             const flyer = document.getElementById('flyer');
             try {
                 const canvas = await html2canvas(flyer, {
                     scale: 2, 
-                    backgroundColor: "#009045" // Fondo verde forzado
+                    backgroundColor: "#009045"
                 });
                 
                 const link = document.createElement('a');
-                link.download = `Invitacion_11Aniv_${(data.Pastor || 'P').replace(/[^a-zA-Z0-9]/g,'')}.png`;
+                link.download = `Carta_11Aniv_${(data.Pastor || 'P').replace(/[^a-zA-Z0-9]/g,'')}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
 
-                // 3. WhatsApp
                 if(data.Celular) {
-                    const msg = `¡Bendiciones Pastor ${data.Pastor}! 🎉\n\nLe saludamos de la Iglesia Centro de Restauración.\nTenemos el honor de invitarle a nuestra Campaña de 11 Aniversario "VEN A CRISTO".\n\n📅 Fecha: 26 de Diciembre\n🕗 Hora: 7:00 PM\n📍 Lugar: Ciudad del Chofer\n\nAdjunto su invitación oficial. ¡Le esperamos!`;
-                    
-                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                    const baseUrl = isMobile ? 'https://api.whatsapp.com/send' : 'https://web.whatsapp.com/send';
-                    const url = `${baseUrl}?phone=${data.Celular}&text=${encodeURIComponent(msg)}`;
-                    
+                    const msg = `¡Bendiciones Pastor ${data.Pastor}! Adjunto la carta de invitación para nuestro 11 Aniversario "VEN A CRISTO". ¡Esperamos contar con su presencia!`;
+                    const url = `https://wa.me/${data.Celular}?text=${encodeURIComponent(msg)}`;
                     window.open(url, '_blank');
                 }
 
