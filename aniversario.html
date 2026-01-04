@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador 11 Aniversario | Final PNG</title>
+    <title>Generador 11 Aniversario | Final</title>
     
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -15,6 +15,7 @@
 
     <style>
         :root {
+            --green-header: #006831;
             --green-body: #008f39;
             --orange: #ff8c00;
             --yellow: #ffdd00;
@@ -80,7 +81,7 @@
         /* --- AFICHE DISEÑO --- */
         #flyer {
             width: 650px;
-            height: 1000px;
+            height: 900px; 
             position: relative;
             display: flex; flex-direction: column; align-items: center;
             box-shadow: 0 0 50px rgba(0,0,0,0.5); flex-shrink: 0;
@@ -92,60 +93,58 @@
         /* PARTE SUPERIOR (VERDE) */
         .top-section {
             width: 100%;
-            height: 460px; /* Altura ajustada para dar espacio al logo */
+            height: 340px; 
             background: radial-gradient(circle at 50% 30%, #00b156 0%, #008f39 60%, #005c25 100%);
             border-bottom: 6px solid var(--yellow);
             position: absolute; top: 0; left: 0; z-index: 0;
             display: flex; flex-direction: column; align-items: center; 
-            padding-top: 40px;
+            padding-top: 30px;
         }
 
-        /* HEADER */
-        .header-content { text-align: center; color: white; z-index: 2; width: 90%; }
+        .header-content { 
+            text-align: center; color: white; 
+            z-index: 2; width: 90%; 
+            display: flex; flex-direction: column; align-items: center;
+            line-height: 1; 
+        }
         
-        .church-line-1 { font-weight: 400; font-size: 1.2rem; letter-spacing: 2px; display: block; margin-bottom: 2px; }
-        .church-line-2 { font-weight: 700; font-size: 1.8rem; letter-spacing: 0.5px; text-shadow: 0 3px 8px rgba(0,0,0,0.3); display: block; }
-        
-        .aniv-text { color: var(--yellow); font-weight: 800; font-size: 1rem; text-transform: uppercase; margin-top: 8px; letter-spacing: 3px; }
+        .church-line-1 { font-weight: 400; font-size: 1.1rem; letter-spacing: 2px; display: block; margin-bottom: -5px; }
+        .church-line-2 { font-weight: 600; font-size: 1.6rem; letter-spacing: 1px; text-shadow: 0 3px 8px rgba(0,0,0,0.3); display: block; }
+        .aniv-text { color: var(--yellow); font-weight: 800; font-size: 0.9rem; text-transform: uppercase; margin-top: 8px; letter-spacing: 3px; }
 
-        /* LOGO CONTROLADO */
+        /* LOGO */
         .logo-container {
             width: 100%; display: flex; justify-content: center; align-items: center;
-            z-index: 2; margin-top: 15px;
+            z-index: 2; margin-top: 10px;
         }
-        .logo-img-tag {
-            width: auto; max-width: 90%;
-            /* AUMENTADO EL TAMAÑO */
-            height: 260px; 
-            object-fit: contain;
-            filter: drop-shadow(0 20px 25px rgba(0,0,0,0.4));
+        .logo-svg {
+            width: 90%; max-height: 200px; object-fit: contain;
+            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.4));
             display: block; 
         }
-        .logo-placeholder { color: rgba(255,255,255,0.6); border: 2px dashed rgba(255,255,255,0.4); padding: 30px; border-radius: 10px; font-size: 0.8rem; text-align: center; margin-top: 20px;}
+        .logo-placeholder { color: rgba(255,255,255,0.6); border: 2px dashed rgba(255,255,255,0.4); padding: 30px; border-radius: 10px; font-size: 0.8rem; text-align: center; }
 
         /* CARTA */
         .bottom-section {
-            /* AJUSTE CLAVE DE DISTRIBUCIÓN */
-            margin-top: 420px; 
+            margin-top: 290px; 
             width: 92%;
             background: white;
-            border-radius: 15px;
+            border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             z-index: 10;
             padding: 25px 35px;
             text-align: left;
             display: flex; flex-direction: column;
-            flex: 1; /* Ocupa el espacio restante */
-            margin-bottom: 20px; 
+            flex: 1; 
+            margin-bottom: 40px;
         }
 
-        .greeting { color: var(--text-dark); font-size: 0.95rem; margin-bottom: 12px; line-height: 1.4; border-bottom: 1px solid #eee; padding-bottom: 8px;}
+        .greeting { color: var(--text-dark); font-size: 0.95rem; margin-bottom: 15px; line-height: 1.4; border-bottom: 1px solid #eee; padding-bottom: 10px;}
         .highlight-name { color: var(--green-body); font-weight: 800; text-transform: uppercase; }
 
         .body-text { color: #444; font-size: 0.85rem; line-height: 1.5; text-align: justify; margin-bottom: 15px; font-weight: 500;}
 
-        /* INVITADOS */
-        .guests-box { background: #f0fdf4; border-radius: 8px; padding: 10px; margin-bottom: 15px; border: 1px solid #d1e7dd; }
+        .guests-box { background: #f0fdf4; border-radius: 8px; padding: 12px; margin-bottom: 15px; border: 1px solid #d1e7dd; }
         .guests-title { text-align: center; color: var(--orange); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 8px; }
         .guest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .guest-row { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; color: #333; line-height: 1.2;}
@@ -169,7 +168,7 @@
         }
 
         .footer-strip {
-            width: 100%; padding: 12px; text-align: center;
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 12px; text-align: center;
             background: #333; color: #aaa; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
             z-index: 20; margin-top: auto; 
         }
@@ -200,9 +199,9 @@
                 <i class="fas fa-image"></i>
                 <div>
                     <strong>Logo Lema</strong>
-                    <span id="txt-logo">Carga logo2.png (Obligatorio)</span>
+                    <span id="txt-logo">Auto-carga de logo2.png</span>
                 </div>
-                <input type="file" id="logoInput" accept=".png, .jpg">
+                <input type="file" id="logoInput" accept=".svg, .png, .jpg">
             </label>
             <br>
             <label class="file-box" id="box-sign">
@@ -239,11 +238,10 @@
                     <span class="church-line-1">IGLESIA CRISTIANA</span>
                     <span class="church-line-2">CENTRO DE RESTAURACIÓN</span>
                     <div class="aniv-text">11 Años de Victoria</div>
-                    <div class="aniv-text">TE INVITAMOS A:</div>
                 </div>
 
                 <div class="logo-container">
-                    <img id="logo-img" class="logo-img-tag" style="display: none;">
+                    <img id="logo-img" class="logo-svg" style="display: none;">
                     <div id="logo-placeholder" class="logo-placeholder"><i class="fas fa-sync fa-spin"></i> Cargando logo2.png...</div>
                 </div>
             </div>
@@ -263,10 +261,10 @@
                 <div class="guests-box">
                     <div class="guests-title">Invitados Especiales</div>
                     <div class="guest-grid">
-                        <div class="guest-row"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Ps. Eugenio Masias-</strong>Ecuador 🇪🇨</div></div>
-                        <div class="guest-row"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Abel Zapata-</strong>Chile 🇨🇱</div></div>
-                        <div class="guest-row"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Ruben Dias-</strong>Cerro de Pasco</div></div>
-                        <div class="guest-row"><i class="fas fa-fire"></i><div class="guest-text"><strong>Ps. Fernando Ñaupari-</strong>Testimonio</div></div>
+                        <div class="guest-row"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Ps. Eugenio Masias</strong>Ecuador 🇪🇨</div></div>
+                        <div class="guest-row"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Abel Zapata</strong>Chile 🇨🇱</div></div>
+                        <div class="guest-row"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Ruben Dias</strong>Cerro de Pasco</div></div>
+                        <div class="guest-row"><i class="fas fa-fire"></i><div class="guest-text"><strong>Ps. Fernando Ñaupari</strong>Testimonio</div></div>
                     </div>
                 </div>
 
@@ -294,33 +292,25 @@
     </div>
 
     <script>
-        // FUNCIÓN CRÍTICA PARA CONVERTIR IMAGEN A BASE64
-        // Esto soluciona el problema de exportación al 100%
-        function convertImageToBase64(url, callback) {
-            var xhr = new XMLHttpRequest();
-            xhr.onload = function() {
-                var reader = new FileReader();
-                reader.onloadend = function() {
-                    callback(reader.result);
-                }
-                reader.readAsDataURL(xhr.response);
-            };
-            xhr.open('GET', url);
-            xhr.responseType = 'blob';
-            xhr.send();
-        }
-
-        // CARGA INICIAL
+        // --- 1. CARGA AUTOMÁTICA LOGO PNG EN BASE64 ---
         window.onload = function() {
-            // Intentar cargar logo2.png y convertirlo a Base64
-            convertImageToBase64('logo2.png', function(base64Image) {
-                const img = document.getElementById('logo-img');
-                img.src = base64Image; // Ahora es seguro para html2canvas
-                img.style.display = 'block';
-                document.getElementById('logo-placeholder').style.display = 'none';
-                document.getElementById('txt-logo').innerText = "Logo cargado automáticamente";
-                document.getElementById('txt-logo').style.color = '#008f39';
-            });
+            fetch('logo2.png')
+                .then(r => { 
+                    if(r.ok) return r.blob(); 
+                    throw new Error('no file'); 
+                })
+                .then(blob => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        document.getElementById('logo-img').src = reader.result;
+                        document.getElementById('logo-img').style.display = 'block';
+                        document.getElementById('logo-placeholder').style.display = 'none';
+                        document.getElementById('txt-logo').innerText = "Logo cargado autom.";
+                        document.getElementById('txt-logo').style.color = '#008f39';
+                    };
+                    reader.readAsDataURL(blob);
+                })
+                .catch(() => document.getElementById('logo-placeholder').innerHTML = "Cargar logo manualmente");
         };
 
         function switchTab(t){
@@ -401,12 +391,8 @@
 
             const flyer = document.getElementById('flyer');
             try {
-                // CONFIGURACIÓN OPTIMIZADA PARA IMÁGENES BASE64
                 const canvas = await html2canvas(flyer, {
-                    scale: 2, 
-                    backgroundColor: "#f4f4f4", 
-                    useCORS: true, 
-                    allowTaint: true
+                    scale: 2, backgroundColor: "#f4f4f4", useCORS: true, allowTaint: true
                 });
                 const link = document.createElement('a');
                 link.download = `Invitacion_11Aniv_${pastor.replace(/[^a-zA-Z0-9]/g,'')}.png`;
@@ -414,7 +400,9 @@
                 link.click();
 
                 if(celular) {
-                    const msg = `¡Bendiciones Pastor ${pastor}! Le extendemos una cordial invitación al 11 Aniversario "VEN A CRISTO".`;
+                    // --- TEXTO WHATSAPP ACTUALIZADO ---
+                    const msg = `¡Bendiciones Pastor ${pastor}! 🎉\n\nLa Iglesia Centro de Restauración le invita cordialmente a nuestra Campaña de 11 Aniversario "VEN A CRISTO".\n\nTendremos invitados especiales como el Ps. Eugenio Masias, Abel Zapata y un poderoso testimonio del Ps. Fernando Ñaupari.\n\n📅 Fecha: 26 de Diciembre, 7:00 PM\n📍 Lugar: Ciudad del Chofer\n\nAdjunto su invitación oficial. ¡Le esperamos!`;
+                    
                     const url = `https://wa.me/${celular}?text=${encodeURIComponent(msg)}`;
                     window.open(url, '_blank');
                 }
@@ -428,7 +416,7 @@
                 }
             } catch(e) {
                 console.error(e);
-                alert("Error al generar. Comprueba que logo2.png esté cargado.");
+                alert("Error al generar.");
                 btn.innerHTML = icon;
             }
         }
