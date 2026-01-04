@@ -496,21 +496,20 @@
 
                 if (celular) {
                     const msg =
-                `¡Bendiciones Pastor ${pastor}! 🎉
+                `\u{1F389} Bendiciones Pastor ${pastor}
                 
                 La Iglesia Centro de Restauración le invita cordialmente a nuestra Campaña de 11 Aniversario *"VEN A CRISTO"*.
                 
-                Tendremos invitados especiales como el Ps. Eugenio Masias, Abel Zapata y un poderoso testimonio del Ps. Fernando Ñaupari.
+                Tendremos invitados especiales como el Ps. Eugenio Masias, Abel Zapata y un poderoso testimonio del Ps. Fernando \u{00D1}aupari.
                 
-                📅 *Fecha:* Del 22 al 25 de Enero, 7:00 PM
-                📍 *Lugar:* Ciudad del Chofer
+                \u{1F4C5} *Fecha:* Del 22 al 25 de Enero, 7:00 PM
+                \u{1F4CD} *Lugar:* Ciudad del Chofer
                 
-                Adjunto su invitación oficial. ¡Le esperamos!`;
+                Adjunto su invitación oficial. \u{2728}`;
                 
                     const url = `https://wa.me/${celular}?text=${encodeURIComponent(msg)}`;
                     window.open(url, '_blank');
                 }
-
 
                 btn.innerHTML = '<i class="fas fa-check"></i>';
                 setTimeout(() => btn.innerHTML = icon, 3000);
