@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador 11 Aniversario | Ajustado</title>
+    <title>Generador 11 Aniversario | Final Ajustado</title>
     
     <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Librerías -->
@@ -57,7 +57,7 @@
         input[type="file"] { display: none; }
 
         .tabs { display: flex; gap: 5px; background: #eee; padding: 5px; border-radius: 8px; }
-        .tab-btn { flex: 1; padding: 8px; border: none; background: transparent; cursor: pointer; border-radius: 5px; font-weight: 600; color: #666; transition: 0.3s; font-size: 0.8rem; }
+        .tab-btn { flex: 1; padding: 8px; border: none; background: transparent; cursor: pointer; border-radius: 5px; font-weight: 700; color: #666; transition: 0.3s; font-size: 0.8rem; }
         .tab-btn.active { background: white; color: var(--green-body); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
         .panel { display: none; margin-top: 15px; }
@@ -75,26 +75,26 @@
         /* --- PREVIEW AREA --- */
         .preview-area {
             flex-grow: 1; background: #333; display: flex;
-            justify-content: center; align-items: center; padding: 40px; overflow: auto;
+            justify-content: center; align-items: center; padding: 20px; overflow: auto;
         }
 
         /* --- AFICHE DISEÑO --- */
         #flyer {
             width: 650px;
-            /* Altura reducida para compactar */
-            height: 900px; 
+            height: 950px; 
             position: relative;
             display: flex; flex-direction: column; align-items: center;
             box-shadow: 0 0 50px rgba(0,0,0,0.5); flex-shrink: 0;
             overflow: hidden;
             background-color: #f4f4f4;
+            /* Padding bottom extra para el espacio final solicitado */
+            padding-bottom: 20px; 
         }
 
         /* PARTE SUPERIOR (VERDE) */
         .top-section {
             width: 100%;
-            /* Altura reducida para subir el contenido */
-            height: 340px; 
+            height: 400px; 
             background: radial-gradient(circle at 50% 30%, #00b156 0%, #008f39 60%, #005c25 100%);
             border-bottom: 6px solid var(--yellow);
             position: absolute; top: 0; left: 0; z-index: 0;
@@ -102,23 +102,27 @@
             padding-top: 30px;
         }
 
-        /* HEADER OPTIMIZADO */
-        .header-content { text-align: center; color: white; z-index: 2; width: 90%; }
+        /* HEADER SUPER COMPACTO */
+        .header-content { 
+            text-align: center; color: white; 
+            z-index: 2; width: 90%; 
+            display: flex; flex-direction: column; align-items: center;
+            line-height: 1; /* Reducir interlineado general */
+        }
         
         .church-line-1 { 
             font-weight: 400; /* Regular */
-            font-size: 1.1rem; 
+            font-size: 1.2rem; 
             letter-spacing: 2px; 
             display: block; 
-            opacity: 0.95; 
+            margin-bottom: -5px; /* Pegar a la línea de abajo */
         }
         .church-line-2 { 
-            font-weight: 600; /* SemiBold */
-            font-size: 1.6rem; 
-            letter-spacing: 1px; 
+            font-weight: 700; /* SemiBold/Bold */
+            font-size: 1.7rem; 
+            letter-spacing: 0.5px; 
             text-shadow: 0 3px 8px rgba(0,0,0,0.3); 
             display: block; 
-            margin-top: 2px; 
         }
         
         .aniv-text { 
@@ -126,37 +130,40 @@
             text-transform: uppercase; margin-top: 8px; letter-spacing: 3px; 
         }
 
-        /* LOGO */
+        /* LOGO MÁS GRANDE Y PEGADO */
         .logo-container {
             width: 100%; display: flex; justify-content: center; align-items: center;
-            z-index: 2; margin-top: 10px;
+            z-index: 2; 
+            margin-top: 0px; /* Sin espacio arriba */
+            margin-bottom: 0px; /* Sin espacio abajo */
         }
         .logo-svg {
-            width: 90%; 
-            max-height: 200px; /* Tamaño controlado */
+            width: 95%; 
+            max-height: 280px; /* Aumentado */
             object-fit: contain;
-            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.4));
+            filter: drop-shadow(0 20px 25px rgba(0,0,0,0.4));
             display: block; 
+            /* Ajuste fino para subirlo un poco visualmente si tiene margen interno */
+            transform: translateY(-10px); 
         }
         .logo-placeholder { 
             color: rgba(255,255,255,0.6); border: 2px dashed rgba(255,255,255,0.4); 
-            padding: 30px; border-radius: 10px; font-size: 0.8rem; text-align: center;
+            padding: 30px; border-radius: 10px; font-size: 0.8rem; text-align: center; margin-top: 20px;
         }
 
-        /* CARTA (SUBIDA HACIA ARRIBA) */
+        /* CARTA */
         .bottom-section {
-            margin-top: 290px; /* Sube la carta para solaparse con el verde */
+            margin-top: 330px; /* Subido para que el logo "pise" la carta */
             width: 92%;
             background: white;
-            border-radius: 12px;
+            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             z-index: 10;
             padding: 25px 35px;
             text-align: left;
             display: flex; flex-direction: column;
-            /* Flex para distribuir mejor el espacio vertical */
-            flex: 1; 
-            margin-bottom: 40px; /* Espacio para el footer */
+            flex: 1; /* Ocupa el espacio restante */
+            margin-bottom: 20px; /* Espacio antes del footer */
         }
 
         .greeting { 
@@ -170,7 +177,7 @@
             text-align: justify; margin-bottom: 15px; font-weight: 500;
         }
 
-        /* INVITADOS OPTIMIZADOS */
+        /* Invitados */
         .guests-box { 
             background: #f0fdf4; border-radius: 8px; padding: 12px; 
             margin-bottom: 15px; border: 1px solid #d1e7dd; 
@@ -187,14 +194,18 @@
         .guest-row i { color: var(--green-body); font-size: 0.8rem; width: 12px;}
         .guest-row strong { font-weight: 700; color: #000; }
 
-        /* FECHA COMPACTA */
+        /* Fecha */
         .event-info {
             text-align: center; background: var(--green-body); color: white;
             padding: 8px; border-radius: 50px; font-weight: 700; font-size: 0.85rem;
             margin-bottom: 10px; box-shadow: 0 3px 8px rgba(0, 143, 57, 0.3);
         }
 
-        /* FIRMA */
+        /* Despedida y Firma */
+        .farewell {
+            text-align: center; font-size: 0.8rem; color: #555; font-style: italic; margin-bottom: 5px;
+        }
+
         .signature-wrapper {
             width: 100%; display: flex; justify-content: center; margin-top: 5px;
         }
@@ -211,10 +222,11 @@
         }
 
         .footer-strip {
-            position: absolute; bottom: 0; left: 0;
             width: 100%; padding: 12px; text-align: center;
             background: #333; color: #aaa; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
             z-index: 20;
+            /* Margen superior para el espacio extra solicitado */
+            margin-top: auto; 
         }
 
         @media (max-width: 900px) {
@@ -227,7 +239,7 @@
 <body>
 
     <div class="sidebar">
-        <div class="sidebar-header">
+        <div>
             <h2>Gestor 11 Aniversario</h2>
             <p>Configuración</p>
         </div>
@@ -278,12 +290,14 @@
         <div id="flyer">
             
             <div class="top-section">
+                <!-- HEADER SUPER COMPACTO -->
                 <div class="header-content">
                     <span class="church-line-1">IGLESIA CRISTIANA</span>
                     <span class="church-line-2">CENTRO DE RESTAURACIÓN</span>
                     <div class="aniv-text">11 Años de Victoria</div>
                 </div>
 
+                <!-- LOGO GIGANTE -->
                 <div class="logo-container">
                     <img id="logo-img" class="logo-svg" style="display: none;">
                     <div id="logo-placeholder" class="logo-placeholder"><i class="fas fa-sync fa-spin"></i> Cargando logo2.svg...</div>
@@ -297,28 +311,35 @@
                 </div>
 
                 <div class="body-text">
-                    Les saludo muy cordialmente en el nombre de nuestro Señor Jesucristo. El motivo de la presente es invitarles a participar de esta gran fiesta espiritual de nuestro <strong>11 Aniversario</strong>. Es una maravillosa oportunidad para unirnos en adoración y comunión fraternal.
+                    Les saludo muy cordialmente en el nombre de nuestro Señor y Salvador Jesucristo, deseando que estén gozando de las bendiciones que Él nos da.
+                    <br><br>
+                    El motivo de la presente es invitarles a participar de esta gran fiesta espiritual de nuestro <strong>11 Aniversario</strong>. Es una maravillosa oportunidad para unirnos en adoración, alabanza y comunión fraternal.
                 </div>
 
                 <div class="guests-box">
                     <div class="guests-title">Invitados Especiales</div>
                     <div class="guest-grid">
-                        <div class="guest-row"><i class="fas fa-user-tie"></i> <div><strong>Ps. Eugenio Masias</strong> (Ecuador)</div></div>
-                        <div class="guest-row"><i class="fas fa-user-tie"></i> <div><strong>Abel Zapata</strong> (Chile)</div></div>
-                        <div class="guest-row"><i class="fas fa-user-tie"></i> <div><strong>Ruben Dias</strong> (Cerro de Pasco)</div></div>
-                        <div class="guest-row"><i class="fas fa-fire"></i> <div><strong>Ps. Fernando Ñaupari</strong> (Lima)</div></div>
+                        <div class="guest-row"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Ps. Eugenio Masias</strong>Ecuador 🇪🇨</div></div>
+                        <div class="guest-row"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Abel Zapata</strong>Chile 🇨🇱</div></div>
+                        <div class="guest-row"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Ruben Dias</strong>Cerro de Pasco</div></div>
+                        <div class="guest-row"><i class="fas fa-fire"></i><div class="guest-text"><strong>Ps. Fernando Ñaupari</strong>Testimonio</div></div>
                     </div>
                 </div>
 
                 <div class="event-info">
-                    Del 22 al 25 de Enero • 7:00 PM<br>
-                    <span style="font-weight: 400; font-size: 0.8rem; opacity: 0.9;">Mz. H Lote 23, Urb. Ciudad del Chofer</span>
+                    <span>Del 22 al 25 de Enero • 7:00 PM</span>
+                    Mz. H Lote 23, Urb. Ciudad del Chofer
+                </div>
+
+                <!-- DESPEDIDA AGREGADA -->
+                <div class="farewell">
+                    ¡Esperamos contar con su valiosa presencia!
                 </div>
 
                 <div class="signature-wrapper">
                     <div class="signature-box">
                         <img id="sign-img" class="sign-img" style="display: none;">
-                        <div id="sign-placeholder" style="font-size:0.6rem; color:#ccc; margin-bottom:15px;">(Firma Aquí)</div>
+                        <div id="sign-placeholder" style="font-size:0.7rem; color:#ccc; margin-bottom:20px;">(Firma Aquí)</div>
                         <div class="pastor-line">Brigadiel Cerna Ravines</div>
                         <div style="font-size: 0.7rem; color: #666; text-transform: uppercase;">Pastor Principal</div>
                     </div>
