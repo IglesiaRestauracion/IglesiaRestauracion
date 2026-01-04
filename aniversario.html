@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador 11 Aniversario | Ven a Cristo</title>
+    <title>Generador 11 Aniversario | Premium</title>
     
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -15,9 +15,10 @@
 
     <style>
         :root {
-            --bg-green-light: #00b156;
-            --bg-green: #008f39;
-            --bg-green-dark: #005221;
+            /* NUEVA PALETA MÁS ELEGANTE */
+            --bg-emerald: #004d25;     /* Verde base más oscuro */
+            --bg-deep: #00220e;        /* Casi negro verde */
+            --gold-accent: #ffd700;
             --text-orange: #ff8c00;
             --text-yellow: #ffdd00;
             --white: #ffffff;
@@ -40,164 +41,186 @@
             background: white;
             padding: 20px;
             border-right: 1px solid #ddd;
-            display: flex; flex-direction: column; gap: 15px;
-            box-shadow: 4px 0 20px rgba(0,0,0,0.05); z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.05);
+            z-index: 100;
             overflow-y: auto;
         }
 
-        .sidebar-header { border-bottom: 2px solid var(--bg-green); padding-bottom: 10px; margin-bottom: 10px; }
-        .sidebar-header h2 { color: var(--bg-green); margin: 0; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
+        .sidebar-header { border-bottom: 2px solid var(--bg-emerald); padding-bottom: 10px; margin-bottom: 10px; }
+        .sidebar-header h2 { color: var(--bg-emerald); margin: 0; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
         
-        .upload-section label { display: block; font-size: 0.8rem; font-weight: 700; color: #555; margin-bottom: 5px; }
         .file-input-box {
-            display: flex; align-items: center; gap: 10px; padding: 10px;
+            display: flex; align-items: center; gap: 10px; padding: 12px;
             border: 1px solid #ccc; border-radius: 8px; cursor: pointer; transition: 0.3s;
             background: #fafafa;
         }
-        .file-input-box:hover { border-color: var(--bg-green); background: #f0fff4; }
-        .file-input-box i { font-size: 1.2rem; color: var(--bg-green); }
-        .file-input-box span { font-size: 0.8rem; color: #666; }
+        .file-input-box:hover { border-color: var(--bg-emerald); background: #e8f5e9; }
+        .file-input-box i { font-size: 1.2rem; color: var(--bg-emerald); }
+        .file-input-box span { font-size: 0.8rem; color: #555; font-weight: 600; }
         input[type="file"] { display: none; }
 
+        /* Tabs */
         .tabs { display: flex; gap: 5px; background: #eee; padding: 5px; border-radius: 8px; }
         .tab-btn { flex: 1; padding: 8px; border: none; background: transparent; cursor: pointer; border-radius: 5px; font-weight: 600; color: #666; transition: 0.3s; font-size: 0.85rem; }
-        .tab-btn.active { background: white; color: var(--bg-green); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .tab-btn.active { background: white; color: var(--bg-emerald); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
         .panel { display: none; margin-top: 15px; }
         .panel.active { display: block; }
 
-        .contacts-list { margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; max-height: 300px; overflow-y: auto; }
+        /* Listas y Botones */
+        .contacts-list { margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
         .contact-item { background: #fff; border: 1px solid #eee; padding: 10px; margin-bottom: 5px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
         .contact-info strong { display: block; font-size: 0.85rem; color: #333; }
-        .contact-info span { font-size: 0.75rem; color: #777; }
         
         .btn-wa { width: 32px; height: 32px; border-radius: 50%; background: #25D366; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-        .btn-wa:hover { transform: scale(1.1); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .btn-wa:hover { transform: scale(1.1); }
         .btn-wa.done { background: #ccc; cursor: default; transform: none; }
 
         .manual-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; font-family: 'Montserrat'; }
-        .btn-gen { width: 100%; padding: 12px; background: var(--bg-green); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
-        .btn-gen:hover { background: var(--bg-dark-green); }
-
-        /* --- PREVIEW --- */
+        .btn-gen { width: 100%; padding: 12px; background: var(--bg-emerald); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+        
+        /* --- PREVIEW AREA --- */
         .preview-area {
-            flex-grow: 1; background: #333; display: flex;
+            flex-grow: 1; background: #222; display: flex;
             justify-content: center; align-items: center; padding: 40px; overflow: auto;
-            background-image: radial-gradient(#555 1px, transparent 1px); background-size: 20px 20px;
         }
 
-        /* --- AFICHE --- */
+        /* --- AFICHE (CANVAS) --- */
         #flyer {
             width: 650px;
             height: 950px;
             position: relative;
             display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 0 60px rgba(0,0,0,0.6); flex-shrink: 0;
+            box-shadow: 0 0 60px rgba(0,0,0,0.8); flex-shrink: 0;
             padding: 40px; text-align: center;
-            /* Fondo verde premium */
-            background: radial-gradient(circle at 50% 0%, var(--bg-green-light) 0%, var(--bg-green) 40%, var(--bg-green-dark) 100%);
-            border: 10px solid rgba(255,255,255,0.1);
+            border: 1px solid #333;
             overflow: hidden;
+            
+            /* FONDO MEJORADO: ESMERALDA PROFUNDO */
+            background: radial-gradient(ellipse at top, #005f2c 0%, #003314 60%, #001a08 100%);
         }
 
-        .bg-texture {
+        /* Textura de "Polvo Dorado" sutil */
+        .gold-dust {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-            opacity: 0.6; mix-blend-mode: overlay; pointer-events: none; z-index: 0;
+            background-image: radial-gradient(#ffe600 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.15; pointer-events: none; z-index: 0;
         }
         
-        .sunburst {
-            position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
-            width: 800px; height: 800px;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+        /* Luz cenital */
+        .spotlight {
+            position: absolute; top: -150px; left: 50%; transform: translateX(-50%);
+            width: 700px; height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
             z-index: 0; pointer-events: none;
         }
 
-        /* HEADER */
+        /* 1. HEADER */
         .header-top {
-            z-index: 10; margin-bottom: 5px; width: 100%;
-            background: radial-gradient(ellipse at top, rgba(0,0,0,0.3) 0%, transparent 70%);
-            padding-top: 10px; padding-bottom: 20px;
+            z-index: 10; margin-bottom: 10px; width: 100%;
+            position: relative;
         }
         .church-title {
-            font-weight: 900; font-size: 1.4rem; letter-spacing: 1px; color: white;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.4); margin-bottom: 5px;
+            font-weight: 900; font-size: 1.4rem; letter-spacing: 2px; color: white;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.8); margin-bottom: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.2); display: inline-block; padding-bottom: 5px;
         }
         .ministry-title {
-            font-size: 1.1rem; letter-spacing: 3px; color: var(--text-yellow); font-weight: 700;
-            text-transform: uppercase; text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+            font-size: 1rem; letter-spacing: 4px; color: var(--gold-accent); font-weight: 700;
+            text-transform: uppercase; text-shadow: 0 2px 10px rgba(255, 215, 0, 0.4);
+            margin-top: 5px;
         }
 
-        /* LOGO (AUMENTADO DE TAMAÑO) */
+        /* 2. LOGO */
         .logo-container {
-            margin: 0 0 20px 0; width: 100%; display: flex; justify-content: center;
+            margin: 10px 0 20px 0; width: 100%; display: flex; justify-content: center;
             z-index: 10; position: relative; min-height: 200px; align-items: center;
         }
         .logo-svg {
-            /* TAMAÑO AUMENTADO */
-            width: 95%; 
-            max-height: 280px; 
-            object-fit: contain;
-            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4));
-            transform: rotate(-2deg);
+            width: 90%; max-height: 250px; object-fit: contain;
+            /* Sombra fuerte para despegarlo del fondo oscuro */
+            filter: drop-shadow(0 20px 20px rgba(0,0,0,0.5));
         }
-        .logo-fallback { font-family:'Titan One'; color: white; font-size: 2rem; border: 2px dashed rgba(255,255,255,0.3); padding: 20px; border-radius: 10px; }
+        .logo-warning { color: #ff6b6b; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px; font-size: 0.8rem; display: none; }
 
-        /* CARTA */
+        /* 3. CARTA */
         .letter-container {
-            background: rgba(0, 30, 10, 0.5);
-            border: 1px solid rgba(255,255,255,0.25);
-            border-radius: 15px; padding: 20px 30px; width: 100%; text-align: left;
-            flex-grow: 1; display: flex; flex-direction: column; backdrop-filter: blur(8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            background: rgba(0, 20, 5, 0.6); /* Más oscuro y elegante */
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px; padding: 25px 35px; width: 100%; text-align: left;
+            flex-grow: 1; display: flex; flex-direction: column; backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
             z-index: 10;
         }
 
-        .greeting { color: var(--white); font-size: 0.95rem; margin-bottom: 12px; line-height: 1.4; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;}
-        .highlight-name { color: var(--text-yellow); font-weight: 800; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .greeting { 
+            color: var(--white); font-size: 0.95rem; margin-bottom: 15px; line-height: 1.5; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;
+        }
+        .highlight-name { color: var(--gold-accent); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .body-text { color: #eee; font-size: 0.85rem; line-height: 1.5; text-align: justify; margin-bottom: 15px; }
+        .body-text { color: #ddd; font-size: 0.85rem; line-height: 1.5; text-align: justify; margin-bottom: 15px; font-weight: 400; }
 
-        .guest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+        /* Invitados */
+        .guest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .guest-item {
-            background: rgba(255,255,255,0.08); border-radius: 6px; padding: 6px 8px;
+            background: rgba(255,255,255,0.05); border-radius: 4px; padding: 8px;
             display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.05);
         }
-        .guest-item i { color: var(--text-orange); font-size: 0.9rem; }
-        .guest-text { font-size: 0.7rem; color: white; line-height: 1.2; text-align: left;}
-        .guest-text strong { display: block; color: var(--text-yellow); font-size: 0.75rem; font-weight: 700; }
+        .guest-item i { color: var(--text-orange); }
+        .guest-text { font-size: 0.7rem; color: #ccc; line-height: 1.2; text-align: left;}
+        .guest-text strong { display: block; color: var(--white); font-size: 0.75rem; }
 
+        /* Fecha */
         .event-details {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-            color: var(--bg-dark-green); padding: 12px; border-radius: 8px;
-            text-align: center; font-weight: 800; text-transform: uppercase; font-size: 0.95rem; margin: 10px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            border-top: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2);
+            color: var(--white); padding: 10px; 
+            text-align: center; font-weight: 400; text-transform: uppercase; font-size: 0.9rem; margin: 10px 0;
         }
-        .event-details span { color: #d35400; font-size: 1.2rem; display: block; margin-bottom: 2px; }
+        .event-details span { color: var(--gold-accent); font-size: 1.1rem; display: block; font-weight: 800; margin-bottom: 3px; letter-spacing: 1px;}
 
-        /* FIRMA CENTRADA */
+        /* FIRMA CENTRADA (FLEXBOX) */
+        .signature-wrapper {
+            margin-top: auto;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 15px;
+        }
+
         .signature-box {
-            background: white; width: 240px;
-            margin: 15px auto 0 auto; padding: 10px; border-radius: 6px;
-            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             transform: rotate(-1deg);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 260px; /* Ancho fijo para centrado perfecto */
         }
         
-        .sign-img { height: 60px; width: auto; object-fit: contain; display: block; margin-bottom: -15px; z-index: 1; }
-        
+        .sign-img { height: 60px; width: auto; object-fit: contain; margin-bottom: -10px; display: block; }
         .pastor-sign { 
-            color: var(--bg-dark-green); font-weight: 800; font-size: 0.75rem; text-transform: uppercase;
-            border-top: 1px solid #ccc; padding-top: 5px; margin-top: 5px; width: 90%; text-align: center;
-            z-index: 2; position: relative;
+            color: #000; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; 
+            border-top: 1px solid #333; padding-top: 5px; margin-top: 5px; width: 100%; text-align: center;
         }
 
-        .footer-info { font-size: 0.75rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; z-index: 10; font-weight: 600;}
+        .footer-info { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 3px; margin-top: 20px; z-index: 10; font-weight: 600;}
 
+        /* Responsive */
         @media (max-width: 900px) {
             body { flex-direction: column; overflow-y: auto; }
             .sidebar { width: 100%; height: auto; border-bottom: 1px solid #ccc;}
-            #flyer { transform: scale(0.52); margin: -200px 0; }
+            #flyer { transform: scale(0.5); margin: -230px 0; }
         }
     </style>
 </head>
@@ -207,7 +230,7 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <h2>Gestor Aniversario</h2>
-            <p>Generación de Invitaciones</p>
+            <p>Configuración y Envíos</p>
         </div>
 
         <div class="tabs">
@@ -218,35 +241,33 @@
 
         <!-- PANEL 1: ARCHIVOS -->
         <div id="panel-files" class="panel active">
-            <div class="upload-section">
-                <!-- LOGO (CORREGIDO PARA GITHUB PAGES) -->
-                <label>Logo del Lema (logo2.svg):</label>
-                <label class="file-input-box">
-                    <i class="fas fa-image"></i>
-                    <span id="logo-status">Clic para cargar logo</span>
-                    <input type="file" id="logoInput" accept=".svg, .png, .jpg">
-                </label>
+            <label style="margin-bottom:5px; display:block; font-size:0.8rem; font-weight:700;">1. Logo del Lema (Obligatorio):</label>
+            <label class="file-input-box">
+                <i class="fas fa-image"></i>
+                <span id="logo-status">Clic para cargar logo2.svg</span>
+                <input type="file" id="logoInput" accept=".svg, .png, .jpg">
+            </label>
+            <div style="font-size:0.7rem; color:#d9534f; margin-top:5px;">
+                * Carga el archivo aquí para que aparezca en la descarga final.
+            </div>
 
-                <label style="margin-top: 15px;">Firma Pastor (PNG):</label>
-                <label class="file-input-box">
-                    <i class="fas fa-signature"></i>
-                    <span id="sign-status">Clic para cargar firma</span>
-                    <input type="file" id="signInput" accept=".png, .jpg">
-                </label>
-            </div>
-            <div style="margin-top: 20px; font-size: 0.75rem; color: #666; background: #e8f5e9; padding: 10px; border-radius: 5px;">
-                <i class="fas fa-exclamation-circle"></i> <b>Nota Importante:</b> Para que el logo aparezca en la descarga, debes cargarlo aquí manualmente o asegurar que el archivo 'logo2.svg' está en la misma carpeta.
-            </div>
+            <label style="margin-top: 20px; margin-bottom:5px; display:block; font-size:0.8rem; font-weight:700;">2. Firma Pastor:</label>
+            <label class="file-input-box">
+                <i class="fas fa-signature"></i>
+                <span id="sign-status">Clic para cargar firma (PNG)</span>
+                <input type="file" id="signInput" accept=".png, .jpg">
+            </label>
         </div>
 
         <!-- PANEL 2: EXCEL -->
         <div id="panel-list" class="panel">
-            <label class="file-input-box" style="background: #f0fdf4; border-color: #008f39;">
-                <i class="fas fa-file-excel"></i>
+            <label class="file-input-box" style="background: #f0fdf4; border-color: var(--bg-emerald);">
+                <i class="fas fa-file-excel" style="color:green;"></i>
                 <span>Cargar Excel (.xlsx)</span>
                 <input type="file" id="excelInput" accept=".xlsx, .xls">
             </label>
             <div style="font-size: 0.7rem; color: #888; margin: 5px 0 15px 0;">Req: Pastor, Iglesia, Celular</div>
+            
             <div class="contacts-list" id="contactsList">
                 <div style="text-align: center; padding: 20px; color: #999;">Lista vacía</div>
             </div>
@@ -264,18 +285,20 @@
     <!-- PREVIEW AREA -->
     <div class="preview-area">
         <div id="flyer">
-            <div class="bg-texture"></div>
-            <div class="sunburst"></div>
+            <div class="gold-dust"></div>
+            <div class="spotlight"></div>
             
             <div class="header-top">
                 <div class="church-title">IGLESIA CRISTIANA CENTRO DE RESTAURACIÓN</div>
                 <div class="ministry-title">11 Años de Victoria</div>
             </div>
 
-            <!-- LOGO: Se inicia oculto, el JS intentará cargar el default o el usuario lo sube -->
+            <!-- LOGO: IMPORTANTE -->
             <div class="logo-container">
-                <img id="logo-img" class="logo-svg" style="display: none;" alt="Logo Aniversario">
-                <div id="logo-placeholder" class="logo-fallback">CARGA "logo2.svg"</div>
+                <img id="logo-img" class="logo-svg" style="display:none;" alt="Ven a Cristo">
+                <div id="logo-placeholder" style="border: 2px dashed rgba(255,255,255,0.3); padding: 30px; border-radius: 10px; color:white;">
+                    <i class="fas fa-arrow-left"></i> Carga "logo2.svg" en la pestaña Archivos
+                </div>
             </div>
 
             <div class="letter-container">
@@ -300,10 +323,13 @@
                     Mz. H Lote 23, Urb. Ciudad del Chofer
                 </div>
 
-                <div class="signature-box">
-                    <img id="signature-img" class="sign-img" style="display: none;">
-                    <div id="sign-placeholder" style="font-size:0.6rem; color:#aaa;">(Firma aquí)</div>
-                    <div class="pastor-sign">Brigadiel Cerna Ravines<br><span style="font-weight: 400; font-size: 0.65rem; color: #555;">Pastor Principal</span></div>
+                <!-- FIRMA WRAPPER (CENTRADO) -->
+                <div class="signature-wrapper">
+                    <div class="signature-box">
+                        <img id="signature-img" class="sign-img" src="" style="display: none;">
+                        <div id="sign-placeholder" style="font-size:0.6rem; color:#aaa; padding:10px;">(Carga la firma en Archivos)</div>
+                        <div class="pastor-sign">Brigadiel Cerna Ravines<br><span style="font-weight: 400; font-size: 0.65rem; color: #555;">Pastor Principal</span></div>
+                    </div>
                 </div>
             </div>
 
@@ -312,28 +338,6 @@
     </div>
 
     <script>
-        // --- AUTO-LOAD DEFAULT LOGO (Intento automático) ---
-        window.onload = function() {
-            // Intentamos cargar 'logo2.svg' automáticamente como DataURL para evitar CORS
-            fetch('logo2.svg')
-                .then(response => response.blob())
-                .then(blob => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                        const img = document.getElementById('logo-img');
-                        img.src = reader.result;
-                        img.style.display = 'block';
-                        document.getElementById('logo-placeholder').style.display = 'none';
-                        document.getElementById('logo-status').innerText = "logo2.svg (Auto-cargado)";
-                        document.getElementById('logo-status').style.color = '#008f39';
-                    };
-                    reader.readAsDataURL(blob);
-                })
-                .catch(() => {
-                    console.log('No se encontró logo2.svg automáticamente. El usuario debe subirlo.');
-                });
-        };
-
         // --- TABS ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -351,7 +355,7 @@
             }
         }
 
-        // --- CARGA DE IMÁGENES (MANUAL) ---
+        // --- CARGA DE IMÁGENES (FIXED) ---
         function handleImageUpload(inputId, imgId, placeholderId, statusId) {
             document.getElementById(inputId).addEventListener('change', function(e) {
                 const file = e.target.files[0];
@@ -359,13 +363,15 @@
                     const reader = new FileReader();
                     reader.onload = function(evt) {
                         const img = document.getElementById(imgId);
-                        img.src = evt.target.result;
+                        // Convertir a Base64 para evitar problemas de seguridad en la descarga
+                        img.src = evt.target.result; 
                         img.style.display = 'block';
+                        
                         if(placeholderId) document.getElementById(placeholderId).style.display = 'none';
                         if(statusId) {
                             const el = document.getElementById(statusId);
                             el.innerText = "Cargado: " + file.name;
-                            el.style.color = '#008f39';
+                            el.style.color = '#009045';
                             el.style.fontWeight = 'bold';
                         }
                     }
@@ -409,7 +415,7 @@
             });
         }
 
-        // --- CORE PROCESS ---
+        // --- PROCESOS ---
         async function process(index, btn) {
             const data = contactsData[index];
             await generateAndSend(data.Pastor || "", data.Iglesia || "", data.Celular, btn);
@@ -432,22 +438,22 @@
             const icon = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
-            // Actualizar
+            // 1. Actualizar Datos
             document.getElementById('prev-pastor').innerText = pastor;
             document.getElementById('prev-iglesia').innerText = iglesia;
 
-            // ESPERA CRÍTICA
+            // 2. Espera crítica para render
             await new Promise(r => setTimeout(r, 800));
 
             const flyer = document.getElementById('flyer');
             try {
-                // CONFIGURACIÓN HTML2CANVAS SOLUCIÓN SVG
+                // 3. Captura con configuración segura
                 const canvas = await html2canvas(flyer, {
                     scale: 2, 
-                    backgroundColor: "#008f39",
+                    backgroundColor: "#003314", // Color de fondo solido de respaldo
                     useCORS: true,
                     allowTaint: true,
-                    imageTimeout: 0 // Esperar carga completa
+                    imageTimeout: 0
                 });
                 
                 const link = document.createElement('a');
@@ -471,12 +477,12 @@
                     btn.innerHTML = '<i class="fas fa-check"></i>';
                     btn.disabled = true;
                 } else {
-                    btn.innerHTML = "Enviado con Éxito";
+                    btn.innerHTML = "Descargado y Enviado";
                 }
 
             } catch (e) {
                 console.error(e);
-                alert("Error al generar imagen. Verifique consola.");
+                alert("Error al generar. Verifique que cargó el logo y firma.");
                 btn.innerHTML = icon;
             }
         }
