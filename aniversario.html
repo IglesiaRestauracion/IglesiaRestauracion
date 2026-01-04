@@ -6,7 +6,7 @@
     <title>Generador 11 Aniversario | Ven a Cristo</title>
     
     <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Librerías -->
@@ -15,13 +15,13 @@
 
     <style>
         :root {
-            --bg-green: #009045;
-            --bg-dark-green: #005c25;
+            --bg-green-light: #00b156;
+            --bg-green: #008f39;
+            --bg-green-dark: #005221;
             --text-orange: #ff8c00;
-            --text-yellow: #ffcc00;
+            --text-yellow: #ffdd00;
             --white: #ffffff;
-            --gray-panel: #f8f9fa;
-            --border-color: #e0e0e0;
+            --gray-panel: #f0f2f5;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,87 +34,56 @@
             overflow: hidden;
         }
 
-        /* --- SIDEBAR MEJORADO --- */
+        /* --- SIDEBAR --- */
         .sidebar {
-            width: 400px;
+            width: 380px;
             background: white;
-            padding: 25px;
-            border-right: 1px solid var(--border-color);
+            padding: 20px;
+            border-right: 1px solid #ddd;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.05);
+            gap: 15px;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.05);
             z-index: 100;
             overflow-y: auto;
         }
 
-        .sidebar-header {
-            border-bottom: 2px solid var(--bg-green);
-            padding-bottom: 15px;
-            margin-bottom: 10px;
+        .sidebar-header { border-bottom: 2px solid var(--bg-green); padding-bottom: 10px; margin-bottom: 10px; }
+        .sidebar-header h2 { color: var(--bg-green); margin: 0; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
+        
+        .upload-section label { display: block; font-size: 0.8rem; font-weight: 700; color: #555; margin-bottom: 5px; }
+        .file-input-box {
+            display: flex; align-items: center; gap: 10px; padding: 10px;
+            border: 1px solid #ccc; border-radius: 8px; cursor: pointer; transition: 0.3s;
+            background: #fafafa;
         }
-        .sidebar-header h2 { color: var(--bg-green); margin: 0; font-size: 1.2rem; text-transform: uppercase; font-weight: 800; }
-        .sidebar-header p { color: #666; font-size: 0.85rem; margin-top: 5px; }
+        .file-input-box:hover { border-color: var(--bg-green); background: #f0fff4; }
+        .file-input-box i { font-size: 1.2rem; color: var(--bg-green); }
+        .file-input-box span { font-size: 0.8rem; color: #666; }
+        input[type="file"] { display: none; }
 
-        /* TABS */
-        .tabs { display: flex; background: #f0f0f0; border-radius: 8px; padding: 4px; gap: 5px; }
-        .tab-btn {
-            flex: 1; padding: 10px; border: none; background: transparent; cursor: pointer;
-            border-radius: 6px; font-weight: 600; color: #666; transition: 0.3s; font-size: 0.9rem;
-        }
+        /* Tabs */
+        .tabs { display: flex; gap: 5px; background: #eee; padding: 5px; border-radius: 8px; }
+        .tab-btn { flex: 1; padding: 8px; border: none; background: transparent; cursor: pointer; border-radius: 5px; font-weight: 600; color: #666; transition: 0.3s; font-size: 0.85rem; }
         .tab-btn.active { background: white; color: var(--bg-green); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        .panel { display: none; animation: fadeIn 0.3s ease; }
+        .panel { display: none; margin-top: 15px; }
         .panel.active { display: block; }
 
-        /* DISEÑO DE INPUTS DE CARGA (NUEVO) */
-        .upload-section { display: flex; flex-direction: column; gap: 15px; }
+        /* Lista Contactos */
+        .contacts-list { margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; max-height: 300px; overflow-y: auto; }
+        .contact-item { background: #fff; border: 1px solid #eee; padding: 10px; margin-bottom: 5px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
+        .contact-info strong { display: block; font-size: 0.85rem; color: #333; }
+        .contact-info span { font-size: 0.75rem; color: #777; }
         
-        .file-card {
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: 0.3s;
-            cursor: pointer;
-            background: #fff;
-        }
-        .file-card:hover { border-color: var(--bg-green); background: #f0fff4; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        
-        .file-icon {
-            width: 45px; height: 45px;
-            background: #e8f5e9;
-            color: var(--bg-green);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem;
-        }
-        .file-info h4 { margin: 0; font-size: 0.9rem; color: #333; }
-        .file-info p { margin: 0; font-size: 0.75rem; color: #888; }
+        .btn-wa { width: 32px; height: 32px; border-radius: 50%; background: #25D366; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-wa:hover { transform: scale(1.1); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .btn-wa.done { background: #ccc; cursor: default; transform: none; }
 
-        /* LISTA DE CONTACTOS */
-        .contacts-list { margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px; }
-        .contact-item {
-            background: #fff; border: 1px solid #eee; padding: 12px; margin-bottom: 8px;
-            border-radius: 8px; display: flex; justify-content: space-between; align-items: center;
-        }
-        .contact-details strong { display: block; font-size: 0.9rem; color: #333; }
-        .contact-details span { font-size: 0.75rem; color: #666; }
-
-        .btn-wa {
-            width: 35px; height: 35px; border-radius: 50%; border: none;
-            background: #25D366; color: white; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; transition: 0.2s;
-        }
-        .btn-wa:hover { transform: scale(1.1); box-shadow: 0 3px 8px rgba(37, 211, 102, 0.4); }
-        .btn-wa.done { background: #ccc; cursor: default; transform: none; box-shadow: none; }
-
-        /* INPUTS MANUALES */
-        .input-manual { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 10px; font-family: 'Montserrat'; }
-        .btn-generate { width: 100%; padding: 12px; background: var(--bg-green); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
-        .btn-generate:hover { background: var(--bg-dark-green); }
+        /* Manual Inputs */
+        .manual-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; font-family: 'Montserrat'; }
+        .btn-gen { width: 100%; padding: 12px; background: var(--bg-green); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+        .btn-gen:hover { background: var(--bg-dark-green); }
 
         /* --- PREVIEW AREA --- */
         .preview-area {
@@ -123,86 +92,130 @@
             background-image: radial-gradient(#555 1px, transparent 1px); background-size: 20px 20px;
         }
 
-        /* --- AFICHE --- */
+        /* --- AFICHE (CANVAS) --- */
         #flyer {
             width: 650px;
             height: 950px;
-            background-color: var(--bg-green);
-            /* Degradado de Fondo Mejorado */
-            background-image: radial-gradient(circle at 50% 30%, #00b355 0%, var(--bg-green) 50%, #004d1f 100%);
-            position: relative; display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5); flex-shrink: 0;
+            position: relative;
+            display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 0 60px rgba(0,0,0,0.6); flex-shrink: 0;
             padding: 40px; text-align: center;
-            border: 12px solid rgba(255,255,255,0.15); /* Marco translúcido */
+            border: 10px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            /* FONDO MEJORADO */
+            background: radial-gradient(circle at 50% 0%, var(--bg-green-light) 0%, var(--bg-green) 40%, var(--bg-green-dark) 100%);
         }
 
-        /* Header */
-        .header-top { margin-bottom: 15px; color: white; text-transform: uppercase; z-index: 10; }
-        .church-title { font-weight: 800; font-size: 1.3rem; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .ministry-title { font-size: 0.9rem; letter-spacing: 3px; opacity: 0.9; margin-top: 5px; }
-
-        /* Logo */
-        .logo-container { 
-            margin: 10px 0 20px 0; width: 100%; display: flex; justify-content: center; 
-            min-height: 150px; align-items: center;
+        /* Textura de fondo */
+        .bg-texture {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+            opacity: 0.6; mix-blend-mode: overlay; pointer-events: none; z-index: 0;
         }
-        .logo-svg { 
-            width: 85%; max-height: 220px; object-fit: contain; 
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); /* Sombra para que destaque */
+        
+        /* Rayos de luz fondo */
+        .sunburst {
+            position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+            z-index: 0; pointer-events: none;
         }
-        .logo-placeholder { color: rgba(255,255,255,0.3); font-size: 0.9rem; border: 2px dashed rgba(255,255,255,0.3); padding: 20px; border-radius: 10px; }
 
-        /* Carta */
+        /* 1. Header (Mejorado para legibilidad) */
+        .header-top {
+            z-index: 10; margin-bottom: 10px; width: 100%;
+            /* Sombra suave detrás del header para separar del fondo */
+            background: radial-gradient(ellipse at top, rgba(0,0,0,0.3) 0%, transparent 70%);
+            padding-top: 10px; padding-bottom: 20px;
+        }
+        .church-title {
+            font-weight: 900; font-size: 1.4rem; letter-spacing: 1px; color: white;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.4); margin-bottom: 5px;
+        }
+        .ministry-title {
+            font-size: 1.1rem; letter-spacing: 3px; color: var(--text-yellow); font-weight: 700;
+            text-transform: uppercase; text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+        }
+
+        /* 2. Logo */
+        .logo-container {
+            margin: 5px 0 25px 0; width: 100%; display: flex; justify-content: center;
+            z-index: 10; position: relative; min-height: 180px; align-items: center;
+        }
+        .logo-svg {
+            width: 85%; max-height: 220px; object-fit: contain;
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4));
+            transform: rotate(-2deg); /* Ligera inclinación dinámica */
+        }
+        /* Texto fallback si no hay logo */
+        .logo-fallback { font-family:'Titan One'; color: white; font-size: 2rem; border: 2px dashed rgba(255,255,255,0.3); padding: 20px; border-radius: 10px; }
+
+        /* 3. Carta */
         .letter-container {
-            background: rgba(0, 40, 15, 0.5); /* Fondo más oscuro para leer mejor */
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 15px; padding: 25px 35px; width: 100%; text-align: left;
+            background: rgba(0, 30, 10, 0.5); /* Más oscuro para contraste */
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 15px; padding: 20px 30px; width: 100%; text-align: left;
             flex-grow: 1; display: flex; flex-direction: column; backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            z-index: 10;
         }
 
-        .greeting { color: var(--white); font-size: 1rem; margin-bottom: 15px; line-height: 1.4; }
-        .highlight-name { color: var(--text-yellow); font-weight: 800; text-transform: uppercase; text-shadow: 1px 1px 0 rgba(0,0,0,0.5);}
+        .greeting { color: var(--white); font-size: 0.95rem; margin-bottom: 12px; line-height: 1.4; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;}
+        .highlight-name { color: var(--text-yellow); font-weight: 800; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
-        .body-text { color: #f0f0f0; font-size: 0.9rem; line-height: 1.5; text-align: justify; margin-bottom: 15px; }
+        .body-text { color: #eee; font-size: 0.85rem; line-height: 1.5; text-align: justify; margin-bottom: 15px; }
 
-        /* Invitados */
+        /* Invitados Grid */
         .guest-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px;
         }
         .guest-item {
-            background: rgba(255,255,255,0.1); border-radius: 5px; padding: 5px 8px;
-            display: flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.08); border-radius: 6px; padding: 6px 8px;
+            display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.05);
         }
-        .guest-item i { color: var(--text-yellow); font-size: 0.8rem; }
+        .guest-item i { color: var(--text-orange); font-size: 0.9rem; }
         .guest-text { font-size: 0.7rem; color: white; line-height: 1.2; text-align: left;}
-        .guest-text strong { display: block; color: var(--text-orange); font-size: 0.75rem; }
+        .guest-text strong { display: block; color: var(--text-yellow); font-size: 0.75rem; font-weight: 700; }
 
+        /* Fecha Destacada */
         .event-details {
-            background: var(--white); color: var(--bg-dark-green); padding: 10px; border-radius: 8px;
-            text-align: center; font-weight: 700; text-transform: uppercase; font-size: 0.9rem; margin: 10px 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            color: var(--bg-green-dark); padding: 12px; border-radius: 8px;
+            text-align: center; font-weight: 800; text-transform: uppercase; font-size: 0.95rem; margin: 10px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transform: scale(1.02);
         }
-        .event-details span { color: var(--text-orange); font-size: 1.1rem; display: block; }
+        .event-details span { color: #d35400; font-size: 1.2rem; display: block; margin-bottom: 2px; }
 
-        /* --- FIRMA (SOLUCIÓN FONDO BLANCO) --- */
+        /* FIRMA CENTRADA */
         .signature-box {
-            background: white; /* Fondo blanco para que la firma azul se vea */
-            width: 250px;
-            margin: 20px auto 0 auto;
-            padding: 10px;
-            border-radius: 8px;
+            background: white;
+            width: 240px;
+            /* Centrado absoluto */
+            margin: 15px auto 0 auto;
+            padding: 8px;
+            border-radius: 6px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transform: rotate(-2deg); /* Estilo tarjeta */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: rotate(-1deg);
+            position: relative;
         }
-        .sign-img { height: 60px; object-fit: contain; margin-bottom: -10px; }
-        .pastor-sign { color: var(--bg-dark-green); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; border-top: 1px solid #ccc; padding-top: 5px; margin-top: 5px; }
+        /* Chincheta decorativa */
+        .signature-box::after {
+            content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%);
+            width: 10px; height: 10px; background: red; border-radius: 50%; box-shadow: 0 2px 2px rgba(0,0,0,0.3);
+        }
+
+        .sign-img { height: 55px; object-fit: contain; margin-bottom: -15px; position: relative; z-index: 1; }
+        .pastor-sign { color: var(--bg-green-dark); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; border-top: 1px solid #ccc; padding-top: 5px; margin-top: 5px; position: relative; z-index: 2; }
 
         /* Footer */
-        .footer-info { font-size: 0.8rem; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; }
+        .footer-info { font-size: 0.75rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; z-index: 10; font-weight: 600;}
 
-        @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+        @media (max-width: 900px) {
+            body { flex-direction: column; overflow-y: auto; }
+            .sidebar { width: 100%; height: auto; border-bottom: 1px solid #ccc;}
+            #flyer { transform: scale(0.52); margin: -200px 0; }
+        }
     </style>
 </head>
 <body>
@@ -210,54 +223,46 @@
     <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="sidebar-header">
-            <h2>Gestor 11 Aniversario</h2>
+            <h2>Gestor Aniversario</h2>
             <p>Configuración y Envíos</p>
         </div>
 
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('files')">1. Archivos</button>
-            <button class="tab-btn" onclick="switchTab('list')">2. Lista Excel</button>
+            <button class="tab-btn" onclick="switchTab('list')">2. Excel</button>
             <button class="tab-btn" onclick="switchTab('manual')">3. Manual</button>
         </div>
 
         <!-- PANEL 1: ARCHIVOS -->
         <div id="panel-files" class="panel active">
             <div class="upload-section">
-                <!-- Carga de Logo -->
-                <label class="file-card">
-                    <div class="file-icon"><i class="fas fa-image"></i></div>
-                    <div class="file-info">
-                        <h4>Logo Lema (SVG/PNG)</h4>
-                        <p id="logo-status">Clic para cargar logo2.svg</p>
-                    </div>
+                <label>Logo del Lema (logo2.svg):</label>
+                <label class="file-input-box">
+                    <i class="fas fa-image"></i>
+                    <span id="logo-status">Clic para cargar logo</span>
                     <input type="file" id="logoInput" accept=".svg, .png, .jpg">
                 </label>
 
-                <!-- Carga de Firma -->
-                <label class="file-card">
-                    <div class="file-icon"><i class="fas fa-signature"></i></div>
-                    <div class="file-info">
-                        <h4>Firma Pastor (PNG)</h4>
-                        <p id="sign-status">Clic para cargar firma azul</p>
-                    </div>
+                <label style="margin-top: 15px;">Firma Pastor (Azul/Negro):</label>
+                <label class="file-input-box">
+                    <i class="fas fa-signature"></i>
+                    <span id="sign-status">Clic para cargar firma</span>
                     <input type="file" id="signInput" accept=".png, .jpg">
                 </label>
             </div>
-            <div style="margin-top: 20px; font-size: 0.8rem; color: #666; background: #e3f2fd; padding: 10px; border-radius: 5px;">
-                <i class="fas fa-info-circle"></i> <b>Nota:</b> La firma se colocará en una tarjeta blanca para que el color azul sea visible sobre el fondo verde.
+            <div style="margin-top: 20px; font-size: 0.75rem; color: #666; background: #e8f5e9; padding: 10px; border-radius: 5px;">
+                <i class="fas fa-check-circle"></i> <b>Importante:</b> Carga el archivo <code>logo2.svg</code> aquí para que aparezca en la imagen descargada.
             </div>
         </div>
 
         <!-- PANEL 2: EXCEL -->
         <div id="panel-list" class="panel">
-            <label class="file-card" style="border-color: #009045; background: #f1f8e9;">
-                <div class="file-icon" style="background: #009045; color: white;"><i class="fas fa-file-excel"></i></div>
-                <div class="file-info">
-                    <h4>Cargar Excel</h4>
-                    <p>Columnas: Pastor, Iglesia, Celular</p>
-                </div>
+            <label class="file-input-box" style="background: #f0fdf4; border-color: #008f39;">
+                <i class="fas fa-file-excel"></i>
+                <span>Cargar Excel (.xlsx)</span>
                 <input type="file" id="excelInput" accept=".xlsx, .xls">
             </label>
+            <div style="font-size: 0.7rem; color: #888; margin: 5px 0 15px 0;">Req: Pastor, Iglesia, Celular</div>
             
             <div class="contacts-list" id="contactsList">
                 <div style="text-align: center; padding: 20px; color: #999;">Lista vacía</div>
@@ -266,31 +271,29 @@
 
         <!-- PANEL 3: MANUAL -->
         <div id="panel-manual" class="panel">
-            <div class="input-group">
-                <input type="text" class="input-manual" id="man-pastor" placeholder="Nombre del Pastor" oninput="updateManual()">
-                <input type="text" class="input-manual" id="man-iglesia" placeholder="Nombre de la Iglesia" oninput="updateManual()">
-                <input type="text" class="input-manual" id="man-celular" placeholder="Celular (con código país)">
-                <button class="btn-generate" onclick="processManual(this)">Descargar y Enviar</button>
-            </div>
+            <input type="text" class="manual-input" id="man-pastor" placeholder="Nombre del Pastor" oninput="updateManual()">
+            <input type="text" class="manual-input" id="man-iglesia" placeholder="Nombre de la Iglesia" oninput="updateManual()">
+            <input type="text" class="manual-input" id="man-celular" placeholder="Celular (con código país)">
+            <button class="btn-gen" onclick="processManual(this)">Descargar y Enviar</button>
         </div>
     </div>
 
     <!-- PREVIEW AREA -->
     <div class="preview-area">
         <div id="flyer">
+            <div class="bg-texture"></div>
+            <div class="sunburst"></div>
             
-            <!-- HEADER -->
+            <!-- HEADER MEJORADO -->
             <div class="header-top">
-                <div class="church-title">Iglesia Cristiana Centro de Restauración</div>
+                <div class="church-title">IGLESIA CRISTIANA CENTRO DE RESTAURACIÓN</div>
                 <div class="ministry-title">11 Años de Victoria</div>
             </div>
 
-            <!-- LOGO DINÁMICO -->
+            <!-- LOGO -->
             <div class="logo-container">
                 <img id="logo-img" class="logo-svg" style="display: none;">
-                <div id="logo-placeholder" class="logo-placeholder">
-                    Carga el archivo "logo2.svg" en el panel lateral
-                </div>
+                <div id="logo-placeholder" class="logo-fallback">CARGA "logo2.svg"</div>
             </div>
 
             <!-- CARTA -->
@@ -301,22 +304,21 @@
                 </div>
 
                 <div class="body-text">
-                    Es un honor saludarle e invitarle a nuestra Gran Campaña Evangelística de Aniversario.
+                    Es un honor saludarle e invitarle a nuestra Gran Campaña Evangelística de Aniversario. Será un tiempo de poder y milagros.
                 </div>
 
-                <!-- INVITADOS -->
-                <div style="font-size: 0.8rem; color: var(--text-orange); font-weight: 700; margin-bottom: 5px; text-transform: uppercase;">Invitados Especiales:</div>
+                <!-- INVITADOS ACTUALIZADOS -->
                 <div class="guest-grid">
                     <div class="guest-item">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-user-tie"></i>
                         <div class="guest-text"><strong>Ps. Eugenio Masias</strong>Ecuador 🇪🇨</div>
                     </div>
                     <div class="guest-item">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-user-tie"></i>
                         <div class="guest-text"><strong>Abel Zapata</strong>Chile 🇨🇱</div>
                     </div>
                     <div class="guest-item">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-user-tie"></i>
                         <div class="guest-text"><strong>Ruben Dias</strong>Cerro de Pasco</div>
                     </div>
                     <div class="guest-item">
@@ -325,16 +327,17 @@
                     </div>
                 </div>
 
+                <!-- FECHA ACTUALIZADA -->
                 <div class="event-details">
-                    26 de Diciembre • 7:00 PM<br>
-                    <span>Mz. H Lote 23, Ciudad del Chofer</span>
+                    <span>Del 22 al 25 de Enero • 7:00 PM</span>
+                    Mz. H Lote 23, Urb. Ciudad del Chofer
                 </div>
 
-                <!-- FIRMA EN TARJETA BLANCA -->
+                <!-- FIRMA CENTRADA -->
                 <div class="signature-box">
                     <img id="signature-img" class="sign-img" style="display: none;">
-                    <div id="sign-placeholder" style="font-size: 0.7rem; color: #ccc; margin-bottom: 10px;">Carga la firma</div>
-                    <div class="pastor-sign">Brigadiel Cerna Ravines<br><span style="font-weight: 400; font-size: 0.7rem; color: #555;">Pastor Principal</span></div>
+                    <div id="sign-placeholder" style="font-size:0.6rem; color:#aaa;">(Firma aquí)</div>
+                    <div class="pastor-sign">Brigadiel Cerna Ravines<br><span style="font-weight: 400; font-size: 0.65rem; color: #555;">Pastor Principal</span></div>
                 </div>
             </div>
 
@@ -343,12 +346,11 @@
     </div>
 
     <script>
-        // --- LOGICA DE TABS ---
+        // --- TABS ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
             
-            // Lógica simple de índices
             if(tabId === 'files') {
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
                 document.getElementById('panel-files').classList.add('active');
@@ -361,7 +363,7 @@
             }
         }
 
-        // --- CARGA DE IMÁGENES (LOGO Y FIRMA) ---
+        // --- CARGA DE IMÁGENES (CONVERSIÓN BASE64) ---
         function handleImageUpload(inputId, imgId, placeholderId, statusId) {
             document.getElementById(inputId).addEventListener('change', function(e) {
                 const file = e.target.files[0];
@@ -369,11 +371,15 @@
                     const reader = new FileReader();
                     reader.onload = function(evt) {
                         const img = document.getElementById(imgId);
-                        img.src = evt.target.result;
+                        img.src = evt.target.result; // Base64 directo
                         img.style.display = 'block';
                         if(placeholderId) document.getElementById(placeholderId).style.display = 'none';
-                        if(statusId) document.getElementById(statusId).innerText = file.name;
-                        if(statusId) document.getElementById(statusId).style.color = '#009045';
+                        if(statusId) {
+                            const el = document.getElementById(statusId);
+                            el.innerText = "Cargado: " + file.name;
+                            el.style.color = '#008f39';
+                            el.style.fontWeight = 'bold';
+                        }
                     }
                     reader.readAsDataURL(file);
                 }
@@ -383,7 +389,7 @@
         handleImageUpload('logoInput', 'logo-img', 'logo-placeholder', 'logo-status');
         handleImageUpload('signInput', 'signature-img', 'sign-placeholder', 'sign-status');
 
-        // --- EXCEL ---
+        // --- EXCEL LOGIC ---
         let contactsData = [];
         document.getElementById('excelInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
@@ -401,13 +407,11 @@
         function renderList() {
             const list = document.getElementById('contactsList');
             list.innerHTML = '';
-            if(contactsData.length === 0) return;
-
             contactsData.forEach((c, i) => {
                 const div = document.createElement('div');
                 div.className = 'contact-item';
                 div.innerHTML = `
-                    <div class="contact-details">
+                    <div class="contact-info">
                         <strong>${c.Pastor || 'Pastor'}</strong>
                         <span>${c.Iglesia || ''}</span>
                     </div>
@@ -417,48 +421,12 @@
             });
         }
 
-        // --- CORE: GENERAR Y ENVIAR ---
+        // --- CORE PROCESS ---
         async function process(index, btn) {
             const data = contactsData[index];
-            const icon = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-            // Actualizar
-            document.getElementById('prev-pastor').innerText = data.Pastor || "";
-            document.getElementById('prev-iglesia').innerText = data.Iglesia || "";
-
-            await new Promise(r => setTimeout(r, 500));
-
-            const flyer = document.getElementById('flyer');
-            try {
-                const canvas = await html2canvas(flyer, {
-                    scale: 2,
-                    backgroundColor: "#009045"
-                });
-                
-                const link = document.createElement('a');
-                link.download = `Invitacion_11Aniv_${(data.Pastor || 'Invitado').replace(/[^a-zA-Z0-9]/g,'')}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-
-                if(data.Celular) {
-                    const msg = `¡Bendiciones Pastor ${data.Pastor}! Adjunto la invitación oficial para el 11 Aniversario "VEN A CRISTO".`;
-                    const url = `https://wa.me/${data.Celular}?text=${encodeURIComponent(msg)}`;
-                    window.open(url, '_blank');
-                }
-
-                btn.className = 'btn-wa done';
-                btn.innerHTML = '<i class="fas fa-check"></i>';
-                btn.disabled = true;
-
-            } catch (e) {
-                console.error(e);
-                alert("Error generando imagen");
-                btn.innerHTML = icon;
-            }
+            await generateAndSend(data.Pastor || "", data.Iglesia || "", data.Celular, btn);
         }
 
-        // --- MODO MANUAL ---
         function updateManual() {
             document.getElementById('prev-pastor').innerText = document.getElementById('man-pastor').value || "NOMBRE DEL PASTOR";
             document.getElementById('prev-iglesia').innerText = document.getElementById('man-iglesia').value || "NOMBRE IGLESIA";
@@ -467,21 +435,60 @@
         async function processManual(btn) {
             const p = document.getElementById('man-pastor').value;
             const c = document.getElementById('man-celular').value;
-            
+            const i = document.getElementById('man-iglesia').value;
             if(!p) return alert("Escriba un nombre");
-            
-            const temp = { Pastor: p, Iglesia: document.getElementById('man-iglesia').value, Celular: c };
-            
-            // Simular proceso usando la función existente (truco para reutilizar codigo)
-            contactsData = [temp];
-            await process(0, btn);
-            
-            // Resetear botón manual
-            setTimeout(() => {
-                btn.innerHTML = "Descargar y Enviar";
-                btn.className = "btn-generate";
-                btn.disabled = false;
-            }, 3000);
+            await generateAndSend(p, i, c, btn);
+        }
+
+        async function generateAndSend(pastor, iglesia, celular, btn) {
+            const icon = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+            // Actualizar
+            document.getElementById('prev-pastor').innerText = pastor;
+            document.getElementById('prev-iglesia').innerText = iglesia;
+
+            await new Promise(r => setTimeout(r, 500));
+
+            const flyer = document.getElementById('flyer');
+            try {
+                // Configuración mejorada para capturar SVG y transparecias
+                const canvas = await html2canvas(flyer, {
+                    scale: 2, 
+                    backgroundColor: "#008f39",
+                    useCORS: true,
+                    allowTaint: true
+                });
+                
+                const link = document.createElement('a');
+                link.download = `Invitacion_11Aniv_${pastor.replace(/[^a-zA-Z0-9]/g,'')}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+                if(celular) {
+                    const msg = `¡Bendiciones Pastor ${pastor}! 🎉\n\nLe saludamos de la Iglesia Centro de Restauración.\nTenemos el honor de invitarle a nuestra Campaña de 11 Aniversario "VEN A CRISTO".\n\n📅 Fecha: Del 22 al 25 de Enero, 7:00 PM\n📍 Lugar: Ciudad del Chofer\n\nAdjunto su invitación oficial. ¡Le esperamos!`;
+                    
+                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                    const url = isMobile 
+                        ? `https://api.whatsapp.com/send?phone=${celular}&text=${encodeURIComponent(msg)}`
+                        : `https://web.whatsapp.com/send?phone=${celular}&text=${encodeURIComponent(msg)}`;
+                    
+                    window.open(url, '_blank');
+                }
+
+                if(btn.classList.contains('btn-wa')) {
+                    btn.className = 'btn-wa done';
+                    btn.innerHTML = '<i class="fas fa-check"></i>';
+                    btn.disabled = true;
+                } else {
+                    btn.innerHTML = "Enviado con Éxito";
+                }
+
+            } catch (e) {
+                console.error(e);
+                alert("Error al generar imagen");
+                btn.innerHTML = icon;
+            }
         }
     </script>
 </body>
