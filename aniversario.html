@@ -1,125 +1,443 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ven a Cristo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador 11 Aniversario | Ven a Cristo</title>
+    
+    <!-- Fuentes: Titan One (Para el título 3D estilo cartoon) y Montserrat (Textos serios) -->
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Librerías para Excel y Captura de Imagen -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-<!-- Fuente -->
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Paleta basada en la imagen VEN A CRISTO */
+            --bg-green: #008f39; /* Verde Hoja Intenso */
+            --bg-dark-green: #005c25;
+            --text-orange: #ff9100;
+            --text-yellow: #ffdd00;
+            --shadow-teal: #004d40; /* Sombra del texto 3D */
+            --white: #ffffff;
+        }
 
-<style>
-/* ================= RESET ================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-  font-family: 'Baloo 2', cursive;
-}
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #eef2f5;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
 
-/* ================= HERO ================= */
-.hero {
-  min-height: 100vh;
-  background: #0b8f3c; /* Verde principal */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
+        /* --- SIDEBAR DE CONTROL --- */
+        .sidebar {
+            width: 380px;
+            background: white;
+            padding: 25px;
+            border-right: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
 
-/* ================= CONTENEDOR ================= */
-.slogan {
-  line-height: 1;
-}
+        .sidebar-header h2 { color: var(--bg-green); margin: 0; font-size: 1.4rem; text-transform: uppercase; font-weight: 900; }
+        .sidebar-header p { color: #666; font-size: 0.8rem; }
 
-/* ================= VEN A ================= */
-.ven-a {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  color: #ffffff;
-  font-weight: 800;
-  margin-bottom: 0.4rem;
-  text-shadow:
-    0 4px 0 #0b5f2a,
-    0 6px 12px rgba(0,0,0,.25);
-}
+        /* Botón de Carga Excel */
+        .upload-area {
+            border: 2px dashed var(--bg-green);
+            background: #f1f8f3;
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .upload-area:hover { background: #dcedd6; border-color: var(--bg-dark-green); }
+        .upload-area i { font-size: 2rem; color: var(--bg-green); margin-bottom: 10px; }
+        input[type="file"] { display: none; }
 
-/* ================= CRISTO ================= */
-.cristo {
-  font-size: clamp(4rem, 10vw, 7.5rem);
-  font-weight: 800;
-  color: #ffc42d;
-  letter-spacing: 2px;
-  position: relative;
-  text-shadow:
-    0 4px 0 #e09b00,
-    0 8px 0 #c48100,
-    0 14px 20px rgba(0,0,0,.35);
-}
+        /* Lista de Contactos */
+        .contacts-wrapper {
+            flex-grow: 1;
+            overflow-y: auto;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
 
-/* ================= BRILLO ================= */
-.shine {
-  position: relative;
-}
+        .contact-card {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+        .contact-card:hover { border-left: 4px solid var(--bg-green); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        
+        .contact-info h4 { margin: 0; font-size: 0.9rem; color: #333; font-weight: 700; }
+        .contact-info span { font-size: 0.75rem; color: #888; display: block; }
 
-.shine::after {
-  content: '';
-  position: absolute;
-  top: -20%;
-  left: 35%;
-  width: 10px;
-  height: 40px;
-  background: white;
-  opacity: 0.7;
-  transform: rotate(25deg);
-  box-shadow:
-    0 0 12px white,
-    0 0 22px rgba(255,255,255,.9);
-}
+        .wa-btn {
+            background: #25D366; color: white; border: none;
+            width: 40px; height: 40px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; transition: 0.2s;
+        }
+        .wa-btn:hover { transform: scale(1.1); box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4); }
+        .wa-btn.sent { background: #ccc; cursor: default; transform: none; box-shadow: none; }
 
-/* ================= SUB ================= */
-.sub {
-  margin-top: 0.8rem;
-  font-size: clamp(1.1rem, 3vw, 1.6rem);
-  color: #ffffff;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 0 #0b5f2a;
-}
+        /* --- ÁREA DE VISTA PREVIA --- */
+        .preview-area {
+            flex-grow: 1;
+            background: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: auto;
+            background-image: radial-gradient(#444 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
 
-/* ================= VERSO ================= */
-.verse {
-  margin-top: 0.4rem;
-  font-size: 0.95rem;
-  color: #e8ffe8;
-  letter-spacing: 1px;
-}
-</style>
+        /* --- EL AFICHE (CANVAS) --- */
+        #flyer {
+            width: 600px;
+            height: 750px;
+            background-color: var(--bg-green);
+            /* Textura de ruido sutil para calidad profesional */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+            padding: 40px;
+            text-align: center;
+            border: 10px solid rgba(255,255,255,0.1); /* Marco sutil */
+        }
+
+        /* --- ELEMENTOS DE DISEÑO (ESTILO VEN A CRISTO) --- */
+        
+        .header-top {
+            margin-bottom: 20px;
+            z-index: 10;
+        }
+        .aniv-badge {
+            background: var(--white);
+            color: var(--bg-dark-green);
+            font-weight: 900;
+            padding: 8px 30px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
+        }
+
+        /* RECREACIÓN DEL LOGOTIPO EN CSS PURO (Por si no carga el SVG) */
+        .logo-container {
+            margin: 30px 0 50px 0;
+            transform: rotate(-3deg); /* Inclinación dinámica */
+            z-index: 10;
+        }
+
+        /* "VEN A" - Blanco con borde verde */
+        .text-ven-a {
+            font-family: 'Titan One', cursive;
+            font-size: 4.5rem;
+            color: var(--white);
+            /* Simulación de borde grueso usando text-shadow */
+            text-shadow: 
+                3px 3px 0 var(--bg-dark-green),
+                -1px -1px 0 var(--bg-dark-green),  
+                1px -1px 0 var(--bg-dark-green),
+                -1px 1px 0 var(--bg-dark-green),
+                1px 1px 0 var(--bg-dark-green);
+            line-height: 0.8;
+            margin-bottom: -15px; /* Superposición */
+            position: relative;
+            z-index: 2;
+        }
+
+        /* "CRISTO" - Gradiente Naranja, 3D Profundo */
+        .text-cristo {
+            font-family: 'Titan One', cursive;
+            font-size: 7.5rem;
+            /* Gradiente de texto */
+            background: linear-gradient(to bottom, var(--text-yellow) 20%, var(--text-orange) 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Efecto 3D (Drop Shadow sólido) */
+            filter: drop-shadow(0px 8px 0px var(--shadow-teal)) drop-shadow(0px 15px 20px rgba(0,0,0,0.4));
+            /* Borde simulado */
+            -webkit-text-stroke: 2px var(--shadow-teal);
+            line-height: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .text-lema {
+            font-family: 'Titan One', cursive;
+            font-size: 1.4rem;
+            color: var(--white);
+            text-transform: uppercase;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+        }
+
+        /* CAJA DE INVITADOS (Glassmorphism sutil) */
+        .invite-box {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            margin-top: auto; /* Empujar al fondo */
+            margin-bottom: 30px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .invite-label {
+            color: var(--text-yellow);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+        }
+
+        .pastor-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900; /* Extra Bold */
+            font-size: 2.2rem;
+            color: var(--white);
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+        }
+
+        .church-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            text-transform: uppercase;
+        }
+
+        /* FOOTER DE FECHA */
+        .footer-info {
+            background: var(--bg-dark-green);
+            width: 115%; /* Salirse del padding */
+            padding: 15px 0;
+            margin-bottom: -40px; /* Pegar al borde */
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+        }
+        .footer-info i { color: var(--text-yellow); margin-right: 5px; }
+
+        /* Responsive UI */
+        @media (max-width: 1000px) {
+            body { flex-direction: column; overflow-y: auto; }
+            .sidebar { width: 100%; height: auto; padding-bottom: 40px;}
+            .preview-area { padding: 40px 10px; }
+            #flyer { transform: scale(0.6); margin: -100px 0; }
+        }
+    </style>
 </head>
-
 <body>
 
-<section class="hero">
-  <div class="slogan">
+    <!-- BARRA LATERAL (CONTROLES) -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-church"></i> Gestor 11 Aniversario</h2>
+            <p>Generación Masiva de Invitaciones</p>
+        </div>
 
-    <div class="ven-a">VEN A</div>
+        <label class="upload-area">
+            <i class="fas fa-file-excel"></i>
+            <div style="font-weight: bold;">Cargar Excel (.xlsx)</div>
+            <small style="color: #888;">Columnas: Pastor, Iglesia, Celular</small>
+            <input type="file" id="excelInput" accept=".xlsx, .xls">
+        </label>
 
-    <div class="cristo">
-      CRI<span class="shine">S</span>TO
+        <div class="contacts-wrapper" id="contactsList">
+            <div style="text-align: center; color: #999; padding: 30px 10px;">
+                <i class="fas fa-arrow-up" style="margin-bottom: 10px; display:block;"></i>
+                Sube tu lista para comenzar.<br>
+                El sistema generará una imagen personalizada por cada pastor.
+            </div>
+        </div>
     </div>
 
-    <div class="sub">
-      TAL&nbsp;&nbsp;COMO&nbsp;&nbsp;ESTÁS
+    <!-- ÁREA DE VISTA PREVIA -->
+    <div class="preview-area">
+        <div id="flyer">
+            
+            <!-- 1. Encabezado -->
+            <div class="header-top">
+                <div class="aniv-badge">11 Años de Victoria</div>
+            </div>
+
+            <!-- 2. Logo 3D CSS (Replica exacta del estilo solicitado) -->
+            <div class="logo-container">
+                <!-- Si tienes el archivo SVG real, descomenta la linea de abajo y borra los divs de texto -->
+                <!-- <img src="lema.svg" style="width: 100%;"> -->
+                
+                <div class="text-ven-a">VEN A</div>
+                <div class="text-cristo">CRISTO</div>
+                <div class="text-lema">TAL COMO ESTÁS • MATEO 11:28</div>
+            </div>
+
+            <!-- 3. Datos Personalizados (Se llenan con JS) -->
+            <div class="invite-box">
+                <div class="invite-label">Invitación Especial Para:</div>
+                <div class="pastor-name" id="pName">NOMBRE DEL PASTOR</div>
+                <div class="church-name" id="cName">NOMBRE DE LA IGLESIA</div>
+            </div>
+
+            <!-- 4. Footer -->
+            <div class="footer-info">
+                <div><i class="far fa-calendar-alt"></i> 26 DIC</div>
+                <div><i class="far fa-clock"></i> 7:00 PM</div>
+                <div><i class="fas fa-map-marker-alt"></i> Ciudad del Chofer</div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="verse">
-      MATEO 11:28
-    </div>
+    <!-- LÓGICA DE AUTOMATIZACIÓN -->
+    <script>
+        let contactsData = [];
 
-  </div>
-</section>
+        // 1. CARGAR Y LEER EXCEL
+        document.getElementById('excelInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, {type: 'array'});
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
+                contactsData = XLSX.utils.sheet_to_json(sheet);
+                
+                renderContactList();
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        // 2. MOSTRAR LISTA EN SIDEBAR
+        function renderContactList() {
+            const list = document.getElementById('contactsList');
+            list.innerHTML = '';
+            
+            if(contactsData.length === 0) {
+                list.innerHTML = '<div style="padding:10px; text-align:center;">El archivo está vacío o tiene formato incorrecto.</div>';
+                return;
+            }
+
+            contactsData.forEach((c, i) => {
+                const item = document.createElement('div');
+                item.className = 'contact-card';
+                item.innerHTML = `
+                    <div class="contact-info">
+                        <h4>${c.Pastor || 'Pastor Invitado'}</h4>
+                        <span>${c.Iglesia || ''}</span>
+                    </div>
+                    <button class="wa-btn" onclick="processAndSend(${i}, this)" title="Generar y Enviar">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // 3. PROCESAR: Actualizar Diseño -> Generar Imagen -> WhatsApp
+        async function processAndSend(index, btn) {
+            const data = contactsData[index];
+            const originalIcon = btn.innerHTML;
+            
+            // UI: Cargando
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.style.backgroundColor = '#aaa';
+            
+            // A. INYECTAR DATOS EN EL AFICHE
+            document.getElementById('pName').innerText = data.Pastor || "";
+            document.getElementById('cName').innerText = data.Iglesia || "";
+
+            // Esperar un poco para que el navegador renderice los cambios de texto
+            await new Promise(r => setTimeout(r, 400));
+
+            // B. CAPTURAR EL AFICHE
+            const flyerElement = document.getElementById('flyer');
+            
+            try {
+                const canvas = await html2canvas(flyerElement, {
+                    scale: 2, // Calidad HD
+                    backgroundColor: "#008f39", // Asegurar fondo verde
+                    logging: false
+                });
+
+                // C. DESCARGAR LA IMAGEN (Obligatorio por seguridad del navegador)
+                const link = document.createElement('a');
+                // Nombre de archivo limpio
+                const filename = `Invitacion_11Aniv_${(data.Pastor || 'Invitado').replace(/[^a-z0-9]/gi, '_')}.png`;
+                link.download = filename;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+                // D. ABRIR WHATSAPP
+                if(data.Celular) {
+                    const msg = `¡Bendiciones Pastor ${data.Pastor}! 🎉\n\nLe saludamos de la Iglesia Centro de Restauración.\nQueremos invitarle especialmente a nuestra Campaña de 11 Aniversario "VEN A CRISTO".\n\n📅 Fecha: 26 de Diciembre\n🕗 Hora: 7:00 PM\n📍 Lugar: Ciudad del Chofer\n\nAdjunto su invitación personalizada. ¡Le esperamos!`;
+                    
+                    // Detectar si es móvil o escritorio para usar api o web
+                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                    const baseUrl = isMobile ? 'https://api.whatsapp.com/send' : 'https://web.whatsapp.com/send';
+                    
+                    const url = `${baseUrl}?phone=${data.Celular}&text=${encodeURIComponent(msg)}`;
+                    window.open(url, '_blank');
+                } else {
+                    alert("Se descargó la imagen, pero no hay número de celular para este contacto.");
+                }
+
+                // UI: Finalizado
+                btn.className = 'wa-btn sent';
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                btn.disabled = true;
+
+            } catch (err) {
+                console.error(err);
+                alert("Error al generar la imagen");
+                btn.innerHTML = originalIcon;
+                btn.style.backgroundColor = '#25D366';
+            }
+        }
+    </script>
 
 </body>
 </html>
