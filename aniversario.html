@@ -1,276 +1,125 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ven a Cristo | 11 Aniversario - Centro de Restauración</title>
-    
-    <!-- Fuentes de Google (Alternativas visuales idénticas para asegurar que se vea bien online) -->
-    <!-- Heavitas es muy similar a 'Titan One' y Hanson a 'Russo One' -->
-    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Titan+One&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-    <!-- Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ven a Cristo</title>
 
-    <style>
-        /* --- IMPORTACIÓN DE FUENTES LOCALES (SI LAS TIENES) --- */
-        @font-face {
-            font-family: 'Heavitas';
-            src: url('Heavitas.ttf') format('truetype'); /* Pon aquí la ruta de tu archivo si lo tienes */
-        }
-        @font-face {
-            font-family: 'Hanson';
-            src: url('Hanson-Bold.ttf') format('truetype'); /* Pon aquí la ruta de tu archivo si lo tienes */
-        }
+<!-- Fuente -->
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
 
-        :root {
-            /* Paleta extraída de la imagen */
-            --brand-green: #009045; /* Verde fondo */
-            --brand-dark-teal: #004d40; /* Sombra 3D */
-            --brand-yellow: #FFD700;
-            --brand-orange: #FF8C00;
-            --white: #ffffff;
-        }
+<style>
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Baloo 2', cursive;
+}
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--brand-green);
-            color: var(--white);
-            overflow-x: hidden;
-        }
+/* ================= HERO ================= */
+.hero {
+  min-height: 100vh;
+  background: #0b8f3c; /* Verde principal */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
-        /* --- HERO SECTION (EL LOGO CSS) --- */
-        .hero-section {
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: radial-gradient(circle at center, #00ab52 0%, #007a3a 100%);
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-        }
+/* ================= CONTENEDOR ================= */
+.slogan {
+  line-height: 1;
+}
 
-        /* Partículas de fondo sutiles */
-        .bg-pattern {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
-            background-size: 40px 40px;
-            opacity: 0.3;
-            pointer-events: none;
-        }
+/* ================= VEN A ================= */
+.ven-a {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: #ffffff;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+  text-shadow:
+    0 4px 0 #0b5f2a,
+    0 6px 12px rgba(0,0,0,.25);
+}
 
-        /* CONTENEDOR DEL LOGO */
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transform: scale(1);
-            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+/* ================= CRISTO ================= */
+.cristo {
+  font-size: clamp(4rem, 10vw, 7.5rem);
+  font-weight: 800;
+  color: #ffc42d;
+  letter-spacing: 2px;
+  position: relative;
+  text-shadow:
+    0 4px 0 #e09b00,
+    0 8px 0 #c48100,
+    0 14px 20px rgba(0,0,0,.35);
+}
 
-        /* 1. TEXTO "VEN A" */
-        .text-ven {
-            font-family: 'Heavitas', 'Titan One', cursive; /* Fuente principal y fallback */
-            font-size: clamp(3rem, 8vw, 5rem);
-            color: var(--white);
-            line-height: 0.8;
-            text-transform: uppercase;
-            /* Borde verde sutil simulado */
-            text-shadow: 
-                3px 3px 0px var(--brand-dark-teal);
-            transform: rotate(-3deg) translateY(20px);
-            z-index: 2;
-        }
+/* ================= BRILLO ================= */
+.shine {
+  position: relative;
+}
 
-        /* 2. TEXTO "CRISTO" (Efecto 3D Complejo) */
-        .text-cristo {
-            font-family: 'Heavitas', 'Titan One', cursive;
-            font-size: clamp(5rem, 15vw, 10rem);
-            text-transform: uppercase;
-            line-height: 0.9;
-            position: relative;
-            z-index: 1;
-            margin: 0;
-            
-            /* Gradiente Naranja/Amarillo en el texto */
-            background: linear-gradient(to bottom, #ffeb3b 20%, #ff8f00 80%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            
-            /* El contorno blanco y la extrusión 3D Azul verdosa */
-            /* Nota: Webkit-text-stroke hace el borde blanco, text-shadow hace el 3D */
-            -webkit-text-stroke: 6px white; 
-            paint-order: stroke fill;
-            
-            /* Sombra apilada para efecto 3D sólido */
-            text-shadow: 
-                0px 5px 0px #005f56,
-                0px 10px 0px #005f56,
-                0px 15px 0px #005f56,
-                0px 20px 0px #00403a,
-                0px 20px 20px rgba(0,0,0,0.4);
-        }
+.shine::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 35%;
+  width: 10px;
+  height: 40px;
+  background: white;
+  opacity: 0.7;
+  transform: rotate(25deg);
+  box-shadow:
+    0 0 12px white,
+    0 0 22px rgba(255,255,255,.9);
+}
 
-        /* Destello en la "I" */
-        .shine-effect {
-            position: absolute;
-            top: 20%;
-            left: 48%; /* Ajustado sobre la R/I */
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, #fff 10%, rgba(255, 255, 255, 0) 70%);
-            filter: blur(2px);
-            z-index: 10;
-            animation: pulseShine 3s infinite;
-        }
+/* ================= SUB ================= */
+.sub {
+  margin-top: 0.8rem;
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 0 #0b5f2a;
+}
 
-        /* 3. TEXTO "TAL COMO ESTAS" */
-        .text-verse {
-            font-family: 'Hanson', 'Russo One', sans-serif;
-            font-size: clamp(1rem, 3vw, 1.8rem);
-            text-transform: uppercase;
-            margin-top: 25px;
-            letter-spacing: 2px;
-            text-shadow: 0 3px 5px rgba(0,0,0,0.3);
-        }
-        
-        .text-ref {
-            font-family: 'Hanson', 'Russo One', sans-serif;
-            font-size: clamp(0.8rem, 2vw, 1.2rem);
-            margin-top: 5px;
-            color: #b3ffcc;
-        }
-
-        /* --- DETALLES DE CAMPAÑA (11 ANIVERSARIO) --- */
-        .campaign-badge {
-            background: var(--white);
-            color: var(--brand-green);
-            padding: 8px 25px;
-            border-radius: 50px;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        /* --- INFO BAR --- */
-        .info-bar {
-            margin-top: 50px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 900px;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .info-item i { font-size: 1.5rem; color: var(--brand-yellow); margin-bottom: 10px; }
-        .info-item h3 { font-size: 1.1rem; margin-bottom: 5px; font-weight: 800; }
-        .info-item p { font-size: 0.9rem; opacity: 0.9; }
-
-        /* --- CTA BUTTON --- */
-        .cta-btn {
-            background: linear-gradient(to bottom, #ffeb3b, #ff8f00);
-            color: #004d40;
-            padding: 18px 50px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            border: 4px solid #fff;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 40px;
-            transition: 0.3s;
-            text-decoration: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .cta-btn:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-
-        /* Animaciones */
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.5); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes pulseShine {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.5) rotate(45deg); }
-        }
-
-        /* Responsiveness específico para el logo */
-        @media (max-width: 600px) {
-            .text-cristo { -webkit-text-stroke: 3px white; text-shadow: 0px 5px 0px #005f56; }
-            .info-bar { grid-template-columns: 1fr; }
-        }
-    </style>
+/* ================= VERSO ================= */
+.verse {
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  color: #e8ffe8;
+  letter-spacing: 1px;
+}
+</style>
 </head>
+
 <body>
 
-    <section class="hero-section">
-        <div class="bg-pattern"></div>
+<section class="hero">
+  <div class="slogan">
 
-        <!-- Badge de Aniversario -->
-        <div class="campaign-badge">
-            <i class="fas fa-crown"></i> 11º Aniversario - Centro de Restauración
-        </div>
+    <div class="ven-a">VEN A</div>
 
-        <!-- EL LOGO RECREADO EN CSS -->
-        <div class="logo-container">
-            <div class="text-ven">VEN A</div>
-            
-            <div class="text-cristo">
-                CRISTO
-                <div class="shine-effect"></div>
-            </div>
-            
-            <div class="text-verse">Tal como estás</div>
-            <div class="text-ref">Mateo 11:28</div>
-        </div>
+    <div class="cristo">
+      CRI<span class="shine">S</span>TO
+    </div>
 
-        <!-- Información del Evento -->
-        <div class="info-bar">
-            <div class="info-item">
-                <i class="far fa-calendar-alt"></i>
-                <h3>Fechas</h3>
-                <p>Del 20 al 23 de Noviembre</p>
-            </div>
-            <div class="info-item">
-                <i class="far fa-clock"></i>
-                <h3>Hora</h3>
-                <p>7:30 PM (Noches de Milagros)</p>
-            </div>
-            <div class="info-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <h3>Lugar</h3>
-                <p>Centro de Restauración<br>Ciudad del Chofer</p>
-            </div>
-        </div>
+    <div class="sub">
+      TAL&nbsp;&nbsp;COMO&nbsp;&nbsp;ESTÁS
+    </div>
 
-        <!-- Botón de Acción -->
-        <a href="#registro" class="cta-btn">
-            ¡Quiero Asistir!
-        </a>
+    <div class="verse">
+      MATEO 11:28
+    </div>
 
-    </section>
-
-    <!-- Footer Simple -->
-    <footer style="text-align: center; padding: 20px; font-size: 0.8rem; background: #004d40;">
-        <p>&copy; 2026 Iglesia Cristiana Centro de Restauración - 11 Años de Victoria</p>
-    </footer>
+  </div>
+</section>
 
 </body>
 </html>
