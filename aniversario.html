@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador 11 Aniversario | Final</title>
+    <title>Generador 11 Aniversario | Ven a Cristo</title>
     
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Librerías (Versiones estables) -->
+    <!-- Librerías -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
+            --bg-green-light: #00b156;
             --bg-green: #008f39;
-            --bg-dark-green: #005c25;
+            --bg-green-dark: #005221;
             --text-orange: #ff8c00;
             --text-yellow: #ffdd00;
             --white: #ffffff;
-            --gray-panel: #f4f4f4;
+            --gray-panel: #f0f2f5;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,7 +45,8 @@
             overflow-y: auto;
         }
 
-        .sidebar h2 { color: var(--bg-green); margin: 0; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
+        .sidebar-header { border-bottom: 2px solid var(--bg-green); padding-bottom: 10px; margin-bottom: 10px; }
+        .sidebar-header h2 { color: var(--bg-green); margin: 0; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
         
         .upload-section label { display: block; font-size: 0.8rem; font-weight: 700; color: #555; margin-bottom: 5px; }
         .file-input-box {
@@ -57,7 +59,6 @@
         .file-input-box span { font-size: 0.8rem; color: #666; }
         input[type="file"] { display: none; }
 
-        /* Tabs */
         .tabs { display: flex; gap: 5px; background: #eee; padding: 5px; border-radius: 8px; }
         .tab-btn { flex: 1; padding: 8px; border: none; background: transparent; cursor: pointer; border-radius: 5px; font-weight: 600; color: #666; transition: 0.3s; font-size: 0.85rem; }
         .tab-btn.active { background: white; color: var(--bg-green); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -65,8 +66,7 @@
         .panel { display: none; margin-top: 15px; }
         .panel.active { display: block; }
 
-        /* Lista Contactos */
-        .contacts-list { margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
+        .contacts-list { margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; max-height: 300px; overflow-y: auto; }
         .contact-item { background: #fff; border: 1px solid #eee; padding: 10px; margin-bottom: 5px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
         .contact-info strong { display: block; font-size: 0.85rem; color: #333; }
         .contact-info span { font-size: 0.75rem; color: #777; }
@@ -75,19 +75,18 @@
         .btn-wa:hover { transform: scale(1.1); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .btn-wa.done { background: #ccc; cursor: default; transform: none; }
 
-        /* Manual Inputs */
         .manual-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; font-family: 'Montserrat'; }
         .btn-gen { width: 100%; padding: 12px; background: var(--bg-green); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
         .btn-gen:hover { background: var(--bg-dark-green); }
 
-        /* --- PREVIEW AREA --- */
+        /* --- PREVIEW --- */
         .preview-area {
             flex-grow: 1; background: #333; display: flex;
             justify-content: center; align-items: center; padding: 40px; overflow: auto;
             background-image: radial-gradient(#555 1px, transparent 1px); background-size: 20px 20px;
         }
 
-        /* --- AFICHE (CANVAS) --- */
+        /* --- AFICHE --- */
         #flyer {
             width: 650px;
             height: 950px;
@@ -95,39 +94,56 @@
             display: flex; flex-direction: column; align-items: center;
             box-shadow: 0 0 60px rgba(0,0,0,0.6); flex-shrink: 0;
             padding: 40px; text-align: center;
-            /* Fondo mejorado */
-            background: radial-gradient(circle at 50% 30%, #00b156 0%, #008f39 50%, #004d1f 100%);
+            /* Fondo verde premium */
+            background: radial-gradient(circle at 50% 0%, var(--bg-green-light) 0%, var(--bg-green) 40%, var(--bg-green-dark) 100%);
             border: 10px solid rgba(255,255,255,0.1);
+            overflow: hidden;
         }
 
-        /* 1. Header (Mejorado) */
+        .bg-texture {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+            opacity: 0.6; mix-blend-mode: overlay; pointer-events: none; z-index: 0;
+        }
+        
+        .sunburst {
+            position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+            z-index: 0; pointer-events: none;
+        }
+
+        /* HEADER */
         .header-top {
             z-index: 10; margin-bottom: 5px; width: 100%;
-            /* Sombra suave para separar del fondo */
-            text-shadow: 0 4px 8px rgba(0,0,0,0.6);
+            background: radial-gradient(ellipse at top, rgba(0,0,0,0.3) 0%, transparent 70%);
+            padding-top: 10px; padding-bottom: 20px;
         }
         .church-title {
             font-weight: 900; font-size: 1.4rem; letter-spacing: 1px; color: white;
-            margin-bottom: 5px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.4); margin-bottom: 5px;
         }
         .ministry-title {
-            font-size: 1.2rem; letter-spacing: 2px; color: var(--text-yellow); font-weight: 800;
-            text-transform: uppercase;
+            font-size: 1.1rem; letter-spacing: 3px; color: var(--text-yellow); font-weight: 700;
+            text-transform: uppercase; text-shadow: 0 2px 5px rgba(0,0,0,0.4);
         }
 
-        /* 2. Logo */
+        /* LOGO (AUMENTADO DE TAMAÑO) */
         .logo-container {
-            margin: 5px 0 25px 0; width: 100%; display: flex; justify-content: center;
-            z-index: 10; position: relative; min-height: 180px; align-items: center;
+            margin: 0 0 20px 0; width: 100%; display: flex; justify-content: center;
+            z-index: 10; position: relative; min-height: 200px; align-items: center;
         }
         .logo-svg {
-            width: 85%; max-height: 220px; object-fit: contain;
+            /* TAMAÑO AUMENTADO */
+            width: 95%; 
+            max-height: 280px; 
+            object-fit: contain;
             filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4));
             transform: rotate(-2deg);
         }
         .logo-fallback { font-family:'Titan One'; color: white; font-size: 2rem; border: 2px dashed rgba(255,255,255,0.3); padding: 20px; border-radius: 10px; }
 
-        /* 3. Carta */
+        /* CARTA */
         .letter-container {
             background: rgba(0, 30, 10, 0.5);
             border: 1px solid rgba(255,255,255,0.25);
@@ -142,10 +158,7 @@
 
         .body-text { color: #eee; font-size: 0.85rem; line-height: 1.5; text-align: justify; margin-bottom: 15px; }
 
-        /* Invitados Grid */
-        .guest-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px;
-        }
+        .guest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
         .guest-item {
             background: rgba(255,255,255,0.08); border-radius: 6px; padding: 6px 8px;
             display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.05);
@@ -154,7 +167,6 @@
         .guest-text { font-size: 0.7rem; color: white; line-height: 1.2; text-align: left;}
         .guest-text strong { display: block; color: var(--text-yellow); font-size: 0.75rem; font-weight: 700; }
 
-        /* Fecha Destacada */
         .event-details {
             background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
             color: var(--bg-dark-green); padding: 12px; border-radius: 8px;
@@ -163,49 +175,23 @@
         }
         .event-details span { color: #d35400; font-size: 1.2rem; display: block; margin-bottom: 2px; }
 
-        /* FIRMA (CORREGIDA: FLEXBOX PARA CENTRADO PERFECTO) */
+        /* FIRMA CENTRADA */
         .signature-box {
-            background: white;
-            width: 240px;
-            margin: 10px auto 0 auto; /* Auto en márgenes laterales centra el bloque */
-            padding: 10px;
-            border-radius: 6px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: white; width: 240px;
+            margin: 15px auto 0 auto; padding: 10px; border-radius: 6px;
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transform: rotate(-1deg);
-            
-            /* FLEXBOX PARA CENTRAR CONTENIDO INTERNO */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         
-        /* Imagen de firma */
-        .sign-img { 
-            height: 60px; 
-            width: auto; 
-            object-fit: contain; 
-            display: block; 
-            margin-bottom: -15px; /* Superposición ligera */
-            z-index: 1;
-        }
+        .sign-img { height: 60px; width: auto; object-fit: contain; display: block; margin-bottom: -15px; z-index: 1; }
         
-        /* Texto de firma */
         .pastor-sign { 
-            color: var(--bg-dark-green); 
-            font-weight: 800; 
-            font-size: 0.75rem; 
-            text-transform: uppercase; 
-            border-top: 1px solid #ccc; 
-            padding-top: 5px; 
-            margin-top: 5px; 
-            width: 90%; /* Linea no toca bordes */
-            text-align: center;
-            z-index: 2;
-            position: relative;
+            color: var(--bg-dark-green); font-weight: 800; font-size: 0.75rem; text-transform: uppercase;
+            border-top: 1px solid #ccc; padding-top: 5px; margin-top: 5px; width: 90%; text-align: center;
+            z-index: 2; position: relative;
         }
 
-        /* Footer */
         .footer-info { font-size: 0.75rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; z-index: 10; font-weight: 600;}
 
         @media (max-width: 900px) {
@@ -221,7 +207,7 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <h2>Gestor Aniversario</h2>
-            <p>Configuración y Envíos</p>
+            <p>Generación de Invitaciones</p>
         </div>
 
         <div class="tabs">
@@ -233,6 +219,7 @@
         <!-- PANEL 1: ARCHIVOS -->
         <div id="panel-files" class="panel active">
             <div class="upload-section">
+                <!-- LOGO (CORREGIDO PARA GITHUB PAGES) -->
                 <label>Logo del Lema (logo2.svg):</label>
                 <label class="file-input-box">
                     <i class="fas fa-image"></i>
@@ -248,7 +235,7 @@
                 </label>
             </div>
             <div style="margin-top: 20px; font-size: 0.75rem; color: #666; background: #e8f5e9; padding: 10px; border-radius: 5px;">
-                <i class="fas fa-check-circle"></i> <b>Nota:</b> El sistema procesará el SVG para asegurar que aparezca en la descarga.
+                <i class="fas fa-exclamation-circle"></i> <b>Nota Importante:</b> Para que el logo aparezca en la descarga, debes cargarlo aquí manualmente o asegurar que el archivo 'logo2.svg' está en la misma carpeta.
             </div>
         </div>
 
@@ -260,7 +247,6 @@
                 <input type="file" id="excelInput" accept=".xlsx, .xls">
             </label>
             <div style="font-size: 0.7rem; color: #888; margin: 5px 0 15px 0;">Req: Pastor, Iglesia, Celular</div>
-            
             <div class="contacts-list" id="contactsList">
                 <div style="text-align: center; padding: 20px; color: #999;">Lista vacía</div>
             </div>
@@ -278,20 +264,20 @@
     <!-- PREVIEW AREA -->
     <div class="preview-area">
         <div id="flyer">
+            <div class="bg-texture"></div>
+            <div class="sunburst"></div>
             
-            <!-- HEADER -->
             <div class="header-top">
                 <div class="church-title">IGLESIA CRISTIANA CENTRO DE RESTAURACIÓN</div>
                 <div class="ministry-title">11 Años de Victoria</div>
             </div>
 
-            <!-- LOGO -->
+            <!-- LOGO: Se inicia oculto, el JS intentará cargar el default o el usuario lo sube -->
             <div class="logo-container">
-                <img id="logo-img" class="logo-svg" style="display: none;">
+                <img id="logo-img" class="logo-svg" style="display: none;" alt="Logo Aniversario">
                 <div id="logo-placeholder" class="logo-fallback">CARGA "logo2.svg"</div>
             </div>
 
-            <!-- CARTA -->
             <div class="letter-container">
                 <div class="greeting">
                     Apreciado Pastor <span class="highlight-name" id="prev-pastor">NOMBRE DEL PASTOR</span><br>
@@ -302,33 +288,18 @@
                     Es un honor saludarle e invitarle a nuestra Gran Campaña Evangelística de Aniversario. Será un tiempo de poder y milagros.
                 </div>
 
-                <!-- INVITADOS -->
                 <div class="guest-grid">
-                    <div class="guest-item">
-                        <i class="fas fa-user-tie"></i>
-                        <div class="guest-text"><strong>Ps. Eugenio Masias</strong>Ecuador 🇪🇨</div>
-                    </div>
-                    <div class="guest-item">
-                        <i class="fas fa-user-tie"></i>
-                        <div class="guest-text"><strong>Abel Zapata</strong>Chile 🇨🇱</div>
-                    </div>
-                    <div class="guest-item">
-                        <i class="fas fa-user-tie"></i>
-                        <div class="guest-text"><strong>Ruben Dias</strong>Cerro de Pasco</div>
-                    </div>
-                    <div class="guest-item">
-                        <i class="fas fa-fire"></i>
-                        <div class="guest-text"><strong>Ps. Fernando Ñaupari</strong>Testimonio de Poder</div>
-                    </div>
+                    <div class="guest-item"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Ps. Eugenio Masias</strong>Ecuador 🇪🇨</div></div>
+                    <div class="guest-item"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Abel Zapata</strong>Chile 🇨🇱</div></div>
+                    <div class="guest-item"><i class="fas fa-user-tie"></i><div class="guest-text"><strong>Ruben Dias</strong>Cerro de Pasco</div></div>
+                    <div class="guest-item"><i class="fas fa-fire"></i><div class="guest-text"><strong>Ps. Fernando Ñaupari</strong>Testimonio de Poder</div></div>
                 </div>
 
-                <!-- FECHA -->
                 <div class="event-details">
                     <span>Del 22 al 25 de Enero • 7:00 PM</span>
                     Mz. H Lote 23, Urb. Ciudad del Chofer
                 </div>
 
-                <!-- FIRMA CENTRADA -->
                 <div class="signature-box">
                     <img id="signature-img" class="sign-img" style="display: none;">
                     <div id="sign-placeholder" style="font-size:0.6rem; color:#aaa;">(Firma aquí)</div>
@@ -341,6 +312,28 @@
     </div>
 
     <script>
+        // --- AUTO-LOAD DEFAULT LOGO (Intento automático) ---
+        window.onload = function() {
+            // Intentamos cargar 'logo2.svg' automáticamente como DataURL para evitar CORS
+            fetch('logo2.svg')
+                .then(response => response.blob())
+                .then(blob => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        const img = document.getElementById('logo-img');
+                        img.src = reader.result;
+                        img.style.display = 'block';
+                        document.getElementById('logo-placeholder').style.display = 'none';
+                        document.getElementById('logo-status').innerText = "logo2.svg (Auto-cargado)";
+                        document.getElementById('logo-status').style.color = '#008f39';
+                    };
+                    reader.readAsDataURL(blob);
+                })
+                .catch(() => {
+                    console.log('No se encontró logo2.svg automáticamente. El usuario debe subirlo.');
+                });
+        };
+
         // --- TABS ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -358,7 +351,7 @@
             }
         }
 
-        // --- CARGA DE IMÁGENES (CON FIX PARA SVG EXPORT) ---
+        // --- CARGA DE IMÁGENES (MANUAL) ---
         function handleImageUpload(inputId, imgId, placeholderId, statusId) {
             document.getElementById(inputId).addEventListener('change', function(e) {
                 const file = e.target.files[0];
@@ -366,9 +359,8 @@
                     const reader = new FileReader();
                     reader.onload = function(evt) {
                         const img = document.getElementById(imgId);
-                        img.src = evt.target.result; // Base64
+                        img.src = evt.target.result;
                         img.style.display = 'block';
-                        
                         if(placeholderId) document.getElementById(placeholderId).style.display = 'none';
                         if(statusId) {
                             const el = document.getElementById(statusId);
@@ -444,18 +436,18 @@
             document.getElementById('prev-pastor').innerText = pastor;
             document.getElementById('prev-iglesia').innerText = iglesia;
 
-            // Retraso para asegurar que el DOM se pinte
-            await new Promise(r => setTimeout(r, 600));
+            // ESPERA CRÍTICA
+            await new Promise(r => setTimeout(r, 800));
 
             const flyer = document.getElementById('flyer');
             try {
-                // CONFIGURACIÓN CRÍTICA PARA SVG Y IMAGENES
+                // CONFIGURACIÓN HTML2CANVAS SOLUCIÓN SVG
                 const canvas = await html2canvas(flyer, {
                     scale: 2, 
                     backgroundColor: "#008f39",
                     useCORS: true,
                     allowTaint: true,
-                    imageTimeout: 0 // Esperar a que carguen las imagenes
+                    imageTimeout: 0 // Esperar carga completa
                 });
                 
                 const link = document.createElement('a');
@@ -484,7 +476,7 @@
 
             } catch (e) {
                 console.error(e);
-                alert("Error al generar imagen");
+                alert("Error al generar imagen. Verifique consola.");
                 btn.innerHTML = icon;
             }
         }
