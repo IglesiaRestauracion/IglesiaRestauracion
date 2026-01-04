@@ -494,18 +494,23 @@
                 link.href = canvas.toDataURL('image/png');
                 link.click();
 
-                if(celular) {
-                    // TEXTO DE WHATSAPP MEJORADO (Emojis y formato)
-                    const msg = `¡Bendiciones Pastor ${pastor}! 🎉\n\n` +
-                                `La Iglesia Centro de Restauración le invita cordialmente a nuestra Campaña de 11 Aniversario *"VEN A CRISTO"*.\n\n` +
-                                `Tendremos invitados especiales como el Ps. Eugenio Masias, Abel Zapata y un poderoso testimonio del Ps. Fernando Ñaupari.\n\n` +
-                                `📅 *Fecha:* Del 22 al 25 de Enero, 7:00 PM\n` +
-                                `📍 *Lugar:* Ciudad del Chofer\n\n` +
-                                `Adjunto su invitación oficial. ¡Le esperamos!`;
-                    
-                    const url = `https://wa.me/${celular}?text=${encodeURIComponent(msg)}`;
-                    window.open(url, '_blank');
-                }
+if (celular) {
+    const msg =
+`¡Bendiciones Pastor ${pastor}! 🎉
+
+La Iglesia Centro de Restauración le invita cordialmente a nuestra Campaña de 11 Aniversario *"VEN A CRISTO"*.
+
+Tendremos invitados especiales como el Ps. Eugenio Masias, Abel Zapata y un poderoso testimonio del Ps. Fernando Ñaupari.
+
+📅 *Fecha:* Del 22 al 25 de Enero, 7:00 PM
+📍 *Lugar:* Ciudad del Chofer
+
+Adjunto su invitación oficial. ¡Le esperamos!`;
+
+    const url = `https://wa.me/${celular}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+}
+
 
                 btn.innerHTML = '<i class="fas fa-check"></i>';
                 setTimeout(() => btn.innerHTML = icon, 3000);
