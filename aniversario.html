@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador 11 Aniversario | Final PDF/PNG</title>
+    <title>Generador 11 Aniversario | Layout Final</title>
     
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Librerías (Imagen y PDF) -->
+    <!-- Librerías -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
         :root {
-            /* COLORES */
             --green-header: #006831;
             --green-body: #008f39;
             --orange: #ff8c00;
@@ -87,29 +86,27 @@
             justify-content: center; align-items: center; padding: 20px; overflow: hidden;
         }
 
-        /* Wrapper para escalar VISUALMENTE en pantalla sin afectar el CSS real */
         .scale-wrapper {
-            transform: scale(0.55); /* Ajuste solo visual */
+            transform: scale(0.50); /* Escala visual para pantalla */
             transform-origin: center center;
             box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
-        /* --- AFICHE DISEÑO (Medidas Reales) --- */
+        /* --- AFICHE DISEÑO (TAMAÑO REAL) --- */
         #flyer {
             width: 650px;
-            height: 1000px;
+            height: 1080px; /* Altura aumentada para evitar cortes */
             position: relative;
             display: flex; flex-direction: column; align-items: center;
             background-color: #f4f4f4;
             overflow: hidden;
-            /* Importante para captura limpia: */
             box-sizing: border-box;
         }
 
-        /* TOP SECTION */
+        /* PARTE SUPERIOR (FONDO VERDE) */
         .top-section {
             width: 100%;
-            height: 450px; 
+            height: 380px; /* Altura reducida para subir la carta */
             background: radial-gradient(circle at 50% 30%, #00b156 0%, #008f39 60%, #005c25 100%);
             border-bottom: 6px solid var(--yellow);
             position: absolute; top: 0; left: 0; z-index: 0;
@@ -118,7 +115,7 @@
         }
 
         /* HEADER */
-        .header-content { text-align: center; color: white; z-index: 2; width: 90%; }
+        .header-content { text-align: center; color: white; z-index: 2; width: 90%; margin-bottom: 5px; }
         
         .church-line-1 { font-weight: 400; font-size: 1.2rem; letter-spacing: 2px; display: block; margin-bottom: 2px; }
         .church-line-2 { font-weight: 700; font-size: 1.8rem; letter-spacing: 0.5px; text-shadow: 0 3px 8px rgba(0,0,0,0.3); display: block; }
@@ -127,27 +124,28 @@
         /* LOGO */
         .logo-container {
             width: 100%; display: flex; justify-content: center; align-items: center;
-            z-index: 2; margin-top: 15px; margin-bottom: 10px;
+            z-index: 2; margin-top: 10px;
         }
         .logo-svg {
-            width: auto; max-width: 90%;
-            max-height: 200px; object-fit: contain;
+            width: 90%; max-height: 220px; object-fit: contain;
             filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4)); display: block; 
         }
         .logo-placeholder { color: rgba(255,255,255,0.6); border: 2px dashed rgba(255,255,255,0.4); padding: 30px; border-radius: 10px; font-size: 0.8rem; text-align: center; }
 
-        /* CARTA */
+        /* CARTA (PARTE INFERIOR BLANCA) */
         .bottom-section {
-            margin-top: 400px; 
+            margin-top: 340px; /* Sube la carta para tapar el verde sobrante */
             width: 92%;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             z-index: 10;
-            padding: 25px 35px;
+            padding: 30px 40px;
             text-align: left;
             display: flex; flex-direction: column;
-            flex: 1; margin-bottom: 20px;
+            flex: 1; /* Ocupa el resto del espacio */
+            margin-bottom: 20px;
+            position: relative; /* Asegura z-index */
         }
 
         .greeting { 
@@ -193,7 +191,7 @@
         @media (max-width: 900px) {
             body { flex-direction: column; overflow-y: auto; }
             .sidebar { width: 100%; height: auto; }
-            .scale-wrapper { transform: scale(0.45); margin: -200px 0; }
+            .scale-wrapper { transform: scale(0.42); margin: -250px 0; }
         }
     </style>
 </head>
@@ -202,7 +200,7 @@
     <div class="sidebar">
         <div>
             <h2>Gestor 11 Aniversario</h2>
-            <p>Generación PNG / PDF</p>
+            <p>Configuración</p>
         </div>
 
         <div class="tabs">
@@ -216,7 +214,7 @@
                 <i class="fas fa-image"></i>
                 <div>
                     <strong>Logo Lema</strong>
-                    <span id="txt-logo">Carga logo2.png</span>
+                    <span id="txt-logo">Auto-carga de logo2.png</span>
                 </div>
                 <input type="file" id="logoInput" accept=".png, .jpg, .svg">
             </label>
@@ -243,14 +241,13 @@
             <input type="text" class="manual-input" id="man-pastor" placeholder="Nombre del Pastor" oninput="updateManual()">
             <input type="text" class="manual-input" id="man-iglesia" placeholder="Nombre de la Iglesia" oninput="updateManual()">
             <input type="text" class="manual-input" id="man-celular" placeholder="Celular (WhatsApp)">
-            <button class="btn-gen bg-green" onclick="processManual(this, 'png')">Enviar WhatsApp (PNG)</button>
+            <button class="btn-gen bg-green" onclick="processManual(this, 'png')">Enviar WhatsApp</button>
             <div style="height:10px"></div>
             <button class="btn-gen bg-red" onclick="processManual(this, 'pdf')">Descargar PDF</button>
         </div>
     </div>
 
     <div class="preview-area">
-        <!-- WRAPPER PARA ESCALAR VISUALMENTE SIN AFECTAR LA EXPORTACIÓN -->
         <div class="scale-wrapper">
             <div id="flyer">
                 
@@ -321,8 +318,9 @@
                 .then(blob => {
                     const reader = new FileReader();
                     reader.onloadend = () => {
-                        document.getElementById('logo-img').src = reader.result;
-                        document.getElementById('logo-img').style.display = 'block';
+                        const img = document.getElementById('logo-img');
+                        img.src = reader.result;
+                        img.style.display = 'block';
                         document.getElementById('logo-placeholder').style.display = 'none';
                         document.getElementById('txt-logo').innerText = "Logo auto-cargado";
                         document.getElementById('txt-logo').style.color = '#008f39';
@@ -413,10 +411,10 @@
             // Esperar renderizado visual
             await new Promise(r => setTimeout(r, 500));
 
-            // *** MAGIA: CREAR CLON FANTASMA PARA EXPORTAR SIN DISTORSIÓN ***
             const originalFlyer = document.getElementById('flyer');
+            
+            // CLONAR PARA EXPORTAR SIN ESCALA
             const ghostContainer = document.createElement('div');
-            // Posicionar fuera de pantalla pero visible para el renderizador
             ghostContainer.style.position = 'fixed';
             ghostContainer.style.top = '-10000px';
             ghostContainer.style.left = '-10000px';
@@ -424,33 +422,29 @@
             document.body.appendChild(ghostContainer);
 
             const flyerToCapture = ghostContainer.querySelector('#flyer');
-            // Asegurar dimensiones reales en el clon
             flyerToCapture.style.width = "650px";
-            flyerToCapture.style.height = "1000px";
-            flyerToCapture.style.transform = "none"; // Eliminar cualquier escala
+            flyerToCapture.style.height = "1050px"; // Asegurar altura total
+            flyerToCapture.style.transform = "none"; 
 
             try {
                 const canvas = await html2canvas(flyerToCapture, {
-                    scale: 3, // Calidad super alta
+                    scale: 3, 
                     backgroundColor: "#f4f4f4", 
                     useCORS: true, 
                     allowTaint: true
                 });
 
-                document.body.removeChild(ghostContainer); // Limpiar
+                document.body.removeChild(ghostContainer);
 
                 if (type === 'pdf') {
-                    // Generar PDF
                     const { jsPDF } = window.jspdf;
                     const pdf = new jsPDF('p', 'mm', 'a4');
-                    // Ajustar al ancho A4 (210mm)
                     const pdfWidth = 210;
                     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-                    const imgData = canvas.toDataURL('image/jpeg', 0.98); // JPEG comprimido ligero
+                    const imgData = canvas.toDataURL('image/jpeg', 0.98);
                     pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
                     pdf.save(`Invitacion_${pastor.replace(/[^a-zA-Z0-9]/g,'')}.pdf`);
                 } else {
-                    // Generar PNG
                     const link = document.createElement('a');
                     link.download = `Invitacion_11Aniv_${pastor.replace(/[^a-zA-Z0-9]/g,'')}.png`;
                     link.href = canvas.toDataURL('image/png');
@@ -463,10 +457,6 @@
                     }
                 }
 
-                if(btn.classList.contains('btn-wa') || btn.classList.contains('btn-pdf')) {
-                    // Solo marcar como hecho si no es manual
-                    // btn.classList.add('done'); (Opcional, a veces quieres reenviar)
-                }
                 btn.innerHTML = '<i class="fas fa-check"></i>';
                 setTimeout(() => btn.innerHTML = icon, 3000);
 
