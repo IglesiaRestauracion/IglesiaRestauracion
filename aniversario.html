@@ -12,15 +12,13 @@
     <!-- Librerías -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <!-- Librería para PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
         :root {
+            --green-deep: #004d26;      /* Verde Bosque Oscuro */
             --green-main: #008f39;      /* Verde Institucional */
-            --green-dark: #006831;
-            --green-gradient-start: #00a844;
-            --green-gradient-end: #005c25;
+            --green-light: #00a844;
             --orange: #ff8c00;
             --yellow: #ffdd00;
             --white: #ffffff;
@@ -71,16 +69,15 @@
 
         .contacts-list { margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
         .contact-item { background: #fff; border: 1px solid #eee; padding: 10px; margin-bottom: 5px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
-        .contact-info { flex-grow: 1; }
         .contact-info strong { display: block; font-size: 0.85rem; color: #333; }
         
         .actions-group { display: flex; gap: 5px; }
         .btn-wa { width: 32px; height: 32px; border-radius: 50%; background: #25D366; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .btn-pdf { width: 32px; height: 32px; border-radius: 50%; background: #e74c3c; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn-pdf-list { width: 32px; height: 32px; border-radius: 50%; background: #e74c3c; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
         .manual-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; font-family: 'Montserrat'; }
-        .btn-gen { width: 100%; padding: 12px; background: var(--green-main); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; margin-bottom: 5px; }
-        .btn-gen.pdf-manual { background: #e74c3c; }
+        .btn-gen { width: 100%; padding: 12px; background: var(--green-main); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; margin-bottom: 8px; }
+        .btn-pdf { background: #e74c3c; }
 
         /* --- PREVIEW AREA --- */
         .preview-area {
@@ -94,20 +91,22 @@
             box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
+        /* --- AFICHE DISEÑO --- */
         #flyer {
             width: 650px;
-            height: 1050px; 
+            height: 1050px;
             position: relative;
             display: flex; flex-direction: column; align-items: center;
-            background-color: var(--green-main);
+            background-color: #f8f8f8;
             overflow: hidden;
             box-sizing: border-box;
         }
 
+        /* 1. SECCIÓN SUPERIOR (VERDE MEJORADO) */
         .top-section {
             width: 100%;
-            height: 450px; 
-            background: radial-gradient(circle at 50% 20%, var(--green-gradient-start) 0%, var(--green-main) 60%, var(--green-gradient-end) 100%);
+            height: 450px;
+            background: linear-gradient(180deg, var(--green-deep) 0%, var(--green-main) 100%);
             border-bottom: 8px solid var(--yellow);
             position: absolute; top: 0; left: 0; z-index: 0;
             display: flex; flex-direction: column; align-items: center; 
@@ -123,6 +122,7 @@
         .logo-svg { width: auto; max-width: 90%; height: 230px; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); display: block; }
         .logo-placeholder { color: rgba(255,255,255,0.7); border: 2px dashed rgba(255,255,255,0.5); padding: 30px; border-radius: 10px; font-size: 0.8rem; text-align: center; margin-top: 20px; }
 
+        /* 2. CARTA BLANCA */
         .bottom-card {
             margin-top: 380px; 
             width: 92%;
@@ -138,11 +138,13 @@
             position: relative;
         }
 
-        .greeting { color: var(--text-dark); font-size: 1rem; margin-bottom: 15px; line-height: 1.5; border-bottom: 1px solid #eee; padding-bottom: 12px; }
-        .highlight-name { color: var(--green-main); font-weight: 800; text-transform: uppercase; font-size: 1.1rem; }
+        .greeting { color: var(--text-dark); font-size: 1rem; margin-bottom: 12px; line-height: 1.5; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .highlight-name { color: var(--green-main); font-weight: 800; text-transform: uppercase; font-size: 1.05rem; }
 
-        .body-text { color: #444; font-size: 0.9rem; line-height: 1.6; text-align: justify; margin-bottom: 15px; font-weight: 500; }
+        .body-text { color: #444; font-size: 0.88rem; line-height: 1.5; text-align: justify; margin-bottom: 15px; font-weight: 500; }
+        .campaign-name { color: var(--green-dark); font-weight: 800; font-style: italic; }
 
+        /* INVITADOS */
         .guests-box { background: #f0fdf4; border-radius: 10px; padding: 15px; margin-bottom: 15px; border: 1px solid #d1e7dd; }
         .guests-title { text-align: center; color: var(--orange); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
         .guest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -151,7 +153,7 @@
         .guest-row strong { font-weight: 700; color: #000; }
         .guest-row span { font-size: 0.7rem; color: #666; margin-left: 3px; }
 
-        .event-info { background: linear-gradient(90deg, var(--green-main), var(--green-dark)); color: white; padding: 12px; border-radius: 50px; text-align: center; font-weight: 700; font-size: 0.95rem; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0, 143, 57, 0.3); }
+        .event-info { background: linear-gradient(90deg, var(--green-main), var(--green-deep)); color: white; padding: 12px; border-radius: 50px; text-align: center; font-weight: 700; font-size: 0.95rem; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0, 143, 57, 0.3); }
 
         .farewell { text-align: center; font-size: 0.8rem; color: #666; font-style: italic; margin-bottom: 10px; }
 
@@ -161,12 +163,6 @@
         .pastor-role { font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
 
         .footer-strip { position: absolute; bottom: 0; left: 0; width: 100%; padding: 12px; text-align: center; background: #222; color: #aaa; font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; z-index: 20; }
-
-        @media (max-width: 900px) {
-            body { flex-direction: column; overflow-y: auto; }
-            .sidebar { width: 100%; height: auto; }
-            .scale-wrapper { transform: scale(0.45); margin: -250px 0; }
-        }
     </style>
 </head>
 <body>
@@ -213,7 +209,7 @@
             <input type="text" class="manual-input" id="man-iglesia" placeholder="Nombre de la Iglesia" oninput="updateManual()">
             <input type="text" class="manual-input" id="man-celular" placeholder="Celular (WhatsApp)">
             <button class="btn-gen" onclick="processManual(this, 'png')">Descargar y Enviar WhatsApp</button>
-            <button class="btn-gen pdf-manual" onclick="processManual(this, 'pdf')"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
+            <button class="btn-gen btn-pdf" onclick="processManual(this, 'pdf')"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
         </div>
     </div>
 
@@ -231,30 +227,35 @@
                         <div id="logo-placeholder" class="logo-placeholder"><i class="fas fa-sync fa-spin"></i> Cargando logo2.png...</div>
                     </div>
                 </div>
+
                 <div class="bottom-card">
                     <div class="greeting">
                         Apreciado Pastor <span class="highlight-name" id="prev-pastor">NOMBRE DEL PASTOR</span><br>
                         y congregación <span class="highlight-name" id="prev-iglesia">NOMBRE IGLESIA</span>.
                     </div>
+
                     <div class="body-text">
-                        Les saludo muy cordialmente en el nombre de nuestro Señor y Salvador Jesucristo, deseando que estén gozando de las bendiciones que Él nos da.
-                        <br><br>
-                        El motivo de la presente es invitarles a participar de esta gran fiesta espiritual de nuestro <strong>11 Aniversario</strong>. Es una maravillosa oportunidad para unirnos en adoración, alabanza y comunión fraternal.
+                        Les saludo muy cordialmente en el nombre de nuestro Señor y Salvador Jesucristo.
+                        El motivo de la presente es invitarles a participar de esta gran fiesta espiritual de nuestro <strong>11 Aniversario</strong>, en nuestra Campaña Evangelística denominada: <strong class="campaign-name">"Ven a Cristo tal como estás" (Mateo 11:28)</strong>. Es una maravillosa oportunidad para unirnos en adoración y comunión fraternal.
                     </div>
+
                     <div class="guests-box">
-                        <div class="guests-title">Invitados Especiales</div>
+                        <div class="guests-title">Participantes Especiales</div>
                         <div class="guest-grid">
-                            <div class="guest-row"><i class="fas fa-user-tie"></i> <div><strong>Ps. Eugenio Masias</strong><span>(Ecuador)</span></div></div>
-                            <div class="guest-row"><i class="fas fa-user-tie"></i> <div><strong>Abel Zapata</strong><span>(Chile)</span></div></div>
-                            <div class="guest-row"><i class="fas fa-user-tie"></i> <div><strong>Ruben Dias</strong><span>(Cerro de Pasco)</span></div></div>
+                            <div class="guest-row"><i class="fas fa-user-tie"></i> <div><strong>Ps. Eugenio Masias</strong><span>(Predicador)</span></div></div>
+                            <div class="guest-row"><i class="fas fa-music"></i> <div><strong>M. Restauración</strong><span>(Anfitrión)</span></div></div>
+                            <div class="guest-row"><i class="fas fa-microphone"></i> <div><strong>M. Alabanza</strong><span>(Iglesias Invitadas)</span></div></div>
                             <div class="guest-row"><i class="fas fa-fire"></i> <div><strong>Ps. Fernando Ñaupari</strong><span>(Testimonio)</span></div></div>
                         </div>
                     </div>
+
                     <div class="event-info">
                         Del 22 al 25 de Enero • 7:00 PM<br>
                         <span style="font-weight: 400; font-size: 0.8rem; opacity: 0.9;">Mz. H Lote 23, Urb. Ciudad del Chofer</span>
                     </div>
+
                     <div class="farewell">¡Esperamos contar con su valiosa presencia!</div>
+
                     <div class="signature-wrapper">
                         <img id="sign-img" class="sign-img" style="display: none;">
                         <div id="sign-placeholder" style="font-size:0.7rem; color:#ccc; margin-bottom:20px;">(Firma Aquí)</div>
@@ -262,12 +263,14 @@
                         <div class="pastor-role">Pastor Principal</div>
                     </div>
                 </div>
+
                 <div class="footer-strip">Chiclayo - Lambayeque - Perú</div>
             </div>
         </div>
     </div>
 
     <script>
+        // Carga automática de logo
         window.onload = function() {
             fetch('logo2.png')
                 .then(r => { if(r.ok) return r.blob(); return fetch('logo2.svg').then(r2=>{if(r2.ok) return r2.blob(); throw new Error('e')}); })
@@ -278,12 +281,9 @@
                         img.src = reader.result;
                         img.style.display = 'block';
                         document.getElementById('logo-placeholder').style.display = 'none';
-                        document.getElementById('txt-logo').innerText = "Auto-cargado";
-                        document.getElementById('txt-logo').style.color = '#008f39';
                     };
                     reader.readAsDataURL(blob);
-                })
-                .catch(() => document.getElementById('logo-placeholder').innerHTML = "Cargar logo manualmente");
+                }).catch(() => {});
         };
 
         function switchTab(t){
@@ -293,6 +293,9 @@
             else if(t==='list'){ document.querySelectorAll('.tab-btn')[1].classList.add('active'); document.getElementById('panel-list').classList.add('active'); }
             else { document.querySelectorAll('.tab-btn')[2].classList.add('active'); document.getElementById('panel-manual').classList.add('active'); }
         }
+
+        setupUpload('logoInput', 'logo-img', 'logo-placeholder', 'box-logo', 'txt-logo');
+        setupUpload('signInput', 'sign-img', 'sign-placeholder', 'box-sign', 'txt-sign');
 
         function setupUpload(inputId, imgId, placeholderId, boxId, textId) {
             document.getElementById(inputId).addEventListener('change', function(e) {
@@ -304,16 +307,12 @@
                         img.src = evt.target.result;
                         img.style.display = 'block';
                         if(placeholderId) document.getElementById(placeholderId).style.display = 'none';
-                        document.getElementById(boxId).style.borderColor = '#008f39';
-                        document.getElementById(boxId).style.backgroundColor = '#f0fff4';
-                        document.getElementById(textId).innerText = "Cargado: " + f.name;
+                        document.getElementById(textId).innerText = "Cargado";
                     }
                     r.readAsDataURL(f);
                 }
             });
         }
-        setupUpload('logoInput', 'logo-img', 'logo-placeholder', 'box-logo', 'txt-logo');
-        setupUpload('signInput', 'sign-img', 'sign-placeholder', 'box-sign', 'txt-sign');
 
         let contactsData = [];
         document.getElementById('excelInput').addEventListener('change', function(e) {
@@ -332,11 +331,10 @@
             const l = document.getElementById('contactsList'); l.innerHTML = '';
             contactsData.forEach((c, i) => {
                 const d = document.createElement('div'); d.className = 'contact-item';
-                d.innerHTML = `
-                <div class="contact-info"><strong>${c.Pastor||'Pastor'}</strong><span>${c.Iglesia||''}</span></div>
+                d.innerHTML = `<div class="contact-info"><strong>${c.Pastor||'Pastor'}</strong><span>${c.Iglesia||''}</span></div>
                 <div class="actions-group">
-                    <button class="btn-wa" title="Enviar WhatsApp" onclick="process(${i}, this, 'png')"><i class="fab fa-whatsapp"></i></button>
-                    <button class="btn-pdf" title="Exportar PDF" onclick="process(${i}, this, 'pdf')"><i class="fas fa-file-pdf"></i></button>
+                    <button class="btn-wa" onclick="process(${i}, this, 'png')"><i class="fab fa-whatsapp"></i></button>
+                    <button class="btn-pdf-list" onclick="process(${i}, this, 'pdf')"><i class="fas fa-file-pdf"></i></button>
                 </div>`;
                 l.appendChild(d);
             });
@@ -367,57 +365,38 @@
             
             await new Promise(r => setTimeout(r, 600));
 
-            const originalFlyer = document.getElementById('flyer');
-            const ghostContainer = document.createElement('div');
-            ghostContainer.style.position = 'fixed';
-            ghostContainer.style.top = '-10000px';
-            ghostContainer.style.left = '-10000px';
-            ghostContainer.innerHTML = originalFlyer.outerHTML;
-            document.body.appendChild(ghostContainer);
-
-            const flyerToCapture = ghostContainer.querySelector('#flyer');
-            flyerToCapture.style.width = "650px";
-            flyerToCapture.style.height = "1050px";
-            flyerToCapture.style.transform = "none";
+            const flyerToCapture = document.getElementById('flyer');
+            // Temporalmente quitar escala para captura
+            const wrapper = document.querySelector('.scale-wrapper');
+            wrapper.style.transform = "none";
 
             try {
-                const canvas = await html2canvas(flyerToCapture, {
-                    scale: 2, 
-                    backgroundColor: "#008f39", 
-                    useCORS: true, 
-                    allowTaint: true
-                });
-
-                document.body.removeChild(ghostContainer);
-                const fileName = `Invitacion_11Aniv_${pastor.replace(/[^a-zA-Z0-9]/g,'')}`;
+                const canvas = await html2canvas(flyerToCapture, { scale: 2, useCORS: true });
+                wrapper.style.transform = "scale(0.55)"; // Restaurar preview
 
                 if (format === 'pdf') {
                     const { jsPDF } = window.jspdf;
                     const pdf = new jsPDF('p', 'px', [650, 1050]);
-                    const imgData = canvas.toDataURL('image/jpeg', 0.9);
-                    pdf.addImage(imgData, 'JPEG', 0, 0, 650, 1050);
-                    pdf.save(`${fileName}.pdf`);
+                    pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 650, 1050);
+                    pdf.save(`Invitacion_11Aniv_${pastor}.pdf`);
                 } else {
                     const link = document.createElement('a');
-                    link.download = `${fileName}.png`;
+                    link.download = `Invitacion_11Aniv_${pastor}.png`;
                     link.href = canvas.toDataURL('image/png');
                     link.click();
 
-                    if (celular && format === 'png') {
-                        const msg = ` Bendiciones Pastor *${pastor}*\n\nLa Iglesia Centro de Restauración le invita cordialmente a nuestra Campaña de 11 Aniversario *"VEN A CRISTO"*.\n\nTendremos invitados especiales como el Ps. Eugenio Masias, Abel Zapata y un poderoso testimonio del Ps. Fernando Ñaupari.\n\n *Fecha:* Del 22 al 25 de Enero, 7:00 PM\n *Lugar:* Ciudad del Chofer\n\nAdjunto su invitación oficial. `;
-                        const url = `https://wa.me/${celular}?text=${encodeURIComponent(msg)}`;
-                        window.open(url, '_blank');
+                    if (celular) {
+                        const msg = `🙌 Bendiciones Pastor *${pastor}*\n\nLa Iglesia Centro de Restauración le invita a nuestra Campaña de 11 Aniversario: *"Ven a Cristo tal como estás" (Mateo 11:28)*.\n\nContaremos con el Ps. Eugenio Masias, Ministerio Restauración y ministerios invitados.\n\n📅 *Fecha:* 22-25 de Enero\n🕖 *Hora:* 7:00 PM\n📍 *Lugar:* Ciudad del Chofer\n\nAdjuntamos su invitación oficial. ✨`;
+                        window.open(`https://wa.me/${celular}?text=${encodeURIComponent(msg)}`, '_blank');
                     }
                 }
 
                 btn.innerHTML = '<i class="fas fa-check"></i>';
                 setTimeout(() => btn.innerHTML = icon, 3000);
-
             } catch(e) {
-                console.error(e);
-                alert("Error al generar archivo.");
+                alert("Error al generar.");
                 btn.innerHTML = icon;
-                if(document.body.contains(ghostContainer)) document.body.removeChild(ghostContainer);
+                wrapper.style.transform = "scale(0.55)";
             }
         }
     </script>
