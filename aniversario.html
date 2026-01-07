@@ -16,8 +16,8 @@
 
     <style>
         :root {
-            --green-deep: #004d26;      /* Verde Bosque Oscuro */
-            --green-main: #008f39;      /* Verde Institucional */
+            --green-deep: #004d26;      
+            --green-main: #008f39;      
             --green-light: #00a844;
             --orange: #ff8c00;
             --yellow: #ffdd00;
@@ -102,35 +102,33 @@
             box-sizing: border-box;
         }
 
-        /* 1. SECCIÓN SUPERIOR (VERDE MEJORADO) */
         .top-section {
             width: 100%;
-            height: 450px;
+            height: 430px;
             background: linear-gradient(180deg, var(--green-deep) 0%, var(--green-main) 100%);
             border-bottom: 8px solid var(--yellow);
             position: absolute; top: 0; left: 0; z-index: 0;
             display: flex; flex-direction: column; align-items: center; 
-            padding-top: 40px;
+            padding-top: 35px;
         }
 
         .header-content { text-align: center; color: white; z-index: 2; width: 90%; }
-        .church-line-1 { font-weight: 400; font-size: 1.4rem; letter-spacing: 2px; display: block; }
-        .church-line-2 { font-weight: 600; font-size: 1.8rem; letter-spacing: 0.5px; text-shadow: 0 3px 8px rgba(0,0,0,0.2); display: block; }
-        .aniv-text { color: var(--yellow); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-top: 10px; letter-spacing: 3px; }
+        .church-line-1 { font-weight: 400; font-size: 1.3rem; letter-spacing: 2px; display: block; }
+        .church-line-2 { font-weight: 600; font-size: 1.7rem; letter-spacing: 0.5px; text-shadow: 0 3px 8px rgba(0,0,0,0.2); display: block; }
+        .aniv-text { color: var(--yellow); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-top: 8px; letter-spacing: 3px; }
 
         .logo-container { width: 100%; display: flex; justify-content: center; align-items: center; z-index: 5; margin-top: 15px; position: relative; }
-        .logo-svg { width: auto; max-width: 90%; height: 230px; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); display: block; }
+        .logo-svg { width: auto; max-width: 85%; height: 210px; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); display: block; }
         .logo-placeholder { color: rgba(255,255,255,0.7); border: 2px dashed rgba(255,255,255,0.5); padding: 30px; border-radius: 10px; font-size: 0.8rem; text-align: center; margin-top: 20px; }
 
-        /* 2. CARTA BLANCA */
         .bottom-card {
-            margin-top: 380px; 
+            margin-top: 360px; 
             width: 92%;
             background: white;
             border-radius: 20px;
             box-shadow: 0 15px 50px rgba(0,0,0,0.2);
             z-index: 10;
-            padding: 30px 40px;
+            padding: 25px 35px;
             text-align: left;
             display: flex; flex-direction: column;
             flex: 1; 
@@ -138,31 +136,31 @@
             position: relative;
         }
 
-        .greeting { color: var(--text-dark); font-size: 1rem; margin-bottom: 12px; line-height: 1.5; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .greeting { color: var(--text-dark); font-size: 0.95rem; margin-bottom: 10px; line-height: 1.4; border-bottom: 1px solid #eee; padding-bottom: 8px; }
         .highlight-name { color: var(--green-main); font-weight: 800; text-transform: uppercase; font-size: 1.05rem; }
 
-        .body-text { color: #444; font-size: 0.88rem; line-height: 1.5; text-align: justify; margin-bottom: 15px; font-weight: 500; }
-        .campaign-name { color: var(--green-dark); font-weight: 800; font-style: italic; }
+        .body-text { color: #444; font-size: 0.85rem; line-height: 1.4; text-align: justify; margin-bottom: 12px; font-weight: 500; }
+        .campaign-name { color: var(--green-deep); font-weight: 800; font-style: italic; }
 
-        /* INVITADOS */
-        .guests-box { background: #f0fdf4; border-radius: 10px; padding: 15px; margin-bottom: 15px; border: 1px solid #d1e7dd; }
-        .guests-title { text-align: center; color: var(--orange); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
-        .guest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .guest-row { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: #333; line-height: 1.2; }
-        .guest-row i { color: var(--green-main); font-size: 0.9rem; width: 15px; text-align: center;}
+        /* INVITADOS - AJUSTADO PARA 6 */
+        .guests-box { background: #f0fdf4; border-radius: 10px; padding: 12px; margin-bottom: 12px; border: 1px solid #d1e7dd; }
+        .guests-title { text-align: center; color: var(--orange); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+        .guest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 15px; }
+        .guest-row { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: #333; line-height: 1.1; }
+        .guest-row i { color: var(--green-main); font-size: 0.85rem; width: 14px; text-align: center;}
         .guest-row strong { font-weight: 700; color: #000; }
-        .guest-row span { font-size: 0.7rem; color: #666; margin-left: 3px; }
+        .guest-row span { font-size: 0.65rem; color: #666; display: block; }
 
-        .event-info { background: linear-gradient(90deg, var(--green-main), var(--green-deep)); color: white; padding: 12px; border-radius: 50px; text-align: center; font-weight: 700; font-size: 0.95rem; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0, 143, 57, 0.3); }
+        .event-info { background: linear-gradient(90deg, var(--green-main), var(--green-deep)); color: white; padding: 10px; border-radius: 50px; text-align: center; font-weight: 700; font-size: 0.9rem; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0, 143, 57, 0.3); }
 
-        .farewell { text-align: center; font-size: 0.8rem; color: #666; font-style: italic; margin-bottom: 10px; }
+        .farewell { text-align: center; font-size: 0.75rem; color: #666; font-style: italic; margin-bottom: 8px; }
 
         .signature-wrapper { width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center; margin-top: auto; }
-        .sign-img { height: 60px; object-fit: contain; margin-bottom: -15px; display: block; z-index: 2; position: relative; }
-        .pastor-line { border-top: 1px solid #333; color: #333; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; padding-top: 5px; margin-top: 5px; width: 260px; text-align: center; z-index: 1; }
-        .pastor-role { font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+        .sign-img { height: 55px; object-fit: contain; margin-bottom: -15px; display: block; z-index: 2; position: relative; }
+        .pastor-line { border-top: 1px solid #333; color: #333; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; padding-top: 4px; margin-top: 4px; width: 240px; text-align: center; z-index: 1; }
+        .pastor-role { font-size: 0.65rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
 
-        .footer-strip { position: absolute; bottom: 0; left: 0; width: 100%; padding: 12px; text-align: center; background: #222; color: #aaa; font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; z-index: 20; }
+        .footer-strip { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; text-align: center; background: #222; color: #aaa; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; z-index: 20; }
     </style>
 </head>
 <body>
@@ -235,30 +233,31 @@
                     </div>
 
                     <div class="body-text">
-                        Les saludo muy cordialmente en el nombre de nuestro Señor y Salvador Jesucristo.
-                        El motivo de la presente es invitarles a participar de esta gran fiesta espiritual de nuestro <strong>11 Aniversario</strong>, en nuestra Campaña Evangelística denominada: <strong class="campaign-name">"Ven a Cristo tal como estás" (Mateo 11:28)</strong>. Es una maravillosa oportunidad para unirnos en adoración y comunión fraternal.
+                        Les saludo en el nombre de Jesucristo. Es un honor invitarles a nuestro <strong>11 Aniversario</strong>, en nuestra Campaña Evangelística: <strong class="campaign-name">"Ven a Cristo tal como estás" (Mateo 11:28)</strong>. Un tiempo de gloria y bendición.
                     </div>
 
                     <div class="guests-box">
                         <div class="guests-title">Participantes Especiales</div>
                         <div class="guest-grid">
-                            <div class="guest-row"><i class="fas fa-user-tie"></i> <div><strong>Ps. Eugenio Masias</strong><span>(Predicador)</span></div></div>
-                            <div class="guest-row"><i class="fas fa-music"></i> <div><strong>M. Restauración</strong><span>(Anfitrión)</span></div></div>
-                            <div class="guest-row"><i class="fas fa-microphone"></i> <div><strong>M. Alabanza</strong><span>(Iglesias Invitadas)</span></div></div>
-                            <div class="guest-row"><i class="fas fa-fire"></i> <div><strong>Ps. Fernando Ñaupari</strong><span>(Testimonio)</span></div></div>
+                            <div class="guest-row"><i class="fas fa-user-tie"></i> <div><strong>Ps. Eugenio Masias</strong><span>Predicador (Ecuador)</span></div></div>
+                            <div class="guest-row"><i class="fas fa-microphone"></i> <div><strong>Abel Zapata</strong><span>Invitado (Chile)</span></div></div>
+                            <div class="guest-row"><i class="fas fa-microphone"></i> <div><strong>Ruben Diaz</strong><span>Invitado (C. de Pasco)</span></div></div>
+                            <div class="guest-row"><i class="fas fa-fire"></i> <div><strong>Ps. Fernando Ñaupari</strong><span>Testimonio Impactante</span></div></div>
+                            <div class="guest-row"><i class="fas fa-music"></i> <div><strong>M. Restauración</strong><span>Ministerio Anfitrión</span></div></div>
+                            <div class="guest-row"><i class="fas fa-users"></i> <div><strong>Ministerios Varios</strong><span>Iglesias Invitadas</span></div></div>
                         </div>
                     </div>
 
                     <div class="event-info">
                         Del 22 al 25 de Enero • 7:00 PM<br>
-                        <span style="font-weight: 400; font-size: 0.8rem; opacity: 0.9;">Mz. H Lote 23, Urb. Ciudad del Chofer</span>
+                        <span style="font-weight: 400; font-size: 0.75rem; opacity: 0.9;">Mz. H Lote 23, Urb. Ciudad del Chofer</span>
                     </div>
 
-                    <div class="farewell">¡Esperamos contar con su valiosa presencia!</div>
+                    <div class="farewell">¡Su presencia dará realce a este evento!</div>
 
                     <div class="signature-wrapper">
                         <img id="sign-img" class="sign-img" style="display: none;">
-                        <div id="sign-placeholder" style="font-size:0.7rem; color:#ccc; margin-bottom:20px;">(Firma Aquí)</div>
+                        <div id="sign-placeholder" style="font-size:0.7rem; color:#ccc; margin-bottom:20px;">(Firma)</div>
                         <div class="pastor-line">Brigadiel Cerna Ravines</div>
                         <div class="pastor-role">Pastor Principal</div>
                     </div>
@@ -366,13 +365,12 @@
             await new Promise(r => setTimeout(r, 600));
 
             const flyerToCapture = document.getElementById('flyer');
-            // Temporalmente quitar escala para captura
             const wrapper = document.querySelector('.scale-wrapper');
             wrapper.style.transform = "none";
 
             try {
                 const canvas = await html2canvas(flyerToCapture, { scale: 2, useCORS: true });
-                wrapper.style.transform = "scale(0.55)"; // Restaurar preview
+                wrapper.style.transform = "scale(0.55)"; 
 
                 if (format === 'pdf') {
                     const { jsPDF } = window.jspdf;
@@ -386,7 +384,7 @@
                     link.click();
 
                     if (celular) {
-                        const msg = `🙌 Bendiciones Pastor *${pastor}*\n\nLa Iglesia Centro de Restauración le invita a nuestra Campaña de 11 Aniversario: *"Ven a Cristo tal como estás" (Mateo 11:28)*.\n\nContaremos con el Ps. Eugenio Masias, Ministerio Restauración y ministerios invitados.\n\n📅 *Fecha:* 22-25 de Enero\n🕖 *Hora:* 7:00 PM\n📍 *Lugar:* Ciudad del Chofer\n\nAdjuntamos su invitación oficial. ✨`;
+                        const msg = `🙌 Bendiciones Pastor *${pastor}*\n\nLa Iglesia Centro de Restauración le invita a nuestra Campaña de 11 Aniversario: *"Ven a Cristo tal como estás" (Mateo 11:28)*.\n\nContaremos con:\n🔸 Ps. Eugenio Masias\n🔸 Abel Zapata (Chile)\n🔸 Ruben Diaz (C. de Pasco)\n🔸 Ps. Fernando Ñaupari\n\n📅 *Fecha:* 22-25 de Enero\n🕖 *Hora:* 7:00 PM\n📍 *Lugar:* Ciudad del Chofer\n\nAdjuntamos su invitación oficial. ✨`;
                         window.open(`https://wa.me/${celular}?text=${encodeURIComponent(msg)}`, '_blank');
                     }
                 }
