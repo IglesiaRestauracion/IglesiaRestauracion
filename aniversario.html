@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación para Impresión | Centro de Restauración</title>
+    <title>Invitación Centrada en Impresión</title>
     
     <!-- Fuentes: Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,10 +16,9 @@
 
     <style>
         :root {
-            --primary: #333333; /* Gris muy oscuro para texto, mejor que negro puro para impresión */
-            --accent: #a6894a;  /* Dorado para resaltar */
-            --light-gray: #f9f9f9;
-            --border: #e0e0e0;
+            --primary: #1a1a1a;
+            --accent: #8e7341; 
+            --border-light: #ececec;
             --white: #ffffff;
         }
 
@@ -27,7 +26,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #f0f0f0;
+            background-color: #f4f4f4;
             height: 100vh;
             display: flex;
             overflow: hidden;
@@ -49,7 +48,7 @@
             border: 1px solid #ddd; padding: 12px; border-radius: 6px; cursor: pointer; 
             display: flex; align-items: center; gap: 10px; background: #fafafa;
         }
-        .file-box i { color: var(--accent); font-size: 1.2rem; }
+        .file-box i { color: var(--accent); }
         .file-box strong { font-size: 0.75rem; display: block; }
         input[type="file"] { display: none; }
 
@@ -60,7 +59,6 @@
         .panel { display: none; margin-top: 10px; }
         .panel.active { display: block; }
 
-        .contacts-list { margin-top: 10px; border-top: 1px solid #eee; }
         .contact-item { border-bottom: 1px solid #eee; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
         
         .btn-wa { background: #25D366; width: 30px; height: 30px; border-radius: 50%; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -71,251 +69,232 @@
 
         /* --- PREVIEW AREA --- */
         .preview-area {
-            flex-grow: 1; background: #999; display: flex;
+            flex-grow: 1; background: #666; display: flex;
             justify-content: center; align-items: center; padding: 20px; overflow: hidden;
         }
 
         .scale-wrapper {
             transform: scale(0.55);
             transform-origin: center center;
-            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            box-shadow: 0 0 40px rgba(0,0,0,0.3);
         }
 
-        /* --- AFICHE DISEÑO (OPTIMIZADO PARA IMPRESIÓN) --- */
+        /* --- AFICHE DISEÑO (BLANCO TOTAL PARA IMPRESIÓN) --- */
         #flyer {
             width: 650px;
             height: 1050px;
             background-color: var(--white);
             position: relative;
             display: flex; flex-direction: column; align-items: center;
-            padding: 50px 0 0 0;
+            padding: 50px 70px;
             box-sizing: border-box;
             color: var(--primary);
         }
 
-        /* Imagen reducida (Combinación de 11_years y logo2) */
-        .header-combined {
-            height: 150px; /* Reducida significativamente */
+        /* Imagen 11_years REDUCIDA */
+        .header-img {
+            max-height: 100px; /* Tamaño mucho más pequeño */
             width: auto;
-            max-width: 80%;
+            max-width: 60%;
             object-fit: contain;
-            margin-bottom: 30px;
-        }
-
-        .content-wrap {
-            padding: 0 70px;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
+            margin-bottom: 40px;
         }
 
         .greeting {
-            font-size: 0.9rem;
+            width: 100%;
+            font-size: 0.95rem;
             line-height: 1.5;
             margin-bottom: 20px;
             font-weight: 600;
-            color: #000;
-            border-left: 3px solid var(--accent);
+            border-left: 2px solid var(--accent);
             padding-left: 15px;
         }
         .highlight { color: var(--accent); font-weight: 800; text-transform: uppercase; }
 
         .body-text {
-            font-size: 0.82rem;
-            line-height: 1.6;
+            font-size: 0.85rem;
+            line-height: 1.7;
             text-align: justify;
-            color: #444;
-            margin-bottom: 18px;
+            color: #333;
+            margin-bottom: 25px;
         }
 
-        /* Invitados Grid (Limpio para impresión) */
-        .guests-card {
+        /* Invitados (Fino) */
+        .guests-container {
             width: 100%;
-            border: 1px solid var(--border);
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 20px 0;
+            margin-bottom: 25px;
         }
         .guests-title {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--accent);
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
-        .guest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 15px; }
-        .guest-item { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; }
-        .guest-item i { color: var(--accent); font-size: 0.7rem; }
-        .guest-item strong { font-weight: 700; color: #111; }
-        .guest-item span { font-size: 0.65rem; color: #666; display: block; }
+        .guest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+        .guest-item { display: flex; align-items: center; gap: 10px; font-size: 0.75rem; }
+        .guest-item i { color: var(--accent); font-size: 0.8rem; width: 14px; }
+        .guest-item strong { font-weight: 700; }
+        .guest-item span { font-size: 0.65rem; color: #777; display: block; }
 
-        .info-box {
+        .event-info {
             width: 100%;
             border: 1px solid var(--primary);
-            padding: 12px;
+            padding: 15px;
             text-align: center;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
-        .info-box strong { font-size: 0.9rem; color: #000; display: block; margin-bottom: 3px; text-transform: uppercase; }
-        .info-box p { font-size: 0.72rem; color: #444; font-weight: 500; }
+        .event-info strong { font-size: 0.95rem; display: block; margin-bottom: 4px; }
+        .event-info p { font-size: 0.75rem; color: #555; }
 
-        .special-note {
-            font-size: 0.7rem;
+        .note-text {
+            font-size: 0.72rem;
             font-style: italic;
             text-align: center;
-            color: #555;
-            margin-bottom: 25px;
-            line-height: 1.3;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.4;
         }
 
-        .bible-verse {
-            font-size: 0.85rem;
+        .verse-area {
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--accent);
             text-align: center;
             margin-top: auto;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         /* Firma */
-        .sign-area {
+        .signature-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
-        .sign-img { height: 60px; margin-bottom: -15px; z-index: 2; position: relative; }
-        .sign-line { border-top: 1px solid #222; width: 220px; text-align: center; padding-top: 5px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; }
-        .sign-role { font-size: 0.6rem; color: #777; text-transform: uppercase; letter-spacing: 1px; }
+        .sign-img { height: 65px; margin-bottom: -12px; z-index: 2; position: relative; display: none; }
+        .sign-line { border-top: 1px solid #111; width: 230px; text-align: center; padding-top: 6px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; }
+        .sign-role { font-size: 0.65rem; color: #888; letter-spacing: 1px; }
 
-        /* Pie de página elegante y diferente para impresión */
-        .footer-design {
-            width: 100%;
-            padding: 25px 0;
+        /* Pie de página con toque diferente */
+        .footer-minimal {
             position: absolute;
-            bottom: 0;
+            bottom: 30px;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-        .footer-content {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            color: #999;
+            gap: 15px;
             font-size: 0.65rem;
+            color: #bbb;
             font-weight: 600;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
-        .footer-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; }
+        .dot { width: 3px; height: 3px; background: #ddd; border-radius: 50%; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h2>Generador de Invitaciones</h2>
+        <h2>Invitaciones</h2>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('files')">Multimedia</button>
-            <button class="tab-btn" onclick="switchTab('list')">Lista</button>
+            <button class="tab-btn active" onclick="switchTab('files')">Imagen</button>
+            <button class="tab-btn" onclick="switchTab('list')">Excel</button>
             <button class="tab-btn" onclick="switchTab('manual')">Manual</button>
         </div>
 
         <div id="panel-files" class="panel active">
             <label class="file-box">
                 <i class="fas fa-image"></i>
-                <div><strong>Imagen 11_years.png</strong><span>(Cabecera reducida)</span></div>
+                <div><strong>Cargar 11_years.png</strong><span>(Cabecera)</span></div>
                 <input type="file" id="headerInput" accept="image/*">
             </label>
             <br>
             <label class="file-box">
                 <i class="fas fa-signature"></i>
-                <div><strong>Firma Pastor</strong><span>(Formato PNG)</span></div>
+                <div><strong>Cargar Firma</strong><span>(PNG Transparente)</span></div>
                 <input type="file" id="signInput" accept="image/*">
             </label>
         </div>
 
         <div id="panel-list" class="panel">
-            <label class="file-box" style="border-color: #25D366;">
-                <i class="fas fa-file-excel"></i>
-                <div><strong>Cargar Excel</strong><span>Columnas: Pastor, Iglesia, Celular</span></div>
-                <input type="file" id="excelInput" accept=".xlsx, .xls">
-            </label>
+            <input type="file" id="excelInput" accept=".xlsx, .xls" style="display:none">
+            <button class="btn-gen" onclick="document.getElementById('excelInput').click()">Subir Archivo Excel</button>
             <div class="contacts-list" id="contactsList"></div>
         </div>
 
         <div id="panel-manual" class="panel">
             <input type="text" class="manual-input" id="man-pastor" placeholder="Nombre del Pastor" oninput="updateManual()">
             <input type="text" class="manual-input" id="man-iglesia" placeholder="Nombre de la Iglesia" oninput="updateManual()">
-            <input type="text" class="manual-input" id="man-celular" placeholder="WhatsApp (Ej: 51999...)">
+            <input type="text" class="manual-input" id="man-celular" placeholder="WhatsApp">
             <button class="btn-gen" onclick="processManual(this, 'png')">Descargar Imagen</button>
-            <button class="btn-gen" style="background:#444; margin-top: 10px;" onclick="processManual(this, 'pdf')">Guardar PDF</button>
+            <button class="btn-gen" style="background:#e74c3c; margin-top:10px" onclick="processManual(this, 'pdf')">Guardar PDF</button>
         </div>
     </div>
 
     <div class="preview-area">
         <div class="scale-wrapper">
             <div id="flyer">
-                <!-- Imagen combinada reducida -->
-                <img src="11_years.png" id="main-header" class="header-combined" alt="Cabecera">
+                <!-- Imagen reducida -->
+                <img src="11_years.png" id="main-header" class="header-img" alt="11 Años" onerror="this.style.opacity='0.2'">
 
-                <div class="content-wrap">
-                    <div class="greeting">
-                        Estimado Pastor <span class="highlight" id="prev-pastor">NOMBRE DEL PASTOR</span><br>
-                        y congregación <span class="highlight" id="prev-iglesia">NOMBRE DE LA IGLESIA</span>.
-                    </div>
+                <div class="greeting">
+                    Estimado Pastor <span class="highlight" id="prev-pastor">NOMBRE DEL PASTOR</span><br>
+                    y congregación <span class="highlight" id="prev-iglesia">NOMBRE DE LA IGLESIA</span>.
+                </div>
 
-                    <div class="body-text">
-                        Es muy grato dirigirme a usted y saludarle en el nombre glorioso de Cristo Jesús. La presente tiene por finalidad invitarlos a nuestra gran <strong>CONFRATERNIDAD ANUAL</strong> y Campaña Evangelística bajo el lema: <strong style="color:#000;">"Ven a Cristo tal como estás" (Mateo 11:28)</strong>. Queremos que se unan a nosotros para disfrutar de momentos maravillosos en la presencia del Espíritu Santo, alabando a nuestro Señor y escuchando su poderosa palabra.
-                    </div>
+                <div class="body-text">
+                    Le saludamos cordialmente en el nombre glorioso de Cristo Jesús, deseando que Dios los bendiga ricamente. Es un honor invitarles a nuestra gran <strong>CONFRATERNIDAD ANUAL</strong>, que se realizará el día viernes 26 a las 7:00 p.m. en nuestro TEMPLO CENTRAL, bajo el lema: <strong style="color:black">"Ven a Cristo tal como estás" (Mateo 11:28)</strong>. Unámonos para disfrutar momentos maravillosos en presencia del Espíritu Santo, alabando a nuestro Señor y escuchando su poderosa palabra.
+                </div>
 
-                    <!-- Invitados conservados -->
-                    <div class="guests-card">
-                        <div class="guests-title">Participantes Especiales</div>
-                        <div class="guest-grid">
-                            <div class="guest-item"><i class="fas fa-user-tie"></i><div><strong>Ps. Eugenio Masias</strong><span>Predicador (Ecuador)</span></div></div>
-                            <div class="guest-item"><i class="fas fa-microphone"></i><div><strong>Ruben Diaz</strong><span>Min. Alabanza (C. de Pasco)</span></div></div>
-                            <div class="guest-item"><i class="fas fa-fire"></i><div><strong>Ps. Fernando Ñaupari</strong><span>Testimonio Impactante</span></div></div>
-                            <div class="guest-item"><i class="fas fa-microphone"></i><div><strong>Grupo Rhema</strong><span>Min. Alabanza (Chiclayo)</span></div></div>
-                            <div class="guest-item"><i class="fas fa-music"></i><div><strong>Min. Restauración</strong><span>Ministerio Anfitrión</span></div></div>
-                            <div class="guest-item"><i class="fas fa-users"></i><div><strong>Varios Ministerios</strong><span>Iglesias Invitadas</span></div></div>
-                        </div>
-                    </div>
-
-                    <div class="info-box">
-                        <strong>VIERNES 26 DE ENERO • 7:00 P.M.</strong>
-                        <p>Urb. Ciudad del Chofer Mz. H Lt. 23 - Chiclayo</p>
-                        <p style="font-size:0.6rem; color:#888;">(Ref: Paradero de Combis - Simón Bolivar)</p>
-                    </div>
-
-                    <div class="special-note">
-                        El ministerio de alabanza de su congregación puede prepararse para presentar un especial para la gloria de Dios (Opcional).
-                    </div>
-
-                    <div class="bible-verse">
-                        "¡Mirad cuán bueno y cuán delicioso es habitar los hermanos juntos en armonía!" <br> Salmos 133:1
-                    </div>
-
-                    <!-- Firma conservada -->
-                    <div class="sign-area">
-                        <img id="sign-img" class="sign-img" style="display:none;">
-                        <div class="sign-line">Brigadiel Cerna Ravines</div>
-                        <div class="sign-role">Pastor Principal</div>
+                <!-- Participantes -->
+                <div class="guests-container">
+                    <div class="guests-title">Participantes Especiales</div>
+                    <div class="guest-grid">
+                        <div class="guest-item"><i class="fas fa-user-tie"></i><div><strong>Ps. Eugenio Masias</strong><span>Predicador (Ecuador)</span></div></div>
+                        <div class="guest-item"><i class="fas fa-microphone"></i><div><strong>Ruben Diaz</strong><span>Min. Alabanza (C. de Pasco)</span></div></div>
+                        <div class="guest-item"><i class="fas fa-fire"></i><div><strong>Ps. Fernando Ñaupari</strong><span>Testimonio Impactante</span></div></div>
+                        <div class="guest-item"><i class="fas fa-microphone"></i><div><strong>Grupo Rhema</strong><span>Min. Alabanza (Chiclayo)</span></div></div>
+                        <div class="guest-item"><i class="fas fa-music"></i><div><strong>Min. Restauración</strong><span>Ministerio Anfitrión</span></div></div>
+                        <div class="guest-item"><i class="fas fa-users"></i><div><strong>Iglesias Invitadas</strong><span>Varios Ministerios</span></div></div>
                     </div>
                 </div>
 
-                <!-- Pie de página elegante -->
-                <div class="footer-design">
-                    <div class="footer-content">
-                        <span>CHICLAYO</span>
-                        <div class="footer-dot"></div>
-                        <span>PERÚ</span>
-                        <div class="footer-dot"></div>
-                        <span>2025</span>
-                    </div>
+                <div class="event-info">
+                    <strong>VIERNES 26 DE ENERO • 7:00 P.M.</strong>
+                    <p>Urb. Ciudad del Chofer Mz. H Lt. 23 - Chiclayo</p>
+                    <p style="font-size:0.65rem; color:#888;">(Ref: Paradero de Combis - Simón Bolivar)</p>
+                </div>
+
+                <div class="note-text">
+                    Nota: El ministerio de alabanza de su congregación puede prepararse para presentar un especial para la gloria de nuestro Dios (Opcional).
+                </div>
+
+                <div class="verse-area">
+                    "¡Mirad cuán bueno y cuán delicioso es habitar los hermanos juntos en armonía!" <br> Salmos 133:1
+                </div>
+
+                <!-- Firma -->
+                <div class="signature-wrap">
+                    <img id="sign-img" class="sign-img">
+                    <div class="sign-line">Brigadiel Cerna Ravines</div>
+                    <div class="sign-role">Pastor Principal</div>
+                </div>
+
+                <!-- Pie de página -->
+                <div class="footer-minimal">
+                    <span>CHICLAYO</span>
+                    <div class="dot"></div>
+                    <span>PERÚ</span>
+                    <div class="dot"></div>
+                    <span>2025</span>
                 </div>
             </div>
         </div>
@@ -325,9 +304,8 @@
         function switchTab(t){
             document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
             document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-            if(t==='files'){ document.querySelectorAll('.tab-btn')[0].classList.add('active'); document.getElementById('panel-files').classList.add('active'); }
-            else if(t==='list'){ document.querySelectorAll('.tab-btn')[1].classList.add('active'); document.getElementById('panel-list').classList.add('active'); }
-            else { document.querySelectorAll('.tab-btn')[2].classList.add('active'); document.getElementById('panel-manual').classList.add('active'); }
+            document.getElementById('panel-'+t).classList.add('active');
+            event.target.classList.add('active');
         }
 
         document.getElementById('headerInput').addEventListener('change', function(e) { loadFile(e, 'main-header'); });
@@ -412,14 +390,14 @@
                     link.href = canvas.toDataURL('image/png');
                     link.click();
                     if (celular) {
-                        const msg = `Bendiciones Pastor *${pastor}*, le enviamos su invitación formal.`;
+                        const msg = `Bendiciones Pastor *${pastor}*, le enviamos la invitación a nuestra Confraternidad Anual.`;
                         window.open(`https://wa.me/${celular}?text=${encodeURIComponent(msg)}`, '_blank');
                     }
                 }
                 btn.innerHTML = '<i class="fas fa-check"></i>';
                 setTimeout(() => btn.innerHTML = icon, 2000);
             } catch(e) {
-                alert("Error.");
+                alert("Error al generar.");
                 btn.innerHTML = icon;
                 wrapper.style.transform = "scale(0.55)";
             }
