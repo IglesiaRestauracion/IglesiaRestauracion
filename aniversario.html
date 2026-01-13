@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador 11 Aniversario | Elegante Blanco</title>
+    <title>Generador 11 Aniversario | Blanco y Dorado</title>
     
     <!-- Fuentes: Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -16,18 +16,18 @@
 
     <style>
         :root {
-            --primary-color: #1a1a1a; /* Negro elegante */
-            --accent-color: #b8860b;  /* Dorado */
-            --text-gray: #555;
-            --white: #ffffff;
-            --bg-interface: #f4f4f4;
+            --primary-color: #111111;
+            --accent-color: #c5a059; /* Dorado elegante */
+            --bg-flyer: #ffffff;
+            --text-main: #333333;
+            --gray-light: #f8f8f8;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-interface);
+            background-color: #e5e5e5;
             height: 100vh;
             display: flex;
             overflow: hidden;
@@ -41,48 +41,45 @@
             border-right: 1px solid #ddd;
             display: flex; flex-direction: column; gap: 15px;
             z-index: 100; overflow-y: auto;
-            box-shadow: 4px 0 20px rgba(0,0,0,0.05);
         }
 
-        .sidebar h2 { color: var(--primary-color); margin: 0; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
+        .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
         
         .file-box {
             border: 2px dashed #ccc; padding: 10px; border-radius: 6px; cursor: pointer; 
-            display: flex; align-items: center; gap: 10px; transition: 0.3s; background: white;
+            display: flex; align-items: center; gap: 10px; background: white;
         }
         .file-box i { font-size: 1.2rem; color: var(--accent-color); }
-        .file-box div { flex-grow: 1; text-align: left; }
-        .file-box strong { font-size: 0.8rem; display: block; color: #333; }
-        .file-box span { font-size: 0.7rem; color: #666; font-weight: 600; }
+        .file-box strong { font-size: 0.8rem; display: block; }
+        .file-box span { font-size: 0.7rem; color: #666; }
         input[type="file"] { display: none; }
 
         .tabs { display: flex; gap: 5px; background: #eee; padding: 5px; border-radius: 8px; }
-        .tab-btn { flex: 1; padding: 8px; border: none; background: transparent; cursor: pointer; border-radius: 5px; font-weight: 700; color: #666; transition: 0.3s; font-size: 0.8rem; }
+        .tab-btn { flex: 1; padding: 8px; border: none; background: transparent; cursor: pointer; border-radius: 5px; font-weight: 700; color: #666; font-size: 0.8rem; }
         .tab-btn.active { background: white; color: var(--primary-color); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
         .panel { display: none; margin-top: 15px; }
         .panel.active { display: block; }
 
-        .contacts-list { margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
+        .contacts-list { margin-top: 10px; border-top: 1px solid #eee; }
         .contact-item { background: #fff; border: 1px solid #eee; padding: 10px; margin-bottom: 5px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
         
         .btn-wa { width: 32px; height: 32px; border-radius: 50%; background: #25D366; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .btn-pdf-list { width: 32px; height: 32px; border-radius: 50%; background: #e74c3c; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        .manual-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; font-family: 'Montserrat'; }
+        .manual-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; }
         .btn-gen { width: 100%; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; margin-bottom: 8px; }
-        .btn-pdf { background: #e74c3c; }
 
         /* --- PREVIEW AREA --- */
         .preview-area {
-            flex-grow: 1; background: #555; display: flex;
+            flex-grow: 1; background: #444; display: flex;
             justify-content: center; align-items: center; padding: 20px; overflow: hidden;
         }
 
         .scale-wrapper {
             transform: scale(0.55);
             transform-origin: center center;
-            box-shadow: 0 0 50px rgba(0,0,0,0.3);
+            box-shadow: 0 0 50px rgba(0,0,0,0.4);
         }
 
         /* --- AFICHE DISEÑO (FONDO BLANCO) --- */
@@ -91,71 +88,161 @@
             height: 1050px;
             position: relative;
             display: flex; flex-direction: column; align-items: center;
-            background-color: white; /* Fondo blanco */
+            background-color: var(--bg-flyer);
             overflow: hidden;
             box-sizing: border-box;
-            border: 1px solid #ddd;
+            border: 15px solid white; /* Borde interno */
+            outline: 1px solid #eee;
         }
 
+        /* Cabecera con Imagen */
         .top-section {
             width: 100%;
-            height: 380px;
-            background: white;
-            border-bottom: 3px double var(--accent-color);
-            position: absolute; top: 0; left: 0; z-index: 0;
-            display: flex; flex-direction: column; align-items: center; 
-            padding-top: 40px;
+            padding-top: 30px;
+            text-align: center;
+            z-index: 5;
         }
 
-        .header-content { text-align: center; color: var(--primary-color); z-index: 2; width: 90%; }
-        .church-line-1 { font-weight: 500; font-size: 1.1rem; letter-spacing: 4px; display: block; color: var(--text-gray); }
-        .church-line-2 { font-weight: 800; font-size: 1.8rem; letter-spacing: 1px; color: var(--primary-color); margin-top: 5px; }
-        .aniv-text { color: var(--accent-color); font-weight: 900; font-size: 1.2rem; text-transform: uppercase; margin-top: 10px; letter-spacing: 4px; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 5px 0; }
+        .church-logo-img {
+            max-width: 85%;
+            height: auto;
+            max-height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
 
-        .logo-container { width: 100%; display: flex; justify-content: center; align-items: center; z-index: 5; margin-top: 20px; }
-        .logo-svg { width: auto; max-width: 80%; height: 180px; object-fit: contain; display: block; }
-        .logo-placeholder { color: #ccc; border: 2px dashed #eee; padding: 20px; border-radius: 10px; font-size: 0.8rem; text-align: center; }
+        .aniv-badge {
+            display: inline-block;
+            padding: 5px 20px;
+            border-top: 2px solid var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            font-weight: 800;
+            letter-spacing: 5px;
+            font-size: 1rem;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
 
-        .bottom-card {
-            margin-top: 350px; 
-            width: 88%;
-            background: white;
-            z-index: 10;
-            padding: 20px 0px;
-            text-align: left;
-            display: flex; flex-direction: column;
-            flex: 1; 
+        .lema-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .logo-lema {
+            height: 180px;
+            object-fit: contain;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+        }
+
+        .content-body {
+            width: 90%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0 10px;
+        }
+
+        .greeting {
+            font-size: 0.88rem;
+            color: var(--primary-color);
+            line-height: 1.4;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .highlight { color: var(--accent-color); font-weight: 800; text-transform: uppercase; }
+
+        .main-text {
+            font-size: 0.82rem;
+            color: #444;
+            line-height: 1.6;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        /* INVITADOS (Manteniendo tu estructura original) */
+        .guests-box { 
+            background: var(--gray-light); 
+            border-radius: 10px; 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            border: 1px solid #eee; 
+        }
+        .guests-title { 
+            text-align: center; 
+            color: var(--accent-color); 
+            font-weight: 800; 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            margin-bottom: 10px; 
+            letter-spacing: 2px;
+        }
+        .guest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 15px; }
+        .guest-row { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; color: #333; }
+        .guest-row i { color: var(--accent-color); font-size: 0.8rem; width: 12px; }
+        .guest-row strong { font-weight: 700; color: #000; display: block; }
+        .guest-row span { font-size: 0.65rem; color: #777; }
+
+        .event-box {
+            border: 2px solid var(--primary-color);
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .event-box strong { font-size: 1rem; display: block; color: var(--primary-color); }
+        .event-box span { font-size: 0.75rem; color: #555; font-weight: 500; }
+
+        .special-note {
+            font-size: 0.75rem;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .verse-footer {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
             margin-bottom: 20px;
         }
 
-        .greeting { color: var(--primary-color); font-size: 0.9rem; margin-bottom: 15px; line-height: 1.4; font-weight: 600; }
-        .highlight-name { color: var(--accent-color); font-weight: 800; border-bottom: 1px solid var(--accent-color); }
-
-        .body-text { color: #333; font-size: 0.85rem; line-height: 1.6; text-align: justify; margin-bottom: 15px; }
-        .req-box { background: #f9f9f9; border-left: 4px solid var(--accent-color); padding: 12px; margin: 10px 0; font-size: 0.82rem; color: #444; }
-
-        .event-info { 
-            border: 2px solid var(--primary-color); color: var(--primary-color); 
-            padding: 15px; border-radius: 10px; text-align: center; 
-            font-weight: 800; font-size: 0.9rem; margin: 10px 0; 
+        .signature-area {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 30px;
         }
-
-        .verse { text-align: center; font-size: 0.85rem; color: var(--accent-color); font-weight: 700; margin-top: 10px; font-style: italic; }
-
-        .signature-wrapper { width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center; margin-top: auto; padding-bottom: 20px; }
-        .sign-img { height: 60px; object-fit: contain; margin-bottom: -15px; z-index: 2; position: relative; }
-        .pastor-line { border-top: 1px solid #444; color: #000; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; padding-top: 5px; width: 220px; text-align: center; }
-        .pastor-role { font-size: 0.65rem; color: #666; letter-spacing: 1px; }
-
-        .footer-strip { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; text-align: center; background: white; color: #888; border-top: 1px solid #eee; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+        .sign-img { height: 60px; object-fit: contain; margin-bottom: -10px; position: relative; z-index: 2; }
+        .pastor-line { border-top: 1px solid #333; width: 220px; padding-top: 5px; text-align: center; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; }
+        
+        .bottom-strip {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
         <div>
-            <h2>Gestor 11 Aniversario</h2>
-            <p style="font-size: 0.8rem; color: #888;">Diseño Minimalista Blanco</p>
+            <h2>Generador 11 Aniversario</h2>
+            <p style="font-size: 0.8rem; color: #888;">Fondo Blanco & Dorado</p>
         </div>
 
         <div class="tabs">
@@ -165,28 +252,26 @@
         </div>
 
         <div id="panel-files" class="panel active">
-            <label class="file-box" id="box-logo">
+            <label class="file-box">
                 <i class="fas fa-image"></i>
-                <div><strong>Logo Lema</strong><span id="txt-logo">logo2.png</span></div>
-                <input type="file" id="logoInput" accept=".png, .jpg, .svg">
+                <div><strong>Logo Lema (logo2.png)</strong><span id="txt-logo">Cargar imagen</span></div>
+                <input type="file" id="logoInput" accept="image/*">
             </label>
             <br>
-            <label class="file-box" id="box-sign">
+            <label class="file-box">
                 <i class="fas fa-signature"></i>
-                <div><strong>Firma Pastor</strong><span id="txt-sign">Carga PNG</span></div>
-                <input type="file" id="signInput" accept=".png, .jpg">
+                <div><strong>Firma Pastor</strong><span id="txt-sign">Cargar PNG transparente</span></div>
+                <input type="file" id="signInput" accept="image/*">
             </label>
         </div>
 
         <div id="panel-list" class="panel">
             <label class="file-box" style="border-color: var(--accent-color);">
                 <i class="fas fa-file-excel"></i>
-                <div><strong>Subir Excel</strong><span>Columnas: Pastor, Iglesia, Celular</span></div>
+                <div><strong>Subir Excel</strong><span>Pastor, Iglesia, Celular</span></div>
                 <input type="file" id="excelInput" accept=".xlsx, .xls">
             </label>
-            <div class="contacts-list" id="contactsList">
-                <div style="text-align: center; color: #999; padding: 20px;">Lista vacía</div>
-            </div>
+            <div class="contacts-list" id="contactsList"></div>
         </div>
 
         <div id="panel-manual" class="panel">
@@ -194,7 +279,7 @@
             <input type="text" class="manual-input" id="man-iglesia" placeholder="Nombre de la Iglesia" oninput="updateManual()">
             <input type="text" class="manual-input" id="man-celular" placeholder="Celular (WhatsApp)">
             <button class="btn-gen" onclick="processManual(this, 'png')">Descargar Imagen</button>
-            <button class="btn-gen btn-pdf" onclick="processManual(this, 'pdf')"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
+            <button class="btn-gen" style="background:#e74c3c" onclick="processManual(this, 'pdf')">Exportar PDF</button>
         </div>
     </div>
 
@@ -202,58 +287,68 @@
         <div class="scale-wrapper">
             <div id="flyer">
                 <div class="top-section">
-                    <div class="header-content">
-                        <span class="church-line-1">DE: LA IGLESIA CRISTIANA</span>
-                        <span class="church-line-2">“CENTRO DE RESTAURACIÓN”</span>
-                        <div class="aniv-text">11 AÑOS DE FIDELIDAD</div>
-                    </div>
-                    <div class="logo-container">
-                        <img id="logo-img" class="logo-svg" style="display: none;">
-                        <div id="logo-placeholder" class="logo-placeholder"><i class="fas fa-image"></i> Logo</div>
-                    </div>
+                    <!-- Reemplazo de texto por imagen 11_years.png -->
+                    <img src="11_years.png" alt="Centro de Restauración" class="church-logo-img" onerror="this.style.display='none'; this.after('IGLESIA CENTRO DE RESTAURACIÓN')">
+                    <br>
+                    <div class="aniv-badge">11 Aniversario</div>
                 </div>
 
-                <div class="bottom-card">
+                <div class="lema-container">
+                    <img id="logo-img" class="logo-lema" style="display:none;">
+                    <div id="logo-placeholder" style="color:#ccc; font-size:0.7rem; border:1px dashed #ccc; padding:20px;">[Logo Lema logo2.png]</div>
+                </div>
+
+                <div class="content-body">
                     <div class="greeting">
-                        Estimado Pastor <span class="highlight-name" id="prev-pastor">NOMBRE DEL PASTOR</span><br>
-                        y congregación <span class="highlight-name" id="prev-iglesia">NOMBRE DE LA IGLESIA</span>.
+                        Estimado Pastor <span class="highlight" id="prev-pastor">NOMBRE DEL PASTOR</span><br>
+                        y congregación <span class="highlight" id="prev-iglesia">NOMBRE DE LA IGLESIA</span>.
                     </div>
 
-                    <div class="body-text">
-                        Les saludamos muy cordialmente en el nombre glorioso de nuestro Señor y Salvador Jesucristo, deseando que Dios los bendiga rica y abundantemente en su vida cristiana.<br><br>
-                        La presente tiene por finalidad invitarlos a nuestra gran <strong>CONFRATERNIDAD ANUAL</strong>, celebrando nuestro 11 Aniversario bajo el lema: <strong>"Ven a Cristo tal como estás" (Mateo 11:28)</strong>. Será un tiempo maravilloso para disfrutar juntos en la presencia del Espíritu Santo.
+                    <div class="main-text">
+                        Saludamos en el nombre glorioso de Cristo Jesús, deseando que Dios los bendiga rica y abundantemente. La presente tiene por finalidad invitarlos a esta gran <strong>CONFRATERNIDAD ANUAL</strong>, donde estaremos alabando a nuestro Señor y escuchando la poderosa palabra de Dios bajo el lema: <strong>"Ven a Cristo tal como estás"</strong>.
                     </div>
 
-                    <div class="event-info">
-                        VIERNES 26 DE ENERO • 7:00 P.M.<br>
-                        <span style="font-weight: 500; font-size: 0.75rem; display: block; margin-top: 5px;">
-                            Urb. Ciudad del Chofer Mz. H Lt. 23 - Chiclayo<br>
-                            (Ref: Paradero de Combis - Simón Bolivar)
-                        </span>
+                    <!-- MANTENIENDO PARTICIPANTES ORIGINALES -->
+                    <div class="guests-box">
+                        <div class="guests-title">Participantes Especiales</div>
+                        <div class="guest-grid">
+                            <div class="guest-row"><i class="fas fa-user-tie"></i> <div><strong>Ps. Eugenio Masias</strong><span>Predicador (Ecuador)</span></div></div>
+                            <div class="guest-row"><i class="fas fa-microphone"></i> <div><strong>Ruben Diaz</strong><span>Min. Alabanza (C. de Pasco)</span></div></div>
+                            <div class="guest-row"><i class="fas fa-fire"></i> <div><strong>Ps. Fernando Ñaupari</strong><span>Testimonio Impactante</span></div></div>
+                            <div class="guest-row"><i class="fas fa-microphone"></i> <div><strong>Grupo Rhema</strong><span>Min. Alabanza (Chiclayo)</span></div></div>
+                            <div class="guest-row"><i class="fas fa-music"></i> <div><strong>Min. Restauración</strong><span>Ministerio Anfitrión</span></div></div>
+                            <div class="guest-row"><i class="fas fa-users"></i> <div><strong>Varios Ministerios</strong><span>Iglesias Invitadas</span></div></div>
+                        </div>
                     </div>
 
-                    <div class="req-box">
-                        <strong>Nota:</strong> Se solicita que el ministerio de alabanza de su congregación se prepare para presentar un especial para la gloria de Dios (Opcional).
+                    <div class="event-box">
+                        <strong>VIERNES 26 DE ENERO • 7:00 P.M.</strong>
+                        <span>Urb. Ciudad del Chofer Mz. H Lt. 23 - Chiclayo</span>
+                        <div style="font-size: 0.65rem; color: #777; margin-top: 3px;">(Ref: Paradero de Combis - Simón Bolivar)</div>
                     </div>
 
-                    <div class="verse">
-                        "¡Mirad cuán bueno y cuán delicioso es habitar los hermanos juntos en armonía!" <br> (Salmos 133:1)
+                    <div class="special-note">
+                        Nota: El ministerio de alabanza de su congregación puede preparar un especial para la gloria de Dios (Opcional).
                     </div>
 
-                    <div class="signature-wrapper">
-                        <img id="sign-img" class="sign-img" style="display: none;">
-                        <div id="sign-placeholder" style="height:20px;"></div>
+                    <div class="verse-footer">
+                        "¡Mirad cuán bueno y cuán delicioso es habitar los hermanos juntos en armonía!" - Salmos 133:1
+                    </div>
+
+                    <div class="signature-area">
+                        <img id="sign-img" class="sign-img" style="display:none;">
                         <div class="pastor-line">Brigadiel Cerna Ravines</div>
-                        <div class="pastor-role">Pastor Principal</div>
+                        <div style="font-size:0.6rem; color:#888; text-transform:uppercase;">Pastor Principal</div>
                     </div>
                 </div>
 
-                <div class="footer-strip">Chiclayo - Lambayeque - Perú</div>
+                <div class="bottom-strip">Chiclayo - Lambayeque - Perú</div>
             </div>
         </div>
     </div>
 
     <script>
+        // Cargar logo2.png automáticamente
         window.onload = function() {
             fetch('logo2.png').then(r => r.blob()).then(blob => {
                 const reader = new FileReader();
@@ -275,15 +370,15 @@
             else { document.querySelectorAll('.tab-btn')[2].classList.add('active'); document.getElementById('panel-manual').classList.add('active'); }
         }
 
-        setupUpload('logoInput', 'logo-img', 'logo-placeholder', 'box-logo', 'txt-logo');
-        setupUpload('signInput', 'sign-img', 'sign-placeholder', 'box-sign', 'txt-sign');
+        setupUpload('logoInput', 'logo-img', 'logo-placeholder', 'txt-logo');
+        setupUpload('signInput', 'sign-img', null, 'txt-sign');
 
-        function setupUpload(inputId, imgId, placeholderId, boxId, textId) {
+        function setupUpload(inputId, imgId, placeholderId, textId) {
             document.getElementById(inputId).addEventListener('change', function(e) {
                 const f = e.target.files[0];
                 if(f) {
                     const r = new FileReader();
-                    r.onload = function(evt) {
+                    r.onload = (evt) => {
                         const img = document.getElementById(imgId);
                         img.src = evt.target.result;
                         img.style.display = 'block';
@@ -312,8 +407,8 @@
             const l = document.getElementById('contactsList'); l.innerHTML = '';
             contactsData.forEach((c, i) => {
                 const d = document.createElement('div'); d.className = 'contact-item';
-                d.innerHTML = `<div class="contact-info"><strong>${c.Pastor||'Pastor'}</strong><span>${c.Iglesia||''}</span></div>
-                <div class="actions-group">
+                d.innerHTML = `<div><strong>${c.Pastor||'Pastor'}</strong><br><small>${c.Iglesia||''}</small></div>
+                <div style="display:flex; gap:5px;">
                     <button class="btn-wa" onclick="process(${i}, this, 'png')"><i class="fab fa-whatsapp"></i></button>
                     <button class="btn-pdf-list" onclick="process(${i}, this, 'pdf')"><i class="fas fa-file-pdf"></i></button>
                 </div>`;
@@ -323,37 +418,32 @@
 
         async function process(i, btn, format) {
             const d = contactsData[i];
-            await generate(d.Pastor||"", d.Iglesia||"", d.Celular, btn, format);
+            await generate(d.Pastor, d.Iglesia, d.Celular, btn, format);
         }
 
         function updateManual(){
-            document.getElementById('prev-pastor').innerText = document.getElementById('man-pastor').value || "NOMBRE PASTOR";
-            document.getElementById('prev-iglesia').innerText = document.getElementById('man-iglesia').value || "NOMBRE IGLESIA";
+            document.getElementById('prev-pastor').innerText = document.getElementById('man-pastor').value || "NOMBRE DEL PASTOR";
+            document.getElementById('prev-iglesia').innerText = document.getElementById('man-iglesia').value || "NOMBRE DE LA IGLESIA";
         }
 
         async function processManual(btn, format) {
-            const p = document.getElementById('man-pastor').value;
-            const c = document.getElementById('man-celular').value;
-            const i = document.getElementById('man-iglesia').value;
-            await generate(p, i, c, btn, format);
+            await generate(document.getElementById('man-pastor').value, document.getElementById('man-iglesia').value, document.getElementById('man-celular').value, btn, format);
         }
 
         async function generate(pastor, iglesia, celular, btn, format) {
             const icon = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            document.getElementById('prev-pastor').innerText = pastor;
-            document.getElementById('prev-iglesia').innerText = iglesia;
+            document.getElementById('prev-pastor').innerText = pastor || "NOMBRE DEL PASTOR";
+            document.getElementById('prev-iglesia').innerText = iglesia || "NOMBRE DE LA IGLESIA";
             
-            await new Promise(r => setTimeout(r, 600));
-
-            const flyerToCapture = document.getElementById('flyer');
+            await new Promise(r => setTimeout(r, 500));
+            const flyer = document.getElementById('flyer');
             const wrapper = document.querySelector('.scale-wrapper');
-            const originalTransform = wrapper.style.transform;
             wrapper.style.transform = "none";
 
             try {
-                const canvas = await html2canvas(flyerToCapture, { scale: 2, useCORS: true });
-                wrapper.style.transform = originalTransform; 
+                const canvas = await html2canvas(flyer, { scale: 2, useCORS: true });
+                wrapper.style.transform = "scale(0.55)"; 
 
                 if (format === 'pdf') {
                     const { jsPDF } = window.jspdf;
@@ -365,19 +455,17 @@
                     link.download = `Invitacion_${pastor}.png`;
                     link.href = canvas.toDataURL('image/png');
                     link.click();
-
-                    if (celular && format === 'png') {
-                        const msg = `Bendiciones Pastor *${pastor}*. La Iglesia Centro de Restauración le hace llegar la invitación formal a nuestro 11 Aniversario. ¡Esperamos contar con su presencia!`;
+                    if (celular) {
+                        const msg = `Bendiciones Pastor *${pastor}*, le enviamos la invitación formal para nuestro 11 Aniversario.`;
                         window.open(`https://wa.me/${celular}?text=${encodeURIComponent(msg)}`, '_blank');
                     }
                 }
-
                 btn.innerHTML = '<i class="fas fa-check"></i>';
-                setTimeout(() => btn.innerHTML = icon, 3000);
+                setTimeout(() => btn.innerHTML = icon, 2000);
             } catch(e) {
-                alert("Error al generar.");
+                alert("Error.");
                 btn.innerHTML = icon;
-                wrapper.style.transform = originalTransform;
+                wrapper.style.transform = "scale(0.55)";
             }
         }
     </script>
